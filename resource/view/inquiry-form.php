@@ -96,36 +96,7 @@ if (isset($_SESSION['user_id'])) {
                     <label>Phone Number</label>
                 </div>
             </div>
-                <h2>Alternate Details:</h2>
-
-            <div class="input-group">
-                <div class="input-box">
-                    <input type="text" name="name" placeholder=" ">
-                    <label>Name</label>
-                </div>
-
-                <div class="input-box">
-                    <input type="text" name="wew" placeholder=" ">
-                    <label>Relationship</label>
-                </div>
-            </div>
-
-
-            <div class="input-group">
-                <div class="input-box">
-                    <input type="tel" name="phone" placeholder=" ">
-                    <label>Phone</label>
-                </div>
-
-                <div class="input-box">
-                    <input type="email" name="email" required placeholder=" ">
-                    <label>Email</label>
-                </div>
-            </div>
-                <div class="input-box">
-                    <input type="text" required placeholder=" ">
-                    <label>Address</label>
-                </div>
+              
 
                 <div class="input-box">
                     <textarea required placeholder=" "></textarea>
