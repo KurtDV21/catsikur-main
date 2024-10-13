@@ -4,6 +4,9 @@ use App\Core\Database;
 use App\Models\User;
 use App\Controllers\UserController;
 
+use App\Models\Inquiry;
+use App\Controllers\InquiryController;
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 session_start();
@@ -13,6 +16,24 @@ $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
+// Form processing logic
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if all required fields are set
+    if (isset($_POST['user_id'], $_POST['post_id'], $_POST['name'], $_POST['occupation'], $_POST['address'], $_POST['email'], $_POST['phone'], $_POST['message'])) {
+        $inquiryModel = new Inquiry($dbConnection);
+        $inquiryController = new InquiryController($inquiryModel);
+        
+        // Call the method to handle the inquiry submission
+        $inquiryController->submitAdoptionInquiry();
+        
+        // Optionally, redirect to a success page or show a success message
+        header('Location: /user-homepage?user_id=' . urlencode(htmlspecialchars($userId))); // Redirect to the user homepage
+        exit;
+    } else {
+        // Handle missing fields (optional)
+        $errorMessage = "Please fill in all required fields.";
+    }
+}
 if (isset($_SESSION['user_id'])) {
     $userId = $_SESSION['user_id']; 
     $user = $userModel->findUserById($userId); 
@@ -24,6 +45,8 @@ if (isset($_SESSION['user_id'])) {
     $phone = ''; 
     $email = '';
   }
+
+  $postId = isset($_GET['post_id']) ? $_GET['post_id'] : '';
 
 ?>
 
@@ -67,10 +90,12 @@ if (isset($_SESSION['user_id'])) {
         <div class="form-container">
             <h1>Cat Adoption Application Form</h1>
             <h2>Applicant Details</h2>
-            <form>
-            <div class="input-group"> <!-- Group for Name and Occupation inputs -->
+            <form action="" method="POST"> 
+              <input type="hidden" name="user_id" value="<?php echo isset($userId) ? htmlspecialchars($userId) : ''; ?>"> 
+              <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($postId); ?>">
+            <div class="input-group">
                     <div class="input-box">
-                        <input type="text" name="name" required value="<?php echo htmlspecialchars($name); ?> ">
+                        <input type="text" name="name" required value="<?php echo htmlspecialchars($name); ?>">
                         <label>Name</label>
                     </div>
 
@@ -80,26 +105,24 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                 </div>
 
-
                 <div class="input-box">
-                    <input type="text" required placeholder=" ">
+                    <input type="text" name="address" required placeholder=" ">
                     <label>Address</label>
                 </div>
             <div class="input-group">
                 <div class="input-box">
-                    <input type="email" name="email" value=" <?php echo htmlspecialchars($email); ?>">
+                    <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>">
                     <label>Email Address</label>
                 </div>
 
                 <div class="input-box">
-                    <input type="tel" name="phone" required value="<?php echo htmlspecialchars($phone); ?> ">
+                    <input type="tel" name="phone" required value="<?php echo htmlspecialchars($phone); ?>">
                     <label>Phone Number</label>
                 </div>
             </div>
-              
 
                 <div class="input-box">
-                    <textarea required placeholder=" "></textarea>
+                    <textarea name="message" required placeholder=" "></textarea>
                     <label>Message</label>
                 </div>
 
@@ -109,7 +132,6 @@ if (isset($_SESSION['user_id'])) {
                 </div>
             </form>
         </div>
-         
     </div>
 </section>
 </body>

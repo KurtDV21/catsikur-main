@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Core\Database;
 use App\Models\Posts;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 class PostController {
 
     private $postsModel;
