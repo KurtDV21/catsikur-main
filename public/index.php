@@ -60,6 +60,10 @@ route('/user-homepage', function () {
     include __DIR__ . '/../resource/view/user-homepage.php';
 });
 
+route('/admin-homepage', function () {
+    include __DIR__ . '/../resource/view/admin-homepage.php';
+});
+
 route('/admin', function () {
     include __DIR__ . '/../resource/view/admin.php';
 });

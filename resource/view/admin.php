@@ -3,12 +3,19 @@
 use App\Core\Database;
 use App\Controllers\PostController;
 use App\Models\Posts;
+use App\Models\User;
+use App\Controllers\UserController;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 $database = new Database();
 $dbConnection = $database->connect();
 $postsModel = new Posts($dbConnection);
+
+$database = new Database();
+$dbConnection = $database->connect();
+$userModel = new User($dbConnection);
+$userController = new UserController($userModel);
 
 // Pagination logic
 $limit = 2; // kung gano karami madidisplay 
@@ -23,6 +30,16 @@ $offset = ($page - 1) * $limit; // Calculate the offset
 
 // Fetch posts for the current page
 $posts = $postsModel->getPosts($limit, $offset);
+
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+  $userId = $_SESSION['user_id']; 
+  $user = $userModel->findUserById($userId); 
+  $name = $user['name'] ?? ''; 
+} else {
+  $name = ''; 
+}
 
 ?>
     
@@ -44,11 +61,11 @@ $posts = $postsModel->getPosts($limit, $offset);
     <img src="/image/logo1.png" alt="logo" class="logo">
     <div class="nav-container">
       <ul class="nav-link">
-        <li><a href="#home">HOME</a></li>
+        <li><a href="/admin-homepage">HOME</a></li>
         <li><a href="">OUR CATS</a></li>
         <li><a href="">ABOUT</a></li>
         <li><a href="">FAQs</a></li>
-        <button class="login-btn">Login</button>
+        <li><label><?php echo htmlspecialchars($name); ?></label></li>
       </ul>
     </div>
   </nav>

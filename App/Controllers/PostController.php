@@ -28,7 +28,7 @@ class PostController {
             // Call the updateApproval method to update the approval status
             if ($this->postsModel->updateApproval($postId, $approvalStatus)) {
                 // Redirect back to the approval page (or show a success message)
-                echo "Successfully updated approval status.";
+                header("location:/admin-homepage");
                 exit;
             } else {
                 // Handle the error (e.g., display an error message)
