@@ -50,7 +50,7 @@ if (isset($_SESSION['user_id'])) {
           <div class="bar"></div>
         </div>
         <ul class="nav-link">
-          <li><a href="#home">HOME</a></li>
+          <li><a href="/user-homepage">HOME</a></li>
           <li><a href="#ourcat">OUR CATS</a></li>
           <li><a href="#">ABOUT</a></li>
           <li><a href="#">FAQs</a></li>

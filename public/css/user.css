@@ -12,6 +12,8 @@
       display: flex; /* Show hamburger on small screens */
   }
 
+
+  
   .nav-link {
       display: none; /* Hide nav links by default */
       flex-direction: column; /* Stack links vertically */

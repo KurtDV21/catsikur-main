@@ -61,7 +61,7 @@ header {
 }
 
 .navbar {
-  background-color: #AFA2D0;
+    background-color: #92A8D1;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -74,8 +74,9 @@ header {
 .nav-link {
     list-style-type: none;
     display: flex;
-    gap: 30px;
+    gap: 20px;
     align-items: center;
+    padding-right: 40px;
 }
 
 .nav-link li {
@@ -84,6 +85,7 @@ header {
     margin-top: 0;
     display: inline;
     justify-content: space-between;
+    
 }
 
 /* Links in Navigation */

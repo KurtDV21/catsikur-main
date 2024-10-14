@@ -13,8 +13,15 @@
 use App\Core\Database;
 use App\Models\Posts;
 use App\Controllers\PostController;
+use App\Models\User;
+use App\Controllers\UserController;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
+
+$database = new Database();
+$dbConnection = $database->connect();
+$userModel = new User($dbConnection);
+$userController = new UserController($userModel);
 
 $database = new Database();
 $dbConnection = $database->connect();
@@ -22,33 +29,39 @@ $postModel = new Posts($dbConnection);
 $postController = new PostController($postModel);
 $post = $postController->showSelectedPosts(); // Get selected cat post
 
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+  $userId = $_SESSION['user_id']; 
+  $user = $userModel->findUserById($userId); 
+  $name = $user['name'] ?? ''; 
+} else {
+  $name = ''; 
+}
 if ($post): // If a valid post is found
 ?>
 
     <!-- HEADER -->
     <header>
-  <nav class="navbar">
-     <img src="image/logo1.png" alt="logo" class="logo">
-
-    <div class="nav-container">
-   
-      <!-- Hamburger Icon -->
-      <div class="hamburger" onclick="toggleMenu()">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
+    <nav class="navbar">
+      <img src="/image/logo1.png" alt="logo" class="logo">
+      <div class="nav-container">
+        <div class="hamburger" onclick="toggleMenu(this)">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <ul class="nav-link">
+          <li><a href="/user-homepage">HOME</a></li>
+          <li><a href="#ourcat">OUR CATS</a></li>
+          <li><a href="#">ABOUT</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><label><?php echo htmlspecialchars($name); ?></label></li>
+        </ul> 
       </div>
+    </nav>
+  </header>
 
-      <ul class="nav-link" id="nav-list">
-        <li><a href="#home">HOME</a></li>
-        <li><a href="#cats">OUR CATS</a></li>
-        <li><a href="about.php">ABOUT</a></li>
-        <li><a href="about.php">FAQs</a></li>
-        <button onclick="visitPage()" class="login-btn">Login</button>
-      </ul>
-    </div>
-  </nav>
-</header>
 
 <section>
   <div class="parent-container">

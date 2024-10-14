@@ -16,6 +16,14 @@ $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
+if (isset($_SESSION['user_id'])) {
+  $userId = $_SESSION['user_id']; 
+  $user = $userModel->findUserById($userId); 
+  $name = $user['name'] ?? ''; 
+} else {
+  $name = ''; 
+}
+
 // Form processing logic
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if all required fields are set
@@ -61,29 +69,25 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body>
       <!-- header nav-bar -->
-  <header>
-  <nav class="navbar">
-     <img src="image/logo1.png" alt="logo" class="logo">
-
-    <div class="nav-container">
-   
-      <!-- Hamburger Icon -->
-      <div class="hamburger" onclick="toggleMenu()">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
+      <header>
+    <nav class="navbar">
+      <img src="/image/logo1.png" alt="logo" class="logo">
+      <div class="nav-container">
+        <div class="hamburger" onclick="toggleMenu(this)">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <ul class="nav-link">
+          <li><a href="/user-homepage">HOME</a></li>
+          <li><a href="#ourcat">OUR CATS</a></li>
+          <li><a href="#">ABOUT</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a><?php echo htmlspecialchars($name); ?></a></li>
+        </ul> 
       </div>
-
-      <ul class="nav-link" id="nav-list">
-        <li><a href="landing.php">HOME</a></li>
-        <li><a href="#cats">OUR CATS</a></li>
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#faqs">FAQs</a></li>
-        <button onclick="visitPage()" class="login-btn">Login</button>
-      </ul>
-    </div>
-  </nav>
-</header>
+    </nav>
+  </header>
 
 <section>
 <div class="outer-container">
