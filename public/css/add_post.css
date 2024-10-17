@@ -1,272 +1,314 @@
 
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  } 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} 
 
-  
-  body {  
-    margin-top: -10px;
-    /* background: url(/image/paws.png) no-repeat; */
-    background-position: top right;
-    background-size: auto; 
-    background-color: #FFEFEF;
-    overflow-x: hidden;
-  }
 
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 25px;
-    cursor: pointer;
-    position: absolute;
-    top: 10%;
+body {  
+  margin-top: -10px;
+  /* background: url(/image/paws.png) no-repeat; */
+  background-position: top right;
+  background-size: auto; 
+  background-color: #FFEFEF;
+  overflow-x: hidden;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  position: absolute;
+  top: 10%;
 
 }
 
 .bar {
-   width: 100%;
-  height: 4px;
-  background-color: #333;
-  transition: all 0.3s ease;
+ width: 100%;
+height: 4px;
+background-color: #333;
+transition: all 0.3s ease;
 
 }
 
 
-  /* navigation bar*/
+/* navigation bar*/
 .logo{
-    width: 100px; /* Set the width */
-    height: auto; /* Maintain aspect ratio */
-    position: relative;
-    margin-left: 20px;
+  width: 100px; /* Set the width */
+  height: auto; /* Maintain aspect ratio */
+  position: relative;
+  margin-left: 20px;
 }
 
-  header {
-    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+header {
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+
   
-  
-    
-  }
+}
 
 #home{
-  display: flex;
+display: flex;
 }
 
-  .navbar {
-    background-color: #92A8D1;
-    position: fixed;
-    display: flex;
-    justify-content: space-between; 
-    width: 100%; 
-    margin-right: 40px;
-    margin-top: 5px;   
-    z-index: 9999;
-  }
-  
-  .logo {
-    margin-right: auto; 
-  }
-  
-  .nav-container {
-    display: flex; 
-  }
-  
-  .nav-link {
-    list-style-type: none;
-    display: flex;
-    gap: 20px; 
-    align-items: center; 
+.navbar {
+  background-color: #92A8D1;
+  position: fixed;
+  display: flex;
+  justify-content: space-between; 
+  width: 100%; 
+  margin-right: 40px;
+  margin-top: 5px;   
+  z-index: 9999;
+}
+
+.logo {
+  margin-right: auto; 
+}
+
+.nav-container {
+  display: flex; 
+}
+
+.nav-link {
+  list-style-type: none;
+  display: flex;
+  gap: 20px; 
+  align-items: center; 
 }
 
 .nav-link li {
-  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 23px;
-    margin-top: 0; 
-    display: inline;
-    position: relative;
-    
+font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+font-size: 23px;
+  margin-top: 0; 
+  display: inline;
+  position: relative;
+  
 }
 
 
 
 .nav-link a {
-  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
-    position: relative;
-    text-decoration: none;
-    color: black;
-    font-weight: 500;
-    line-height: 40px; 
+  position: relative;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  line-height: 40px; 
 }
 
 .nav-link a::after {
-    content: '';
-    position: absolute;
-    left: 0px;
-    bottom: -6px;
-    width: 100%;
-    height: 3px;
-    background: #C3BEF0;
-    border-radius: 5px;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform .5s;
-  }
-  
-  .nav-link a:hover::after {
-    transform-origin: left;
-    transform: scaleX(1);
-  }
-
-  .login-btn a{
-    text-decoration: none;
-  }
-/* --------------------------------------------------------------------------------------------------------------- */
-  /* LOGIN BUTTON */
-  .login-btn {
-    background-color: #C3BEF0; 
-    color: white; 
-    border: none; 
-    border-radius: 5px; 
-    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    padding: 10px 20px; 
-    font-size: 23px; 
-    font-weight: 500; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease, transform 0.3s ease; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    align-self: center; 
-    margin-right: 25px;
+  content: '';
+  position: absolute;
+  left: 0px;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: #C3BEF0;
+  border-radius: 5px;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform .5s;
 }
 
-  .login-btn:hover {
-    background-color: #AFA2D0; 
-    transform: translateY(-2px); 
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
-  }
+.nav-link a:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+.login-btn a{
+  text-decoration: none;
+}
+/* --------------------------------------------------------------------------------------------------------------- */
+/* LOGIN BUTTON */
+.login-btn {
+  background-color: #C3BEF0; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  padding: 10px 20px; 
+  font-size: 23px; 
+  font-weight: 500; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease, transform 0.3s ease; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  align-self: center; 
+  margin-right: 25px;
+}
+
+.login-btn:hover {
+  background-color: #AFA2D0; 
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
+}
 
 
-  .form-container {
-    position: absolute;
-    align-items: center;
-    left: 450px;
-    top: 250px;
-    width: 600px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #FFEFEF;
-    text-align: center;
+.form-container {
+  position: absolute;
+  align-items: center;
+  left: 600px;
+  top: 250px;
+  width: 600px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #FFEFEF;
+  text-align: center;
+}
+
+
+
+.form-container h2 {
+font-size: 2em;
+color: black;
+text-align: center;
 }
 
 .input-box {
-    position: relative;
-    width: 100%;
-    height: 50px;
-    border: 2px solid  black;
-    margin: 30px 0;
-    border-radius: 10px;
-}   
+position: relative;
+width: 100%;
+height: 50px;
+border: 2px solid black;
+margin: 30px 0;
+border-radius: 10px;
+overflow: hidden; /* Ensure elements don't overflow */
+}
 
-
+/* Label stays above the input box by default */
 .input-box label {
-    position: absolute;
-    top:  50%;
-    left: 5px;
-    transform: translateY(-75%);
-    font-size: 1em;
-    font-weight: 500;
-    color: black;
-    pointer-events: none;
-    transition: .5s;
+  position: absolute;
+  /* top: -20px; Always stay above the input box */
+  left: 5px;
+  font-size: 0.9em; /* Slightly reduce font size */
+  font-weight: 500;
+  color: black;
+  pointer-events: none;
+  transition: 0.5s ease;
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label{
-    top: -5px;
+/* Hover effect on input box */
+.input-box:hover label, /* Keep the color effect on hover */
+.input-box input:focus ~ label, /* Respond to input focus */
+.input-box input:valid ~ label { /* Respond when input is valid */
+  color: #ff5e5e; /* Change label color on hover/focus */
 }
 
+/* Optional: Add a subtle shadow effect when hovering */
+.input-box input:hover {
+  box-shadow: 0 0 8px rgba(255, 94, 94, 0.4);
+}
 
-
+/* Style for the input */
 .input-box input {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    color: black;
-    font-weight: 600;
-    padding: 0 35px 0 5px;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: black;
+  font-weight: 600;
+  padding: 0 35px 0 5px;
 }
+
+
+
+
 
 
 /* Specific styling for file upload input */
 .file-upload-box {
-    margin-bottom: 20px;
-    position: relative;
-    height: auto;
-    width: 100%;
+  margin-bottom: 20px;
+  position: relative;
+  height: auto;
+  width: 100%;
 }
 
 .file-upload-box label {
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    transform: translateY(-50%);
-    font-size: 1em;
-    font-weight: 500;
-    color: black;
-    pointer-events: none;
-    transition: 0.5s;
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  font-weight: 500;
+  color: black;
+  pointer-events: none;
+  transition: 0.5s;
 }
 
-.file-upload-box input[type="file"] {
-    width: 100%;
-    padding: 8px;
-    font-size: 1em;
-    color: black;
-    background-color: white; /* Ensure a clean background */
-    border-radius: 5px;
-    border: 2px solid black;
-    box-sizing: border-box;
-    cursor: pointer;
-}
-
-/* Remove default file input styling for better customization */
-.file-upload-box input[type="file"]::-webkit-file-upload-button {
-    display: none; /* Hide default button */
-}
-
-.file-upload-box input[type="file"]::file-selector-button {
-    display: none; /* Hide button in Firefox */
-}
-
-/* Floating label effect for file input */
-.file-upload-box input[type="file"]:focus~label,
-.file-upload-box input[type="file"]:valid~label {
-    top: -5px;
-    font-size: 0.8em;
-    color: #0056b3;
-}
 
 /* Button styling */
 .btn {
-    padding: 10px 15px;
-    background-color: #C3BEF0;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+margin-top: 10px;
+width: 100%;
+height: 45px;
+  padding: 10px 15px;
+  background-color: #C3BEF0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.popup{
+width: 400px;
+text-align: center;
+padding: 0 30px 30px;
+color: #333;
+background-color: #fff;
+border-radius: 10px;
+position: absolute;
+top: 0;
+left: 50%;
+transform: translate(-50%, -50%) scale(0.1);
+visibility: hidden;
+transition: transform 0.4s , top 0.4s;
+}
+
+.open-popup{
+visibility: visible;
+top: 50%;
+transform: translate(-50%, -50%) scale(1);
+}
+
+.popup img{
+width: 100px;
+margin-top: -50px;
+outline: none;
+border-radius: 50%;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.popup h2{
+font-size: 3rem;
+font-weight: 500;
+margin: 30px 0 10px;
+}
+
+.popup button{
+width: 100%;
+margin-top: 50px;
+padding: 10px 0;
+background-color: #AFA2D0;
+color: #fff;
+border: 0;
+outline: none;
+font-size: 2rem;
+border-radius: 5px;
+cursor: pointer;
+box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }

@@ -3,19 +3,12 @@
 use App\Core\Database;
 use App\Controllers\PostController;
 use App\Models\Posts;
-use App\Models\User;
-use App\Controllers\UserController;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 $database = new Database();
 $dbConnection = $database->connect();
 $postsModel = new Posts($dbConnection);
-
-$database = new Database();
-$dbConnection = $database->connect();
-$userModel = new User($dbConnection);
-$userController = new UserController($userModel);
 
 // Pagination logic
 $limit = 2; // kung gano karami madidisplay 
@@ -30,16 +23,6 @@ $offset = ($page - 1) * $limit; // Calculate the offset
 
 // Fetch posts for the current page
 $posts = $postsModel->getPosts($limit, $offset);
-
-session_start();
-
-if (isset($_SESSION['user_id'])) {
-  $userId = $_SESSION['user_id']; 
-  $user = $userModel->findUserById($userId); 
-  $name = $user['name'] ?? ''; 
-} else {
-  $name = ''; 
-}
 
 ?>
     
@@ -61,11 +44,11 @@ if (isset($_SESSION['user_id'])) {
     <img src="/image/logo1.png" alt="logo" class="logo">
     <div class="nav-container">
       <ul class="nav-link">
-        <li><a href="/admin-homepage">HOME</a></li>
+        <li><a href="#home">HOME</a></li>
         <li><a href="">OUR CATS</a></li>
         <li><a href="">ABOUT</a></li>
         <li><a href="">FAQs</a></li>
-        <li><label><?php echo htmlspecialchars($name); ?></label></li>
+        <button class="login-btn">Login</button>
       </ul>
     </div>
   </nav>
@@ -121,14 +104,26 @@ if (isset($_SESSION['user_id'])) {
                         <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($post['id']); ?>">
 
                         <!-- Approve button -->
-                        <button type="submit" name="action" value="approve" class="approve-button">
+                        <button type="submit" name="action" onclick="openPopup()" value="approve" class="approve-button">
                             <i class="fas fa-check"></i>
                         </button>
+                        <div class="popup1" id="popup">
+                            <img src="/image/check.png" alt="">
+                                 <h2>Approved!</h2>
+                                 <p>Post has been successfully approved!</p>
+                           <button class="popbtn" onclick="closePopup()">OK</button>
+                        </div>
 
                         <!-- Deny button -->
-                        <button type="submit" name="action" value="deny" class="deny-button">
+                        <button type="submit" name="action" onclick="openPopup1()" value="deny" class="deny-button">
                             <i class="fas fa-times"></i>
                         </button>
+                        <div class="popup" id="popup1">
+                            <img src="/image/deny.png" alt="">
+                                 <h2>Denied!</h2>
+                                 <p>Post has been successfully denied!</p>
+                           <button class="popbtn" onclick="closePopup1()">OK</button>
+                        </div>
                     </form>
                             </div>
                         </div>
@@ -185,6 +180,28 @@ if (isset($_SESSION['user_id'])) {
       </div>
     </div>
   </div>
+\
+<script>
+    let popup = document.getElementById("popup");
+
+    function openPopup(){
+        popup.classList.add("open-popup")
+    }
+
+    function closePopup(){
+        popup.classList.remove("open-popup")
+    }
+
+    let popup1 = document.getElementById("popup1");
+
+function openPopup1(){
+    popup1.classList.add("open-popup1")
+}
+
+function closePopup1(){
+    popup1.classList.remove("open-popup1")
+}
+</script>
 
 </body>
 </html>
