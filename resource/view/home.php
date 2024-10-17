@@ -2,8 +2,8 @@
 use App\Core\Database;
 use App\Models\User;
 use App\Controllers\UserController;
-use App\Models\Posts;
-use App\Controllers\PostController;
+use App\Models\ApprovedPostsModel;
+use App\Controllers\ApprovedPostsController;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -15,8 +15,8 @@ $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
-$postModel = new Posts($dbConnection);
-$postController = new PostController($postModel);
+$postModel = new ApprovedPostsModel($dbConnection);
+$postController = new ApprovedPostsController($postModel);
 
 // Fetch approved posts
 $approvedPosts = $postController->showApprovedPosts();

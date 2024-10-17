@@ -1,23 +1,31 @@
 <?php
 
 use App\Core\Database;
-use App\Controllers\PostController;
 use App\Models\Posts;
+use App\Models\PostApprovalModel; // Include your PostApproval model
+use App\Controllers\PostApprovalController; // Include your controller
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 $database = new Database();
 $dbConnection = $database->connect();
 $postsModel = new Posts($dbConnection);
+$postApprovalModel = new PostApprovalModel($dbConnection); // Create an instance of your PostApproval model
+$postApprovalController = new PostApprovalController($postApprovalModel); // Create an instance of your controller
+
+// Check if the form has been submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $postApprovalController->updateApproval(); // Call the updateApproval method
+}
 
 // Pagination logic
-$limit = 2; // kung gano karami madidisplay 
-$totalPosts = $postsModel->getTotalPosts(); //kung ilan laman ng database (galing sa SELECT COUNT sa Posts model)
-$totalPages = ceil($totalPosts / $limit);  //laman ng database ngayon is lima divide sa limit tapos i ceceil or round up
-//   5       round up     5         2    (5/2 = 2.5 tas round up magiging 3... bale 3 pages sya with tig dalawang content)
+$limit = 2; // Number of posts to display
+$totalPosts = $postsModel->getTotalPosts(); // Get total number of posts
+$totalPages = ceil($totalPosts / $limit); // Calculate total pages
+
 // Get the current page from the URL, default to 1 if not set
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$page = max(1, min($page, $totalPages)); //max is 1 page, minumum is yung total ng pages para di mag bug
+$page = max(1, min($page, $totalPages)); // Ensure page is within range
 
 $offset = ($page - 1) * $limit; // Calculate the offset
 
@@ -81,50 +89,44 @@ $posts = $postsModel->getPosts($limit, $offset);
             <!-- Display each post -->
             <?php foreach ($posts as $post): ?>
                 <div class="approval-item-container">
-                    <!-- Adopter Info on the left -->
                     <div class="adopter-info">  
                         <div class="profile-placeholder"></div>
                         <p class="username"><?php echo htmlspecialchars($post['name']); ?></p>
                     </div>
 
-                    <!-- Approval Item -->
                     <div class="approval-item">
                         <div class="application-info">
                             <div class="cat-profile">
-                            <img src="<?php echo htmlspecialchars($post['picture']); ?>" alt="Cat Image">
+                                <img src="<?php echo htmlspecialchars($post['picture']); ?>" alt="Cat Image">
                                 <div class="cat-details">
                                     <p><?php echo htmlspecialchars($post['cat_name']); ?></p>
                                     <p><?php echo htmlspecialchars($post['location']); ?></p>
                                 </div>
                             </div>
                             <div class="actions">
+                                <form action="" method="POST"> <!-- Leave action empty to submit to the same page -->
+                                    <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($post['id']); ?>">
 
-                        <!-- Approval form -->
-                        <form action="/updateApproval" method="POST">
-                        <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($post['id']); ?>">
+                                    <button type="submit" name="action" onclick="openPopup()" value="approve" class="approve-button">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <div class="popup1" id="popup">
+                                        <img src="/image/check.png" alt="">
+                                        <h2>Approved!</h2>
+                                        <p>Post has been successfully approved!</p>
+                                        <button class="popbtn" onclick="closePopup()">OK</button>
+                                    </div>
 
-                        <!-- Approve button -->
-                        <button type="submit" name="action" onclick="openPopup()" value="approve" class="approve-button">
-                            <i class="fas fa-check"></i>
-                        </button>
-                        <div class="popup1" id="popup">
-                            <img src="/image/check.png" alt="">
-                                 <h2>Approved!</h2>
-                                 <p>Post has been successfully approved!</p>
-                           <button class="popbtn" onclick="closePopup()">OK</button>
-                        </div>
-
-                        <!-- Deny button -->
-                        <button type="submit" name="action" onclick="openPopup1()" value="deny" class="deny-button">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        <div class="popup" id="popup1">
-                            <img src="/image/deny.png" alt="">
-                                 <h2>Denied!</h2>
-                                 <p>Post has been successfully denied!</p>
-                           <button class="popbtn" onclick="closePopup1()">OK</button>
-                        </div>
-                    </form>
+                                    <button type="submit" name="action" onclick="openPopup1()" value="deny" class="deny-button">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <div class="popup" id="popup1">
+                                        <img src="/image/deny.png" alt="">
+                                        <h2>Denied!</h2>
+                                        <p>Post has been successfully denied!</p>
+                                        <button class="popbtn" onclick="closePopup1()">OK</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -133,7 +135,6 @@ $posts = $postsModel->getPosts($limit, $offset);
 
             <!-- Pagination Buttons -->
             <div class="pagination">
-                <!--halimbawang nasa page 2 ka,mag miminus 1 para maging page 1 or para mabalik sa page-->
                 <?php if ($page > 1): ?>
                     <a href="?page=<?php echo $page - 1; ?>" class="prev-button">Prev</a>
                 <?php endif; ?>
@@ -144,25 +145,24 @@ $posts = $postsModel->getPosts($limit, $offset);
             </div>
         </div>
     </div>
-</div>
+</div>  
 
 <!-- Footer Section -->
 <div class="footer">
     <div class="footer-container">
-       <div class="footer-section other-section">
-         <h3></h3>
-         <p></p>
-         <ul class="social-media2">
-          <li><a href="#"><img src="pin.png" alt="pin"></a></li>
-          <li><a href="#"><img src="call.png" alt="call"></a></li>
-          <li><a href="#"><img src="email.png" alt="email"></a></li>
-      </ul>
-       </div>
+        <div class="footer-section other-section">
+            <h3></h3>
+            <p></p>
+            <ul class="social-media2">
+                <li><a href="#"><img src="pin.png" alt="pin"></a></li>
+                <li><a href="#"><img src="call.png" alt="call"></a></li>
+                <li><a href="#"><img src="email.png" alt="email"></a></li>
+            </ul>
+        </div>
   
         <div class="footer-section about-company">
             <h3>About the Company</h3>
             <p>Lorem ipsum dolor sit amet...</p>
-            <!-- Social Media Icons -->
             <ul class="social-media">
                 <li><a href="#"><img src="facebook.png" alt="Facebook"></a></li>
                 <li><a href="#"><img src="messenger.png" alt="messenger"></a></li>
@@ -171,16 +171,16 @@ $posts = $postsModel->getPosts($limit, $offset);
     </div>
   
     <div class="footer-bottom-container">
-         <div class="footer-bottom">
+        <div class="footer-bottom">
             <p>&copy; All rights reserved.</p>
-          </div>
+        </div>
   
-      <div class="footer-bottom-name">
-        <p>Cat Free Adoption & Rescue Philippines</p>
-      </div>
+        <div class="footer-bottom-name">
+            <p>Cat Free Adoption & Rescue Philippines</p>
+        </div>
     </div>
-  </div>
-\
+</div>
+
 <script>
     let popup = document.getElementById("popup");
 
@@ -194,13 +194,13 @@ $posts = $postsModel->getPosts($limit, $offset);
 
     let popup1 = document.getElementById("popup1");
 
-function openPopup1(){
-    popup1.classList.add("open-popup1")
-}
+    function openPopup1(){
+        popup1.classList.add("open-popup1")
+    }
 
-function closePopup1(){
-    popup1.classList.remove("open-popup1")
-}
+    function closePopup1(){
+        popup1.classList.remove("open-popup1")
+    }
 </script>
 
 </body>

@@ -11,8 +11,8 @@
 <?php
 // Include the PostController
 use App\Core\Database;
-use App\Models\Posts;
-use App\Controllers\PostController;
+use App\Models\PostByIdModel;
+use App\Controllers\PostDetailsController;
 use App\Models\User;
 use App\Controllers\UserController;
 
@@ -25,9 +25,9 @@ $userController = new UserController($userModel);
 
 $database = new Database();
 $dbConnection = $database->connect();
-$postModel = new Posts($dbConnection);
-$postController = new PostController($postModel);
-$post = $postController->showSelectedPosts(); // Get selected cat post
+$postModel = new PostByIdModel($dbConnection);
+$postController = new PostDetailsController($postModel);
+$post = $postController->showSelectedPost(); // Get selected cat post
 
 session_start();
 
