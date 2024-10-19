@@ -2,34 +2,46 @@
 
 use App\Core\Database;
 use App\Models\Posts;
+use App\Models\User;
+use App\Controllers\UserController;
 use App\Models\PostApprovalModel; // Include your PostApproval model
 use App\Controllers\PostApprovalController; // Include your controller
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+session_start();
+
 $database = new Database();
 $dbConnection = $database->connect();
-$postsModel = new Posts($dbConnection);
-$postApprovalModel = new PostApprovalModel($dbConnection); // Create an instance of your PostApproval model
-$postApprovalController = new PostApprovalController($postApprovalModel); // Create an instance of your controller
 
-// Check if the form has been submitted
+$userModel = new User($dbConnection);
+$userController = new UserController($userModel);
+
+$postsModel = new Posts($dbConnection);
+$postApprovalModel = new PostApprovalModel($dbConnection); 
+$postApprovalController = new PostApprovalController($postApprovalModel); 
+
+if (isset($_SESSION['user_id'])) {
+    $userId = $_SESSION['user_id']; 
+    $user = $userModel->findUserById($userId); 
+    $name = $user['name'] ?? ''; 
+    $showPic = $userModel->findUserById($userId);
+  }else{
+    $name = "";
+  }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $postApprovalController->updateApproval(); // Call the updateApproval method
+    $postApprovalController->updateApproval(); 
 }
 
-// Pagination logic
-$limit = 2; // Number of posts to display
-$totalPosts = $postsModel->getTotalPosts(); // Get total number of posts
-$totalPages = ceil($totalPosts / $limit); // Calculate total pages
-
-// Get the current page from the URL, default to 1 if not set
+$limit = 2; 
+$totalPosts = $postsModel->getTotalPosts(); 
+$totalPages = ceil($totalPosts / $limit);  
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$page = max(1, min($page, $totalPages)); // Ensure page is within range
+$page = max(1, min($page, $totalPages)); 
 
-$offset = ($page - 1) * $limit; // Calculate the offset
+$offset = ($page - 1) * $limit; 
 
-// Fetch posts for the current page
 $posts = $postsModel->getPosts($limit, $offset);
 
 ?>
@@ -66,7 +78,7 @@ $posts = $postsModel->getPosts($limit, $offset);
     <div class="background-card">
         <div class="header">
             <div class="image-placeholder">
-                <img src="profile-image.jpg" alt="Admin Profile">
+                <img src="<?php echo htmlspecialchars($showPic['profile_image_path']); ?>" alt="Admin Profile">
                 <h2>ADMIN</h2>
             </div>
         </div>
@@ -133,15 +145,14 @@ $posts = $postsModel->getPosts($limit, $offset);
                 </div>
             <?php endforeach; ?>
 
-            <!-- Pagination Buttons -->
             <div class="pagination">
-                <?php if ($page > 1): ?>
-                    <a href="?page=<?php echo $page - 1; ?>" class="prev-button">Prev</a>
-                <?php endif; ?>
+            <?php if ($page > 1): ?>
+                        <a href="?page=<?php echo $page - 1; ?>" class="prev-button">Prev</a>
+                    <?php endif; ?>
 
-                <?php if ($page < $totalPages): ?>
-                    <a href="?page=<?php echo $page + 1; ?>" class="next-button">Next</a>
-                <?php endif; ?>
+                    <?php if ($page < $totalPages): ?>
+                        <a href="?page=<?php echo $page + 1; ?>" class="next-button">Next</a>
+                    <?php endif; ?>
             </div>
         </div>
     </div>

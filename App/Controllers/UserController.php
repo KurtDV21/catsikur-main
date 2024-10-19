@@ -44,4 +44,5 @@ class UserController {
         return $this->userModel->activateAccount($userId);
     }
 
+    
 }

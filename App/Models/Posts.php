@@ -18,6 +18,7 @@ class Posts {
                 INNER JOIN user ON post.user_id = user.id 
                 WHERE post.approval NOT IN ('approved', 'denied') 
                 LIMIT ? OFFSET ?";
+
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
@@ -25,7 +26,7 @@ class Posts {
     }
 
     public function getTotalPosts() {
-        $sql = "SELECT COUNT(*) AS total FROM post";
+        $sql = "SELECT COUNT(*) AS total FROM post WHERE approval NOT IN ('approved', 'denied')";
         $stmt = $this->mysqli->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();

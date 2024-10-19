@@ -12,7 +12,7 @@ $database = new Database();
 $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
-
+  
 $is_invalid = false;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -73,11 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     
       <ul class="nav-link">
-        <li><a href="#home">HOME</a></li>
+        <li><a href="/">HOME</a></li>
         <li><a href="">OUR CATS</a></li>
         <li><a href="">ABOUT</a></li>
         <li><a href="">FAQs</a></li>
-        <button class="login-btn" onclick="location.href='/user-homepage'">Login</button>
+        <button class="login-btn" onclick="location.href='/loginto'">Login</button>
       </ul>
     
     </div>

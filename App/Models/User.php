@@ -62,7 +62,7 @@ class User {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    
+
 
     public function findByEmail($email) {
         $sql = "SELECT * FROM user WHERE email = ?";
