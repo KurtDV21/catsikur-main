@@ -55,7 +55,17 @@ if (isset($_SESSION['user_id'])) {
           <li><a href="#ourcat">OUR CATS</a></li>
           <li><a href="#">ABOUT</a></li>
           <li><a href="#">FAQs</a></li>
-          <li><label><?php echo htmlspecialchars($name); ?></label></li>
+          <li>
+
+            <div class="user-dropdown">
+              <button class="user-dropdown-button" onclick="toggleUserDropdown()">
+                  <?php echo htmlspecialchars($name); ?>
+              </button>
+              <div class="user-dropdown-content" id="userDropdownContent">
+                  <a href="/logout">Logout</a>
+              </div>
+            </div>
+          </li>
         </ul> 
       </div>
     </nav>
@@ -172,7 +182,7 @@ if (isset($_SESSION['user_id'])) {
     </div>
   </footer>
 
-  <script src="/resource/js/package.js"></script>
+  <script src="/js/package.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

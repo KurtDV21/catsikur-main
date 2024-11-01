@@ -56,7 +56,16 @@ if ($post): // If a valid post is found
           <li><a href="#ourcat">OUR CATS</a></li>
           <li><a href="#">ABOUT</a></li>
           <li><a href="#">FAQs</a></li>
-          <li><label><?php echo htmlspecialchars($name); ?></label></li>
+          <li>
+          <div class="user-dropdown">
+              <button class="user-dropdown-button" onclick="toggleUserDropdown()">
+                  <?php echo htmlspecialchars($name); ?>
+              </button>
+              <div class="user-dropdown-content" id="userDropdownContent">
+                  <a href="/logout">Logout</a>
+              </div>
+            </div>
+        </li>
         </ul> 
       </div>
     </nav>
@@ -99,6 +108,7 @@ else:
     echo "<p>Cat details not found!</p>";
 endif;
 ?>
+<script src="/js/cat-details.js"></script>
 </body>
 
 

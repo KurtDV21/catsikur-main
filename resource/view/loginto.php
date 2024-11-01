@@ -34,20 +34,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mail->Subject = 'Your OTP Code';
         $mail->Body = "Your OTP code is: $otp";
 
-        if ($mail->send()) {
-            // Redirect based on role
-            if ($_SESSION["role"] === 'admin') {
-                header("Location: /otp-admin");
-            } else {
-                header("Location: /otp-verify");
-            }
-            exit;
-        } else {
-            $is_invalid = true;
-        }
-    } else {
-        $is_invalid = true;
-    }
+        // Redirect based on role
+        if ($_SESSION["role"] === 'admin') {
+          header("Location: /admin");
+      } else {
+          header("Location: /user-homepage");
+      }
+      exit;
+  } else {
+      $is_invalid = true;
+  }
 }
 
 ?>

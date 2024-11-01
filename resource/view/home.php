@@ -25,9 +25,8 @@ if (isset($_SESSION['user_id'])) {
   $userId = $_SESSION['user_id']; 
   $user = $userModel->findUserById($userId); 
   $name = $user['name'] ?? ''; 
-} else {
-  $name = ''; 
-}
+  header("Location:/user-homepage");
+} 
 ?>
 
 <!DOCTYPE html>

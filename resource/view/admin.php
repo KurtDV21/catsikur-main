@@ -64,11 +64,20 @@ $posts = $postsModel->getPosts($limit, $offset);
     <img src="/image/logo1.png" alt="logo" class="logo">
     <div class="nav-container">
       <ul class="nav-link">
-        <li><a href="#home">HOME</a></li>
+        <li><a href="/admin-homepage">HOME</a></li>
         <li><a href="">OUR CATS</a></li>
         <li><a href="">ABOUT</a></li>
         <li><a href="">FAQs</a></li>
-        <button class="login-btn">Login</button>
+        <li>
+            <div class="user-dropdown">
+              <button class="user-dropdown-button" onclick="toggleUserDropdown()">
+                  <?php echo htmlspecialchars($name); ?>
+              </button>
+              <div class="user-dropdown-content" id="userDropdownContent">
+                  <a href="/logout">Logout</a>
+              </div>
+            </div>
+        </li>
       </ul>
     </div>
   </nav>
@@ -213,6 +222,6 @@ $posts = $postsModel->getPosts($limit, $offset);
         popup1.classList.remove("open-popup1")
     }
 </script>
-
+<script src="/js/admin.js"></script>
 </body>
 </html>
