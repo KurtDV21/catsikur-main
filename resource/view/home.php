@@ -106,7 +106,7 @@ if (isset($_SESSION['user_id'])) {
        
     <div class="add-container">
       <li>
-        <button class="addbtn" onclick="location.href='/add-post?user_id=<?php echo htmlspecialchars($userId); ?>'"> Add Post </button>
+        <button class="addbtn" onclick="location.href='/loginto'"> Add Post </button>
       </li>
     </div>    
   </section>
