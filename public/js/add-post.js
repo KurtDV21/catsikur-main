@@ -1,8 +1,7 @@
 let popup = document.getElementById("popup");
 
 function openPopup(event) {
-    // Prevent the form from submitting if validation fails
-    event.preventDefault();
+    event.preventDefault(); // Prevent form submission
 
     // Get form inputs
     const name = document.getElementById("name").value.trim();
@@ -15,17 +14,23 @@ function openPopup(event) {
     // Check if all required fields are filled
     if (name && age && location && gender && color && picture > 0) {
         popup.classList.add("open-popup"); // Open popup if all fields are filled
-        setTimeout(() => {
-            document.querySelector("form").submit(); // Submit form after popup shows
-        }, 1000); // Adjust delay if needed
     } else {
-        alert("Please fill out all required fields.");
+        alert("Please fill in all fields.");
     }
+    return false; // Prevent form submission
 }
 
-function closePopup(){
-    popup.classList.remove("open-popup");
+function closePopup() {
+    popup.classList.remove("open-popup"); // Close the popup without submitting
 }
+
+function submitForm() {
+    const form = document.querySelector("form");
+    form.action = "/process-addpost"; // Set the action attribute when user confirms
+    form.submit(); // Manually submit the form
+}
+
+
 
 function toggleUserDropdown() {
     const dropdown = document.getElementById("userDropdownContent");

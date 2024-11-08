@@ -60,7 +60,6 @@ $navbar->render();
         <li><a href="">ABOUT</a></li>
         <li><a href="">FAQs</a></li>
         <li>
-
             <div class="user-dropdown">
               <button class="user-dropdown-button" onclick="toggleUserDropdown()">
                   <?php echo htmlspecialchars($name); ?>
@@ -68,6 +67,9 @@ $navbar->render();
               <div class="user-dropdown-content" id="userDropdownContent">
                   <a href="/logout">Logout</a>
               </div>
+            </div>
+        </li>
+      </ul>
     </div>
   </nav>
 </header>
@@ -76,7 +78,7 @@ $navbar->render();
 
 <div class="form-container">
     <h2>Add Cat Adoption Post</h2>
-    <form action="/process-addpost" method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data"  onsubmit="return openPopup(event)">
         <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($userId); ?>"> <!-- Include the user ID -->
     
         <div class="input-box">
@@ -89,7 +91,38 @@ $navbar->render();
             <input type="text" id="age" name="age" required>
         </div>
 
+        <div class="input-box">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+        </div>
+
+        <div class="input-box">
+            <label for="gender">Gender:</label>
+            <input type="text" id="gender" name="gender" required>
+        </div>
+
+        <div class="input-box">
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" required>
+        </div>
+
+        <div class="upload-box ">
+            <label for="picture">Upload Picture:</label>
+            <input type="file" id="picture" name="picture" accept="image/*" required>
+        </div>
+
+        <button type="submit" class="btn">Submit Post</button>
+        <div class="popup" id="popup">
+            <img src="/image/check.png" alt="">
+            <h2>Thank You!</h2>
+            <p>Your post has been successfully submitted, Thanks!</p>
+            <button type="button" class="popbtn" onclick="submitForm()">Confirm and Submit</button>
+            <button type="button" class="popbtn" onclick="closePopup()">Cancel</button>
+        </div>
+    </form>
 </div>
+
+
 
 <script src="/js/add-post.js"></script>
 </body>
