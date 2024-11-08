@@ -37,8 +37,16 @@ route('/loginto', function () {
     include __DIR__ . '/../resource/view/loginto.php';
 });
 
+route('/admin-login', function () {
+    include __DIR__ . '/../resource/view/admin-login.php';
+});
+
 route('/register-form', function () {
     include __DIR__ . '/../resource/view/register-form.php';
+});
+
+route('/admin-register', function () {
+    include __DIR__ . '/../resource/view/admin-register.php';
 });
 
 route('/post-adoption', function () {
@@ -70,6 +78,10 @@ route('/admin', function () {
 
 route('/process-signup', function () {
     include __DIR__ . '/../resource/view/auth/process-signup.php';
+});
+
+route('/process-admin-signup', function () {
+    include __DIR__ . '/../resource/view/auth/process-admin-signup.php';
 });
 
 route('/signup-success', function () {

@@ -1,8 +1,8 @@
 <?php
 
 use App\Core\Database;
-use App\Models\User;
-use App\Controllers\UserController;
+use App\Models\Admin;
+use App\Controllers\AdminController;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -10,45 +10,42 @@ session_start();
 
 $database = new Database();
 $dbConnection = $database->connect();
-$userModel = new User($dbConnection);
-$userController = new UserController($userModel);
+$adminModel = new Admin($dbConnection);
+$adminController = new AdminController($adminModel);
   
 $is_invalid = false;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $user = $userController->login($_POST["email"], $_POST["password"]);
-  
-  if ($user) {
-      // Generate OTP
-      $otp = rand(100000, 999999);
-      session_regenerate_id();
-      $_SESSION["user_id"] = $user["id"];
-      $_SESSION["user_name"] = $user["name"];
-      $_SESSION["otp"] = $otp;
-      $_SESSION["role"] = $user["role"];
-      
-      // Mailer for sending OTP
-      $mail = require __DIR__ . "/auth/mailer.php";
-      $mail->setFrom('noreply@yourdomain.com', 'Your App');
-      $mail->addAddress($user["email"]);
-      $mail->Subject = 'Your OTP Code';
-      $mail->Body = "Your OTP code is: $otp";
+    $admin = $adminController->login($_POST["email"], $_POST["password"]);
+    
+    if ($admin) {
+        // Generate OTP
+        $otp = rand(100000, 999999);
+        session_regenerate_id();
+        $_SESSION["user_id"] = $admin["id"];
+        $_SESSION["user_name"] = $admin["name"];
+        $_SESSION["otp"] = $otp;
+        $_SESSION["role"] = $admin["role"];
+        
+        // Mailer for sending OTP
+        $mail = require __DIR__ . "/auth/mailer.php";
+        $mail->setFrom('noreply@yourdomain.com', 'Your App');
+        $mail->addAddress($admin["email"]);
+        $mail->Subject = 'Your OTP Code';
+        $mail->Body = "Your OTP code is: $otp";
 
-      // Check if the user has the 'user' role
-      if ($_SESSION["role"] === 'user') {
-          // Redirect to user homepage if role is 'user'
-          header("Location: /user-homepage");
-          exit; // Make sure the script stops after redirection
-      } else {
-          // Set the invalid flag if role is not 'user'
-          $is_invalid = true;
-      }
-  } else {
-      // Set the invalid flag if user does not exist
-      $is_invalid = true;
-  }
+        // Redirect based on role
+        if ($_SESSION["role"] === 'admin') {
+            header("Location: /admin");
+            exit; // Ensure that the script stops after redirection
+        } else {
+            // If the login is invalid or not an admin, set the error flag
+            $is_invalid = true;
+        }   
+    } else {
+        $is_invalid = true;
+    }
 }
-
 
 ?>
 
@@ -84,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </nav>
 </header>
 
-
 <div class="wrapper">
     <span class="icon-close"><ion-icon name="close"></ion-icon></span>
     <div class="form-box login">
@@ -108,9 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <button type="submit" href="/user-homepage" class="btn"><b>Login</b></button>
 
         <div class="login-register">
-          <p >Don't have an account? <a href="/register-form" class="register-link"><b>Register</b></a></p>
-          <p><a href="/admin-login" class="register-link"><b>Admin</b></a></p>
-
+          <p >Want to create an Admin Account? <a href="/admin-register" class="register-link"><b>Register</b></a></p>
         </div>
       </form>
     </div>
