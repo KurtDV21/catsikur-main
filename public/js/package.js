@@ -1,27 +1,38 @@
 // Function to toggle dropdown visibility
-function toggleDropdown(dropdownId) {
-    const dropdownContent = document.getElementById(dropdownId);
-    dropdownContent.classList.toggle("show");
+const dropdownButtons = document.querySelectorAll('.dropbtn');
 
-    // Close other dropdowns if they are open
-    const dropdowns = document.getElementsByClassName("dropdown-content");
-    for (let i = 0; i < dropdowns.length; i++) {
-        if (dropdowns[i].id !== dropdownId && dropdowns[i].classList.contains('show')) {
-            dropdowns[i].classList.remove('show'); // Close other dropdowns
+// Function to toggle dropdown content
+function toggleDropdown(event) {
+    // Close all dropdown contents except the one clicked
+    document.querySelectorAll('.dropdown-content').forEach(content => {
+        if (content !== event.currentTarget.nextElementSibling) {
+            content.classList.remove('show');
         }
-    }
+    });
+
+    // Toggle the clicked dropdown content
+    event.currentTarget.nextElementSibling.classList.toggle('show');
 }
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-            if (dropdowns[i].classList.contains('show')) {
-                dropdowns[i].classList.remove('show');
-            }
-        }
+// Add click event to each dropdown button
+dropdownButtons.forEach(button => {
+    button.addEventListener('click', toggleDropdown);
+});
+
+// Close dropdown if clicked outside
+document.addEventListener('click', function(event) {
+    const isClickInside = [...dropdownButtons].some(button => button.contains(event.target));
+
+    if (!isClickInside) {
+        document.querySelectorAll('.dropdown-content').forEach(content => {
+            content.classList.remove('show');
+        });
     }
+});
+
+function toggleMenu() {
+    const navLinks = document.querySelector('.nav-link');
+    navLinks.classList.toggle('active');
 }
 
 const btnAdoptMe = document.getElementsByClassName('adopt-btn1')

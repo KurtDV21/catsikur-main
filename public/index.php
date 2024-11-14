@@ -107,6 +107,10 @@ route('/otp-verify', function () {
     include __DIR__ . '/../resource/view/layout/otp-verify.php';
 });
 
+route('/otp', function () {
+    include __DIR__ . '/../resource/view/layout/otp.php';
+});
+
 route('/otp-admin', function () {
     include __DIR__ . '/../resource/view/layout/otp-admin.php';
 });
