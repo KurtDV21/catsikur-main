@@ -105,6 +105,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="login-register">
           <p >Want to create an Admin Account? <a href="/admin-register" class="register-link"><b>Register</b></a></p>
+          <a href="/loginto" class="register-link"><b>User</b></a></p>
+        </div>
         </div>
       </form>
     </div>
