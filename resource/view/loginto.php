@@ -62,10 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>Document</title>
 </head>
 <body>
-
-<?php if ($is_invalid): ?>
-    <em>Invalid login. Please check your email and password.</em>   
-<?php endif ?>
     
 <header>
   <nav class="navbar">
@@ -101,6 +97,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           <input type="password" id="password" name="password" required>
           <label for="password">Password</label>
         </div>
+
+        <?php if ($is_invalid): ?>
+            <p style="color: red;"><em>Invalid login. Please check your email and password.</em></p></br>   
+        <?php endif ?>
 
         <div class="remember-forgot">
           <a href="/forgot-password" class="forgot"><b>FORGOT PASSWORD?</b></a>
