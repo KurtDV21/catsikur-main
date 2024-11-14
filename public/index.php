@@ -64,6 +64,17 @@ route('/inquiry-form', function () {
     include __DIR__ . '/../resource/view/inquiry-form.php';
 });
 
+route('/inquiry-form2', function () {
+    include __DIR__ . '/../resource/view/inquiry-form2.php';
+});
+
+route('/inquiry-form3', function () {
+    include __DIR__ . '/../resource/view/inquiry-form3.php';
+});
+
+route('/inquiry-form4', function () {
+    include __DIR__ . '/../resource/view/inquiry-form4.php';
+});
 route('/user-homepage', function () {
     include __DIR__ . '/../resource/view/user-homepage.php';
 });
@@ -113,7 +124,7 @@ route('/process-reset-password', function () {
 });
 
 route('/cat-details', function () {
-    include __DIR__ . '/../resource/view/catdeets.php';
+    include __DIR__ . '/../resource/view/catdetails.php';
 });
 
 route('/profile2', function () {

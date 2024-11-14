@@ -22,6 +22,7 @@ if (isset($_SESSION['user_id'])) {
   $name = $user['name'] ?? ''; 
 } else {
   $name = ''; 
+  header('location:/loginto');
 }
 
 // Form processing logic
@@ -35,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $inquiryController->submitAdoptionInquiry();
         
         // Optionally, redirect to a success page or show a success message
-        header('Location: /user-homepage?user_id=' . urlencode(htmlspecialchars($userId))); // Redirect to the user homepage
+        header('Location: /user-homepage?user_id=' . urlencode(htmlspecialchars($userId))); // Redirect t   o the user homepage
         exit;
     } else {
         // Handle missing fields (optional)
@@ -68,53 +69,53 @@ if (isset($_SESSION['user_id'])) {
     <title>Document</title>
 </head>
 <body>
-      <!-- header nav-bar -->
-      <header>
-    <nav class="navbar">
-      <img src="/image/logo1.png" alt="logo" class="logo">
-      <div class="nav-container">
-        <div class="hamburger" onclick="toggleMenu(this)">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-        </div>
-        <ul class="nav-link">
-          <li><a href="/user-homepage">HOME</a></li>
-          <li><a href="#ourcat">OUR CATS</a></li>
-          <li><a href="#">ABOUT</a></li>
-          <li><a href="#">FAQs</a></li>
-          <li>
-          <div class="user-dropdown">
-              <button class="user-dropdown-button" onclick="toggleUserDropdown()">
-                  <?php echo htmlspecialchars($name); ?>
-              </button>
-              <div class="user-dropdown-content" id="userDropdownContent">
-                  <a href="/logout">Logout</a>
-              </div>
-            </div>
-          </li>
-        </ul> 
-      </div>
-    </nav>
+<header>
+    <?php include("header.php"); ?>
   </header>
 
-<section>
-<div class="outer-container">
+
+
+  <section class="form1" id="form1">
+    <div class="outer-container">
         <div class="form-container">
-            <h1>Cat Adoption Application Form</h1>
-            <h2>Applicant Details</h2>
-            <form action="" method="POST"> 
-              <input type="hidden" name="user_id" value="<?php echo isset($userId) ? htmlspecialchars($userId) : ''; ?>"> 
-              <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($postId); ?>">
-            <div class="input-group">
+            <div class="info">
+                <h1>Cat Adoption Application Form</h1>
+                <h2>Applicant Information</h2>
+                <p>Rest assured that all information you will provide is strictly confidential and for adoption screening purposes only. This section will ask information on the prospective adopter. Kindly fill out everything with the correct information. <br><br>PROVIDE THE EMAIL ADDRESS OF THE CAT OWNER/RESCUER BELOW!</p>
+            </div>
+
+            <form id="form" action="javascript:void(0);" method="POST">
+                <input type="hidden" name="user_id" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"> 
+                <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($postId); ?>">
+
+                <div class="input-group">
+                    <div class="input-box">
+                        <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
+                        <label>Email Address</label>
+                    </div>
+                </div>
+
+                <div class="input-group">
                     <div class="input-box">
                         <input type="text" name="name" required value="<?php echo htmlspecialchars($name); ?>">
-                        <label>Name</label>
+                        <label>First Name</label>
                     </div>
 
                     <div class="input-box">
-                        <input type="text" name="occupation" required placeholder=" ">
-                        <label>Occupation</label>
+                        <input type="text" name="lastname" required placeholder=" ">
+                        <label>Last Name</label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-box">
+                        <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
+                        <label>Email Address</label>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="tel" name="phone" required value="<?php echo htmlspecialchars($phone); ?>">
+                        <label>Phone Number</label>
                     </div>
                 </div>
 
@@ -122,90 +123,201 @@ if (isset($_SESSION['user_id'])) {
                     <input type="text" name="address" required placeholder=" ">
                     <label>Address</label>
                 </div>
-            <div class="input-group">
-                <div class="input-box">
-                    <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>">
-                    <label>Email Address</label>
+
+                <div class="input-group">
+                    <div class="input-box">
+                        <input type="number" name="age" required placeholder=" ">
+                        <label>Age</label>
+                    </div>
                 </div>
 
-                <div class="input-box">
-                    <input type="tel" name="phone" required value="<?php echo htmlspecialchars($phone); ?>">
-                    <label>Phone Number</label>
+                <div class="guardian">
+                    <p>Guardian Name - Relationship - Contact Number: (FOR 18 YRS OLD & BELOW ONLY) <br> Example: Melinda Reyes - Mother - 0917522634 | FOR 18yrs old and below ONLY.</p>
                 </div>
-            </div>
 
-                <div class="input-box">
-                    <textarea name="message" required placeholder=" "></textarea>
-                    <label>Message</label>
+                <div class="input-group">
+                    <div class="input-box">
+                        <input type="text" name="guardian" required placeholder=" ">
+                        <label>Your Answer</label>
+                    </div>
+                </div>
+
+                <div class="guardian">
+                    <p>Industry of the Company You are working for:</p>
+                </div>
+
+                <div class="input-group">
+                    <div class="dropdown">
+                        <span class="dropbtn" onclick="toggleDropdown()" required>
+                            Select a company
+                            <span class="caret"></span>
+                        </span>
+                        <div class="dropdown-content" id="dropdownContent">
+                            <ul>
+                                <li><input type="radio" name="company_industry" value="Office Admin" required> Office Admin</li>
+                                <li><input type="radio" name="company_industry" value="Service Crew" required> Service Crew</li>
+                                <li><input type="radio" name="company_industry" value="Call Center" required> Call Center</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="text" name="fb" required placeholder=" ">
+                        <label>Your Facebook profile link:</label>
+                    </div>
+                </div>
+
+                <div class="questions-container">
+                    <div class="question">
+                        <p>Do you live in a:<span class="required">*</span></p>
+                        <div class="radio-options">
+                            <div>
+                                <input type="radio" name="residence" value="House" id="house" required>
+                                <span>House</span>
+                            </div>
+                            <div>
+                                <input type="radio" name="residence" value="Apartment" id="apartment" required>
+                                <span>Apartment</span>
+                            </div>
+                            <div>
+                                <input type="radio" name="residence" value="Condo" id="condo" required>
+                                <span>Condo</span>
+                            </div>
+                            <div>
+                                <input type="radio" name="residence" value="Other" id="other" onclick="showOtherInput(true)" required>
+                                <span>Other...</span>
+                                <input type="text" class="other-input" name="residence_other" id="otherCaregiverInput" placeholder="Specify if Other" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <p>Do you own the house you are currently residing in or are you a tenant renting the house?:<span class="required">*</span></p>
+                        <div class="radio-options">
+                            <div>
+                                <input type="radio" name="has_pets" value="own" id="own" required>
+                                <span>Own/Landlord</span>
+                            </div>
+                            <div>
+                                <input type="radio" name="has_pets" value="rent" id="rent" required>
+                                <span>Rent/Tenant</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <p>Are all members of your household in agreement with this adoption?:<span class="required">*</span></p>
+                        <div class="radio-options">
+                            <div>
+                                <input type="radio" name="outdoor_space" value="Yes" id="yes_outdoor" required>
+                                <span>Yes</span>
+                            </div>
+                            <div>
+                                <input type="radio" name="outdoor_space" value="No" id="no_outdoor" required>
+                                <span>No</span>
+                            </div>
+                            <div>
+                                <input type="radio" name="outdoor_space" value="Other" id="other_outdoor" required>
+                                <span>Don't know/</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="btn-container">
                     <button type="reset" class="btn-cancel">Cancel</button>
-                    <button type="submit" class="btn-confirm">Confirm</button>
+                    <button type="submit" class="btn-confirm" onclick="location.href='/inquiry-form2'">Next</button>
                 </div>
+
+
+               
             </form>
         </div>
     </div>
 </section>
-<script src="/js/inquiry-form.js"></script>
-</body>
-<footer class="footer">
-        <div class="footer-container">
-    <!-- About Section -->
-    <div class="footer-about">
-        <h3>ABOUT COMPANY</h3>
-        <div class="para">
-        <p>Lorem ipsum dolor sit amet. Ex officiis molestias et sapiente<br> doloremque et dolores doloribus est animi maiores. Ut fugiat <br> molestiae nam quia earum qui aliquid aliquid ab corrupti officiis. Et<br> temporibus quia 33 incidunt adipisci ea deleniti vero 33<br> reprehenderit repellat.</p>
+
+
+
+<section id="about" class="about">
+    <div class="footer-container">
+        <div class="about-company">
+
+        <div class="info-item">
+        <img src="/image/place.png" alt="" class="place-icon">
+        <p><a href="">9A Masambong St. Bahay Toro, Quezon City</a></p>
+    </div>
+    <div class="info-item">
+        <img src="/image/phone.png" alt="" class="phone-icon">
+        <p><a href="">09123456789</a></p>
+    </div>
+    <div class="info-item">
+        <img src="/image/email.png" alt="" class="email-icon">
+        <p><a href="">catfreeadopt@email.com</a></p>
+    </div>
         </div>
-      
-       
+
+
+        <div class="details">
+        <h3>ABOUT COMPANY</h3>
+            <p>Lorem ipsum dolor sit amet. Ex officiis molestias et sapiente<br> doloremque et dolores doloribus est animi maiores. Ut fugiat <br> molestiae nam quia earum qui aliquid aliquid ab corrupti officiis. Et<br> temporibus quia 33 incidunt adipisci ea deleniti vero 33<br> reprehenderit repellat.</p>
+            
+            
+            <a href="https://www.facebook.com/groups/1591906714301364" target="_blank">
+                <img src="/image/facebook.png" alt="Facebook" class="fb-icon">
+            </a>
+            
+            <a href="https://www.messenger.com" target="_blank">
+                <img src="/image/messenger.png" alt="Messenger" class="mess-icon">
+            </a>
+     
+        </div>
     </div>
- <!-- Social Media Section -->
-    <div class="fb">
-      <img src="facebook.png" alt="" class="fb-icon">
-    </div>
 
-    <div class="mess">
-      <img src="messenger.png" alt="" class="mess-icon">
-    </div>
-
-   
-
-</div>
- 
-<div class="details-container">
-<div class="details">
-<div class="place">
-    <img src="place.png" alt="" class="place-icon">
-    <p>ASDWQDASDASDASDASDASDASDASD</p>
-
-  </div>
-
-  <div class="phone">
-    <img src="phone.png" alt="" class="phone-icon">
-    <p>ASDWQDASDASDASDASDASDASDASD</p>
-
-  </div>
-
-  <div class="email">
-    <img src="email.png" alt="" class="email-icon">
-    <p>ASDWQDASDASDASDASDASDASDASD</p>
-
-  </div>
-  </div>
-  </div>
-
-
+  </section>
   
 
-
-
-    <!-- Left Bottom Text -->
-    <div class="footer-left-text">
-      <p>Cat Free Adoption & Rescue Philippines</p>
-    </div>
-  </div>
+  <footer class = "footer">
+    Cats Free Adoption & Rescue Philippines
+  </footer>
   
-  
-</footer>
+<script src="/js/inquiry-form.js"></script>
+
+<script>
+    const drop = document.querySelectorAll('.drop');
+
+    drop.forEach(drop=> {
+
+        const select = drop.querySelector('.select');
+        const caret = drop.querySelector('.caret');
+        const menu = drop.querySelector('.menu');
+        const option = drop.querySelector('.menu li');
+        const selected = drop.querySelector('.selected');
+
+        select.addEventListener('click', () => {
+            select.classList('select-clicked');
+            caret.classList('caret-rotate');
+            menu.classList('menu-open');
+        });
+
+        option.forEach(option => {
+            option.addEventListener('click', () =>{
+                selected.innerText = option.innerText;
+                
+                select.classList.remove('select-clicked');
+                caret.classList.remove('caret-rotate');
+                menu.classList.remove('menu-open');
+
+                options.forEach(option => {
+                    option.classList.remove('active');
+                });
+                option.classList.add('active');
+            });
+        });
+    });
+
+</script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
 </html>

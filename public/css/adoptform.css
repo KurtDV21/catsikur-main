@@ -4,171 +4,222 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Convergence&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 
-
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
 }
-html{
-    scroll-behavior: smooth;
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     overflow-x: hidden;
 }
-body {
-    background-size: cover;
-    background-color: #FFEFEF;
-    
-    
+
+.logo{
+    width: 100px;
+    height: auto;
+    margin-left: 20px;
 }
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    position: absolute;
+    top: 10%;
+}
+
+.bar {
+   width: 100%;
+  height: 4px;
+  background-color: #333;
+  transition: all 0.3s ease;
+}
+
 section {
     height: 100vh;
     width: 100vw;
-    display: block;
+    display: flex;
 }
 
-.mission-section{
-    background: url(paws.png);
-}
-.about{
-    background: url(paws.png);
-    
-}
-
-.fact{
-    background: url(paws.png);
+#about{
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    background-color: #F7C9CB;
 }
 
-.logo {
-    margin-left: 30px;
-      width: 100px; /* Set the width */
-      height: auto; /* Maintain aspect ratio */
-  }
-  
-  header {
-      font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      position: absolute;
-      width: 100vw;
-      display: flex;
-      align-items: center;
-      position: fixed;
-      z-index: 99999;
-  }
-  
-  .navbar {
-    background-color: #92A8D1;
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-  }
-  
-  .nav-container {
-      display: flex;
-  }
-  
-  .nav-link {
-      list-style-type: none;
-      display: flex;
-      align-items: center;
-      gap: 20px; 
-      padding-right: 40px;
-  }
-  
-  .nav-link li {
+#form1{
+    width: 100vw;
+    height: auto;
+    display: flex;
+}
+
+.header{
     font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 23px;
-      margin-top: 0; 
-      display: inline;
-      position: relative;
-  }
-  
-  /* Links in Navigation */
-  .nav-link a {
-      font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      position: relative;
-      text-decoration: none;
-      color: black;
-      font-weight: 500;
-      line-height: 40px;
-  }
-  
-  .nav-link a::after {
-      content: '';
-      position: absolute;
-      left: 0px;
-      bottom: -6px;
-      width: 100%;
-      height: 3px;
-      background: #C3BEF0;
-      border-radius: 5px;
-      transform-origin: right;
-      transform: scaleX(0);
-      transition: transform .5s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #AFA2D0;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 50px;
+    right: 70px;
+}
+
+.hamburger span {
+    display: block;
+    width: 40px;
+    height: 5px;
+    background-color: #333;
+    transition: 0.3s;
+}
+
+.navbar{
+    margin-right: 10px;
+    background-color: #92A8D1;
+    position: fixed;
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 9999;
+}
+
+.nav-link {
+    list-style-type: none;
+    display: flex;
+    gap: 20px; 
+    align-items: center;
+    justify-content: flex-end;
+    text-align: end;
+    margin-left: auto;
+}
+
+.nav-link li {
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;    font-size: 23px;
+    margin-top: 0; 
+    display: inline; 
+    position: relative;
+}
+
+.nav-link a{
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    position: relative;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    line-height: 40px; 
+}
+
+.nav-link a::after {
+    content: '';
+    position: absolute;
+    left: 0px;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: #C3BEF0;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
   }
   
   .nav-link a:hover::after {
-      transform-origin: left;
-      transform: scaleX(1);
+    transform-origin: left;
+    transform: scaleX(1);
   }
-  
-  /* LOGIN BUTTON (NAVBAR) */
-  .btn-contain{
-      display: flex;
-      position: relative;
-      left: 100px;
+
+.login-btn a{
+    text-decoration: none;
+}
+
+.login-btn{
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background-color: #AFA2D0; 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
   }
-  .login-btn {
-  
-      margin-right: 50px;
-      background-color: #C3BEF0; 
-      color: white; 
-      border: none; 
-      border-radius: 5px; 
-      padding: 10px 20px; 
-      font-size: 23px; 
-      font-weight: 500; 
-      cursor: pointer; 
-      transition: background-color 0.3s ease, transform 0.3s ease; 
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-  }
-  
-  .login-btn:hover {
-     background-color: #AFA2D0; 
-     transform: translateY(-2px); 
-     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
-  }
-  
-  .nav-link.login-btn a{
-      text-decoration: none;
-      color: inherit;
-  }
-  
-  .login{
-      text-decoration: none;
-      border: black;
-  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    justify-content: center; 
+    margin-left: 50px; 
+    height: 100vh; 
+    gap: 20px; 
+}
 
 
 
   /* FORM SECTION */
+  .outer-container {
+    margin-bottom: 50px;
+    margin-top: 200px;
+    margin-left: 300px;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    width: 1172px;          /* Set width to 1172px */
+    height: auto;         /* Set height to 1470px */
+    border: 5px solid #000;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
   .form-container{
-    position: relative; /* The parent must have relative positioning */
-    width: 100vw; /* Full width of the viewport */
-    height: 100vh; /* Full height of the viewport */
+   display: flex;
+   flex-direction: column;
+   background-color: #f8c7c7;
+   padding: 50px;
+   border-radius: 10px;
+   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .adoptform{
-    position: absolute; /* Position the element relative to its parent */
-    top: 50%; /* Move it 50% down from the top */
-    left: 50%; /* Move it 50% right from the left */
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     transform: translate(-50%, -50%); /* Adjust the position to center it */
     
     background-color: #f8caca; /* Light pink background */
     border: 3px solid #000; /* Blue border */
     width: 1293px; /* Set a fixed width */
-    height: 450px;
+    height: auto;
     padding: 20px; /* Add some space inside the container */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
@@ -176,6 +227,7 @@ section {
 }
 
 .adoptform h2 {
+    
     font-family: 'Montserrat Alternates', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     position: relative;
     font-size: 55px;
@@ -196,32 +248,11 @@ section {
     
 }
 
-.outer-container {
-    position: absolute;
-    left: 200px;
-    top: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 1172px;          /* Set width to 1172px */
-    height: 1470px;         /* Set height to 1470px */
-    border: 5px solid #000;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-}
 
-.form-container {
-    background-color: #f8c7c7;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 1023px;          /* Set width to 1023px */
-    height: 1275px;         /* Set height to 1275px */
-}
 
-h1 {
+
+
+.info h1 {
     margin-top: 30px;
     font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     justify-content: flex-start;
@@ -230,12 +261,16 @@ h1 {
     font-size: 40px;
 }
 
-h2 {
+.info h2 {
     margin-bottom: 30px; /* Added more space before the next input */
-    margin-top: 60px;    /* Ensure space above h2 */
     color: #555;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
 
+.info p{
+    margin-bottom: 30px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.5rem;
 }
 
 .input-group {
@@ -247,7 +282,7 @@ h2 {
     background-color: white;
 }
 
-.input-box input[name="occupation"]{
+.input-box input[name="lastname"]{
     width: 240px;
 }
 
@@ -266,8 +301,189 @@ h2 {
     background-color: white;
 }
 
-.input-box input[name="wew"]{
-    width: 340px;
+.input-box input[name="age"]{
+    width: 396px;
+    background-color: white;
+}
+
+.input-box input[name="guardian"]{
+    width: 560px;
+    background-color: white;
+
+}.input-box input[name="fb"]{
+    width: 400px;
+    background-color: white;
+}
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    
+}
+
+
+.dropdown {
+    position: relative;
+}
+
+.dropbtn {
+    width: 500px;
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    color: black;
+    padding: 10px 20px;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 5px;
+    gap: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.caret {
+    display: inline-block;
+    margin-left: 10px;
+    transition: transform 0.3s ease; /* Smooth rotation transition */
+    border:  solid black;
+    border-width: 0 5px 5px 0;
+    padding: 4px;
+    transform: rotate(45deg);
+}
+
+.dropdown-content {
+    width: 100%;
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content li {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.dropdown-content li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Rotate caret when dropdown is active */
+.dropbtn.active .caret {
+    transform: rotate(225deg); /* Rotate 180 degrees */
+}
+
+.dropdown-content.show {
+    display: block;
+}
+
+
+.drop{
+    min-width: 15em;
+    position: relative;
+    margin: 2em;
+}
+
+.drop *{
+    box-sizing: border-box;
+}
+
+.select{
+    background: #fff;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px #000 solid;
+    border-radius: 0.5em;
+    padding: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.select-clicked{
+    border: 2px #000 solid;
+    box-shadow: 0 0 0.8em #000;
+}
+
+.select:hover{
+    background: #f1f1f1;
+}
+
+/* .caret{
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #000;
+    transition: 0.3s;
+} */
+
+.caret-rotate{
+    transform: rotate(180deg);
+}
+
+.menu{
+    list-style: none;
+    padding: 0.2em 0.5em;
+    background: #F7C9CB;
+    border: 1px #000 solid;
+    box-shadow: 0 0.5em 1em rgba(0,0,0,02);
+    border-radius: 0.5em;
+    color: black;
+    position: absolute;
+    top: 3em;
+    left: 30%;
+    width: 100%;
+    transform: translateX(-50%);
+    opacity: 0;
+    display: none;
+    transition: 0.2s;
+    z-index: 1;
+}
+
+.menu li{
+    padding:0.7em 0.5em ;
+    margin: 0.3em 0;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.menu li:hover{
+    background-color: #f1f1f1;
+}
+
+.active{
+    background: #f1f1f1;
+}
+
+.menu-open{
+    display: block;
+    opacity: 1;
+}
+
+
+.guardian {
+    margin-bottom: 20px;
 }
 
 .input-box {
@@ -317,6 +533,89 @@ textarea:not(:placeholder-shown) ~ label {
     resize: none;
 }
 
+/* Container to align questions side by side */
+.questions-container {
+    margin-top: 40px;
+    display: flex;
+    gap: 40px; /* Space between the first two questions */
+    flex-wrap: wrap; /* Ensures wrapping when necessary */
+  }
+  
+  /* Style for the first and second question containers */
+  .question {
+    font-family: 'Lato', sans-serif;
+    width: 48%; /* This makes the first two questions sit side by side */
+    box-sizing: border-box; /* Prevents padding from affecting width */
+  }
+  
+  .question p {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .radio-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Space between each option */
+  }
+  
+  .radio-options div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .radio-options input[type="radio"] {
+    margin-right: 10px;
+  }
+
+  .other-input {
+    display: none;
+    width: 50%;
+    border: none;
+    border-bottom: 2px solid #333; /* Creates the underline */
+    padding: 5px;
+    font-size: 16px;
+    outline: none;
+    margin-top: 5px;
+    box-sizing: border-box;
+    background-color: transparent; /* Removes the box background */
+  }
+  
+  .radio-options span {
+    font-size: 1.3rem;
+    color: #333;
+  }
+  
+  .radio-options input[name="residence_other"],
+  .radio-options input[name="pets_other"],
+  .radio-options input[name="outdoor_other"] {
+    border: none;
+    border-bottom: 1px solid #333;
+    margin-left: 5px;
+    padding: 2px 5px;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  /* Ensure the third question is placed below the first two */
+  .question:nth-child(3) {
+    width: 100%; /* Take up full width below the two side-by-side questions */
+    margin-top: 20px; /* Adds some space between the two rows */
+  }
+  
+  /* Styling for the required asterisk */
+  .question .required {
+    color: red;
+    font-weight: normal;
+  }
+  
+
+  
+  
+
+
 .btn-container {
     display: flex;
     justify-content: center;
@@ -349,159 +648,129 @@ textarea:not(:placeholder-shown) ~ label {
 /* END OF FORM */
 
 /* FOOTER SECTION */
-.footer {
-    background-color: #F7C9CB; /* Pink background */
-    padding: 70px;
-    position: relative;
-    top: 900px;
-    height: 487px;
+.footer-container {
     display: flex;
-  }
-  
-  
-  .footer-container {
-    display: flex;                 /* Use flexbox for layout */
-    justify-content: flex-start; /* Space between sections */
-    align-items: center;          /* Center items vertically */
-    max-width: 1200px;            /* Maximum width of the footer */
-    margin: 0 auto;               /* Center the footer on the page */
-    padding: 20px;   
-  }
-  
-  .footer-about {
-      position: relative;
-      left: 650px;
-      width: 40%;                  /* Width of the about section */
-      text-align: left;           /* Align text to the right */
-      display: flex;               /* Use flexbox */
-      flex-direction: column;      /* Stack items vertically */
-      justify-content: center; 
-  }
-  
-  
-  .mess{
-    position: relative;
-    top: 100px;
-    left: 300px;
-  }
-  
-  .mess-icon{
-    position: relative;
-    top: 50px;
-    right: 10px;
-  }
-  
-  .fb-icon{
-    position: relative;
-    top: 150px;
-    left: 275px;
-  }
-  
-  
-  .footer-about h3 {
-    justify-content: flex-end;
-    font-size: 37px;
-    margin-bottom: 10px;
-  }
-  
-  .footer-about p {
-    margin: 5px 0;
-    font-size: 20px;
-  }
-  
-  
-  
-  .footer-left-text {
-    display: flex;
-    position: absolute;
-    top: 450px;
-    left: 20px;
-    bottom: 10px;
-  }
-  
-  .footer-left-text p {
-    font-size: 30px;
-    font-weight: bold;
-  }
-  
-  .footer-about .para{
-    width: 729px;
-    height: 145px;
-  }
-  
-  .details {
-    display: flex;               /* Use flexbox for the details container */
-    flex-direction: column;      /* Stack items vertically */
-    gap: 20px;                  /* Space between items */
-    margin-bottom: 30px;
-  }
-  
-  .details > div {
-    display: flex;               /* Use flexbox for each detail item */
-    align-items: center;         /* Center items vertically */
-    margin-bottom: 30px;
-    margin-left: 10px;
-    gap: 30px;
-  }
-  
-  .place-icon,
-  .phone-icon,
-  .email-icon {
-    margin-right: 10px;         /* Space between icon and paragraph */
-    width: 24px;                /* Set a fixed width for icons */
-    height: 24px;               /* Set a fixed height for icons */
-    margin-left: 10px;
-    gap: 20px;
-  }
-  
-  .details-container{
+    justify-content: center; 
+    align-items: center; 
+    height: 100%;
+    gap: 30px; 
+}
+
+
+.details {
+    margin-left: 200px;
+    flex: 1; 
+    font-size: 2rem;
+     
+}
+
+.details p{
+    margin-bottom: 40px;
+    font-size: 1.5rem;
+}
+
+.about-company p{
+    font-size: 1.5rem;
+    
+}
+
+.details h3 {
+    font-size: 2rem; 
+}
+
+.about-company {
+    margin-left: 200px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    max-width: 1200px;
-    padding: 20px;
-    position: relative;
-    right: 1200px;
-    top: 60px;
-    margin-bottom: 20px;
-  }
+    gap: 30px; /* Space between each icon-paragraph pair */
+}
+
+.info-item {
+    display: flex;
+    align-items: center; /* Align icon and paragraph vertically */
+    gap: 20px; /* Space between icon and paragraph */
+}
+
+.place-icon,
+.phone-icon,
+.email-icon {
+    width: 30px; /* Adjust icon size as needed */
+    height: 30px;
+}
+
+.info-item a{
+    text-decoration: none;
+    color: black;
+}
+
+.fb-icon,
+.mess-icon {
+    margin-right: 20px; /* Optional spacing between icons if needed */
+}
+
+.details a{
+    text-decoration: none;
+}
+
+.footer{
+    background-color: #F7C9CB;
+    font-size: 2rem;
+}
   
-  .user-dropdown-button {
+.user-dropdown-button {
+    width: 150px;
     font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  
-    position: relative;
     text-decoration: none;
     color: black;
     font-weight: 500;
-    font-size: 16px; /* Ensure font size matches */
-    line-height: 40px; /* Keep this consistent */
-    padding: 10px 15px; /* Increase padding for inner space */
-    background-color: transparent; /* Make the button background transparent */
-    border: 1px solid #f7c9cb; /* Optional: Add a border color */
-    border-radius: 5px; /* Optional rounded corners */
-    cursor: pointer;
-    display: inline-block; /* Ensure proper sizing */
     font-size: 24px;
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    
+    line-height: 40px;
+    padding: 10px 15px;
+    background-color: transparent;
+    border: 1px solid #f7c9cb;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    position: relative; /* Needed to position dropdown content absolutely */
   }
   
-  
+  .user-dropdown-button:hover {
+    background-color: #f7c9cb; /* Optional hover effect for button */
+  }
   
   .user-dropdown-content {
-    display: none; /* Hidden by default */
-   
-    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  
-      position: relative;
-      text-decoration: none;
-      color: black;
-      font-weight: 500;
-      line-height: 40px; 
-      background: white; 
+    position: absolute;
+    text-align: center;
+    top: 100%; /* Position just below the button */
+    left: 0;
+    width: 100%; /* Adjust width as needed */
+    background-color: white;
+    border: 1px solid #f7c9cb;
+    border-radius: 5px;
+    overflow: hidden; /* Hide overflowing content */
+    opacity: 0; /* Start hidden */
+    transform: translateY(-10px); /* Start slightly above */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth opacity and slide down */
+    z-index: 1;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
   
   .user-dropdown-content.show {
-    display: block; /* Show when .show class is added */
+    opacity: 1;
+    transform: translateY(0); /* Slide down */
+  }
+  
+  .user-dropdown-content a {
+    display: block;
+    padding: 12px 16px;
+    color: black;
+    text-decoration: none;
+  }
+  
+  .user-dropdown-content a:hover {
+    background-color: #f1f1f1; /* Hover effect for links */
   }

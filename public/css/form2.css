@@ -1,0 +1,453 @@
+@import url('https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.logo{
+    width: 100px;
+    height: auto;
+    margin-left: 20px;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    position: absolute;
+    top: 10%;
+}
+
+.bar {
+   width: 100%;
+  height: 4px;
+  background-color: #333;
+  transition: all 0.3s ease;
+}
+
+section{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+#main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-image:url(background.png) ;
+}
+
+#form{
+    width: 100vw;
+    height: auto;
+    display: flex;
+}
+
+#ourcats{
+    width: 100vw;
+    height: auto;
+    display: flex;
+    background-color: #FFEFEF;
+}
+
+#about{
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    background-color: #F7C9CB;
+}
+
+.header{
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #AFA2D0;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 50px;
+    right: 70px;
+}
+
+.hamburger span {
+    display: block;
+    width: 40px;
+    height: 5px;
+    background-color: #333;
+    transition: 0.3s;
+}
+
+.navbar{
+    margin-right: 10px;
+    background-color: #AFA2D0;
+    position: fixed;
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 9999;
+}
+
+.nav-link {
+    list-style-type: none;
+    display: flex;
+    gap: 20px; 
+    align-items: center;
+    justify-content: flex-end;
+    text-align: end;
+    margin-left: auto;
+}
+
+.nav-link li {
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;    font-size: 23px;
+    margin-top: 0; 
+    display: inline; 
+    position: relative;
+}
+
+.nav-link a{
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    position: relative;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    line-height: 40px; 
+}
+
+.nav-link a::after {
+    content: '';
+    position: absolute;
+    left: 0px;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: #C3BEF0;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+  }
+  
+  .nav-link a:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+  }
+
+.login-btn a{
+    text-decoration: none;
+}
+
+.login-btn{
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background-color: #AFA2D0; 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
+  }
+.outer-container {
+    margin-bottom: 50px;
+    margin-top: 200px;
+    margin-left: 400px;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    width: auto;          /* Set width to 1172px */
+    height: auto;         /* Set height to 1470px */
+    border: 5px solid #000;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+  .form-container{
+   display: flex;
+   flex-direction: column;
+   background-color: #f8c7c7;
+   padding: 50px;
+   border-radius: 10px;
+   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.text h1{
+    margin-bottom: 15px;
+    font-size: 2rem;
+    font-family: 'Montseratt', sans-serif;
+  }
+
+  .question-container {
+    margin-top: 20px;
+    background-color: #f8d7da; /* Light pink background */
+    padding: 15px;
+    border-radius: 5px;
+    max-width: 1000px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .question-text {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .required {
+    color: red;
+  }
+  
+  .answer-options label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #333; /* Ensures visibility of the radio button */
+    width: 16px;
+    height: 16px;
+  }
+  
+  .other-option {
+    display: flex;
+    align-items: center;
+  }
+  
+  .other-input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #333; /* Creates the underline */
+    padding: 5px;
+    font-size: 16px;
+    outline: none;
+    margin-top: 5px;
+    box-sizing: border-box;
+    background-color: transparent; /* Removes the box background */
+  }
+
+  .other {
+    width: 40%;
+    border: none;
+    border-bottom: 2px solid #333; /* Creates the underline */
+    padding: 5px;
+    font-size: 16px;
+    outline: none;
+    margin-top: 5px;
+    box-sizing: border-box;
+    background-color: transparent; /* Removes the box background */
+  }
+
+  .question-container .example {
+    font-size: 1.3rem;
+    color: #555;
+    margin-bottom: 8px;
+  }
+
+  .check-options{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .check-options label{
+    gap: 10px;
+    font-size: 1.3rem;
+    color: #333;
+  }
+  
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 60px;
+}
+
+.btn-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 232px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    border-radius: 40px;
+}
+
+.btn-cancel {
+    background-color: #C3BEF0;
+    color: #000;
+}
+
+.btn-confirm {
+    background-color: #C3BEF0;
+    color: #000;
+}
+
+.incomplete {
+    border: 2px solid red;
+  }
+
+  .footer-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100%;
+    gap: 30px; 
+}
+
+
+.details {
+    margin-left: 200px;
+    flex: 1; 
+    font-size: 2rem;
+     
+}
+
+.details p{
+    margin-bottom: 40px;
+    font-size: 1.5rem;
+}
+
+.about-company p{
+    font-size: 1.5rem;
+    
+}
+
+.details h3 {
+    font-size: 2rem; 
+}
+
+.about-company {
+    margin-left: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px; /* Space between each icon-paragraph pair */
+}
+
+.info-item {
+    display: flex;
+    align-items: center; /* Align icon and paragraph vertically */
+    gap: 20px; /* Space between icon and paragraph */
+}
+
+.place-icon,
+.phone-icon,
+.email-icon {
+    width: 30px; /* Adjust icon size as needed */
+    height: 30px;
+}
+
+.info-item a{
+    text-decoration: none;
+    color: black;
+}
+
+.fb-icon,
+.mess-icon {
+    margin-right: 20px; /* Optional spacing between icons if needed */
+}
+
+.details a{
+    text-decoration: none;
+}
+
+.footer{
+    background-color: #F7C9CB;
+    font-size: 2rem;
+}
+
+.user-dropdown-button {
+    width: 150px;
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 40px;
+    padding: 10px 15px;
+    background-color: transparent;
+    border: 1px solid #f7c9cb;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    position: relative; /* Needed to position dropdown content absolutely */
+  }
+  
+  .user-dropdown-button:hover {
+    background-color: #f7c9cb; /* Optional hover effect for button */
+  }
+  
+  .user-dropdown-content {
+    position: absolute;
+    text-align: center;
+    top: 100%; /* Position just below the button */
+    left: 0;
+    width: 100%; /* Adjust width as needed */
+    background-color: white;
+    border: 1px solid #f7c9cb;
+    border-radius: 5px;
+    overflow: hidden; /* Hide overflowing content */
+    opacity: 0; /* Start hidden */
+    transform: translateY(-10px); /* Start slightly above */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth opacity and slide down */
+    z-index: 1;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .user-dropdown-content.show {
+    opacity: 1;
+    transform: translateY(0); /* Slide down */
+  }
+  
+  .user-dropdown-content a {
+    display: block;
+    padding: 12px 16px;
+    color: black;
+    text-decoration: none;
+  }
+  
+  .user-dropdown-content a:hover {
+    background-color: #f1f1f1; /* Hover effect for links */
+  }
