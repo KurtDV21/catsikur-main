@@ -45,7 +45,7 @@ if (isset($_SESSION['user_id'])) {
  <?php include("header.php")?>   
 </header>
 
-  
+
   
   <section id="main" class="main">
     <div class="main-container">

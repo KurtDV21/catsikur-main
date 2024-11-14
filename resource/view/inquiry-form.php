@@ -280,33 +280,31 @@ if (isset($_SESSION['user_id'])) {
     Cats Free Adoption & Rescue Philippines
   </footer>
   
-<script src="/js/inquiry-form.js"></script>
 
-<script>
+  <script>
     const drop = document.querySelectorAll('.drop');
 
-    drop.forEach(drop=> {
-
+    drop.forEach(drop => {
         const select = drop.querySelector('.select');
         const caret = drop.querySelector('.caret');
         const menu = drop.querySelector('.menu');
-        const option = drop.querySelector('.menu li');
+        const options = drop.querySelectorAll('.menu li');
         const selected = drop.querySelector('.selected');
 
         select.addEventListener('click', () => {
-            select.classList('select-clicked');
-            caret.classList('caret-rotate');
-            menu.classList('menu-open');
+            select.classList.toggle('select-clicked');
+            caret.classList.toggle('caret-rotate');
+            menu.classList.toggle('menu-open');
         });
 
-        option.forEach(option => {
-            option.addEventListener('click', () =>{
-                selected.innerText = option.innerText;
-                
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                selected.innerText = option.innerText; // Set the selected option
                 select.classList.remove('select-clicked');
                 caret.classList.remove('caret-rotate');
                 menu.classList.remove('menu-open');
 
+                // Deselect all options and highlight the selected one
                 options.forEach(option => {
                     option.classList.remove('active');
                 });
@@ -314,8 +312,11 @@ if (isset($_SESSION['user_id'])) {
             });
         });
     });
-
 </script>
+
+
+<script src="/js/inquiry-form.js"></script>
+
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
