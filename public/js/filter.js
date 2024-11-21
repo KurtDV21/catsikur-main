@@ -6,7 +6,7 @@ document.querySelectorAll('.filter-option').forEach(option => {
 
         const filters = { [filter]: value };
 
-        fetch('/ajaxFilterPosts.php', {
+        fetch('/ajaxFilterPosts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(filters),
@@ -21,6 +21,8 @@ document.querySelectorAll('.filter-option').forEach(option => {
                 } else {
                     data.forEach(post => {
                         catContainer.innerHTML += `
+
+                            <link rel="stylesheet" href="/css/user.css">
                             <div class="cat-wrapper">
                                 <a href="/cat-details?post_id=${post.id}">
                                     <div class="cat-card">

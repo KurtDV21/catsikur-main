@@ -1,9 +1,7 @@
 <?php
-
 use App\Core\Database;
 use App\Models\User;
 use App\Controllers\UserController;
-
 use App\Models\Inquiry;
 use App\Controllers\InquiryController;
 
@@ -17,47 +15,109 @@ $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
 if (isset($_SESSION['user_id'])) {
-  $userId = $_SESSION['user_id']; 
-  $user = $userModel->findUserById($userId); 
-  $name = $user['name'] ?? ''; 
-} else {
-  $name = ''; 
-  header('location:/loginto');
-}
-
-// Form processing logic
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if all required fields are set
-    if (isset($_POST['user_id'], $_POST['post_id'], $_POST['name'], $_POST['occupation'], $_POST['address'], $_POST['email'], $_POST['phone'], $_POST['message'])) {
-        $inquiryModel = new Inquiry($dbConnection);
-        $inquiryController = new InquiryController($inquiryModel);
-        
-        // Call the method to handle the inquiry submission
-        $inquiryController->submitAdoptionInquiry();
-        
-        // Optionally, redirect to a success page or show a success message
-        header('Location: /user-homepage?user_id=' . urlencode(htmlspecialchars($userId))); // Redirect t   o the user homepage
-        exit;
-    } else {
-        // Handle missing fields (optional)
-        $errorMessage = "Please fill in all required fields.";
-    }
-}
-if (isset($_SESSION['user_id'])) {
-    $userId = $_SESSION['user_id']; 
+    $userId = $_SESSION['user_id'];  
     $user = $userModel->findUserById($userId); 
     $name = $user['name'] ?? ''; 
-    $phone =$user['Phone_number'] ?? '';
+    $phone = $user['Phone_number'] ?? '';
     $email = $user['email'] ?? '';
-  } else {
-    $name = ''; 
-    $phone = ''; 
-    $email = '';
-  }
+} else {
+    header('location:/loginto');
+    exit;
+}
 
-  $postId = isset($_GET['post_id']) ? $_GET['post_id'] : '';
+$postId = isset($_GET['post_id']) ? $_GET['post_id'] : '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $_SESSION['lastSelectedCompany'] = $_POST['company'] ?? '';
+    $_SESSION['has_pets'] = $_POST['has_pets'] ?? '';
+    
+
+    
+    
+    $name = htmlspecialchars(trim($_POST['name']));
+    $lastname = htmlspecialchars(trim($_POST['lastname'])); 
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $phone = htmlspecialchars(trim($_POST['phone']));
+    $address = htmlspecialchars(trim($_POST['address']));
+    $age = $_POST['age'];
+    $guardian = htmlspecialchars(trim($_POST['guardian'] ?? ''));
+    $lastSelectedCompany = $_POST['company'] ?? '';
+    $facebook = $_POST['fb'] ?? '';
+    $housing = $_POST['housing'] ?? '';
+    $housingOther = htmlspecialchars(trim($_POST['housing_other'] ?? ''));
+    $has_pets = $_POST['has_pets'] ?? '';
+    $outdoor_space = $_POST['outdoor_space'] ?? '';
+
+    $name = $name . " " . $lastname;
+
+    if ($housing === 'Other' && !empty($housingOther)) {
+        $housing = $housing . ': ' . $housingOther; // e.g., "Other: My Custom Text"
+    }
+
+    $_SESSION['housing'] = $housing;
+
+    $_SESSION['name'] = $name;
+    $_SESSION['lastname'] = $lastname;
+    $_SESSION['email'] = $email;
+    $_SESSION['phone'] = $phone;
+    $_SESSION['address'] = $address;
+    $_SESSION['age'] = $age;
+    $_SESSION['company'] = $lastSelectedCompany;
+    $_SESSION['guardian'] = $guardian;
+    $_SESSION['facebook'] = $facebook;
+    $_SESSION['outdoor_space'] = $outdoor_space;
+    
+    // Input validation
+    $errors = [];
+
+    // Validate name fields
+    if (empty($name) || empty($lastname)) {
+        $errors[] = "First and last name are required.";
+    }
+
+    // Validate email
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "A valid email address is required.";
+    }
+
+    // Validate phone number (simple check to ensure it’s not empty)
+    if (empty($phone)) {
+        $errors[] = "Phone number is required.";
+    }
+
+    // Validate address
+    if (empty($address)) {
+        $errors[] = "Address is required.";
+    }
+
+    // Validate age (ensure it's a valid number)
+    if (empty($age) || !is_numeric($age)) {
+        $errors[] = "A valid age is required.";
+    }
+
+    // Validate guardian details (only if age is 18 or below)
+    if ($age <= 18 && empty($guardian)) {
+        $errors[] = "Guardian details are required for applicants aged 18 or below.";
+    }
+
+    // Check if there are any validation errors
+    if (count($errors) > 0) {
+        // Store errors in session or display them
+        $_SESSION['errors'] = $errors;
+        // Redirect to the form with error messages
+        header('Location: /inquiry-form'); 
+        exit;
+    }    
+
+    // Redirect to the next step of the form
+    header('Location: /inquiry-form2?post_id=' . $postId);
+    exit;
+
+}
 
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -83,17 +143,19 @@ if (isset($_SESSION['user_id'])) {
                 <h2>Applicant Information</h2>
                 <p>Rest assured that all information you will provide is strictly confidential and for adoption screening purposes only. This section will ask information on the prospective adopter. Kindly fill out everything with the correct information. <br><br>PROVIDE THE EMAIL ADDRESS OF THE CAT OWNER/RESCUER BELOW!</p>
             </div>
-
-            <form id="form" action="javascript:void(0);" method="POST">
+            <?php if (isset($_SESSION['errors']) && count($_SESSION['errors']) > 0): ?>
+                <div class="errors">
+                    <ul>
+                        <?php foreach ($_SESSION['errors'] as $error): ?>
+                            <li><?php echo htmlspecialchars($error); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php unset($_SESSION['errors']); // Clear errors after displaying them ?>
+            <?php endif; ?>
+            <form id="form"  method="POST" >
                 <input type="hidden" name="user_id" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"> 
                 <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($postId); ?>">
-
-                <div class="input-group">
-                    <div class="input-box">
-                        <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
-                        <label>Email Address</label>
-                    </div>
-                </div>
 
                 <div class="input-group">
                     <div class="input-box">
@@ -102,7 +164,7 @@ if (isset($_SESSION['user_id'])) {
                     </div>
 
                     <div class="input-box">
-                        <input type="text" name="lastname" required placeholder=" ">
+                        <input type="text" name="lastname" required placeholder=" " value="<?php echo isset($_SESSION['lastname']) ? $_SESSION['lastname'] : ''; ?>" />
                         <label>Last Name</label>
                     </div>
                 </div>
@@ -114,19 +176,19 @@ if (isset($_SESSION['user_id'])) {
                     </div>
 
                     <div class="input-box">
-                        <input type="tel" name="phone" required value="<?php echo htmlspecialchars($phone); ?>">
+                        <input type="tel" name="phone" required value="<?php echo isset($_SESSION['phone']) ? $_SESSION['phone'] : ''; ?>" />
                         <label>Phone Number</label>
                     </div>
                 </div>
 
                 <div class="input-box">
-                    <input type="text" name="address" required placeholder=" ">
+                    <input type="text" name="address" required placeholder=" " value="<?php echo isset($_SESSION['address']) ? $_SESSION['address'] : ''; ?>" />
                     <label>Address</label>
                 </div>
 
                 <div class="input-group">
                     <div class="input-box">
-                        <input type="number" name="age" required placeholder=" ">
+                        <input type="number" name="age" required placeholder=" " value="<?php echo isset($_SESSION['age']) ? $_SESSION['age'] : ''; ?>" />
                         <label>Age</label>
                     </div>
                 </div>
@@ -137,8 +199,8 @@ if (isset($_SESSION['user_id'])) {
 
                 <div class="input-group">
                     <div class="input-box">
-                        <input type="text" name="guardian" required placeholder=" ">
-                        <label>Your Answer</label>
+                    <input type="text" name="guardian" placeholder=" " value="<?php echo isset($_SESSION['guardian']) ? $_SESSION['guardian'] : ''; ?>" />
+                    <label>Your Answer</label>
                     </div>
                 </div>
 
@@ -148,22 +210,20 @@ if (isset($_SESSION['user_id'])) {
 
                 <div class="input-group">
                     <div class="dropdown">
-                        <span class="dropbtn" onclick="toggleDropdown()" required>
-                            Select a company
+                        <span class="dropbtn" onclick="toggleDropdown()" required name="company">
+                            <?php echo htmlspecialchars($_SESSION['lastSelectedCompany'] ?? 'Select a company'); ?>
                             <span class="caret"></span>
                         </span>
-                        <div class="dropdown-content" id="dropdownContent">
-                            <ul>
-                                <li><input type="radio" name="company_industry" value="Office Admin" required> Office Admin</li>
-                                <li><input type="radio" name="company_industry" value="Service Crew" required> Service Crew</li>
-                                <li><input type="radio" name="company_industry" value="Call Center" required> Call Center</li>
-                            </ul>
-                        </div>
+                        <div id="dropdownContent" class="dropdown-content"></div>
                     </div>
+                
+
+                <!-- Hidden input to store selected company -->
+                <input type="hidden" id="companyInput" name="company" value="<?php echo htmlspecialchars($_SESSION['lastSelectedCompany'] ?? ''); ?>">
 
                     <div class="input-box">
-                        <input type="text" name="fb" required placeholder=" ">
-                        <label>Your Facebook profile link:</label>
+                    <input type="text" name="fb" required placeholder=" " value="<?php echo isset($_SESSION['facebook']) ? htmlspecialchars($_SESSION['facebook']) : ''; ?>" />
+                    <label>Your Facebook profile link:</label>
                     </div>
                 </div>
 
@@ -172,34 +232,36 @@ if (isset($_SESSION['user_id'])) {
                         <p>Do you live in a:<span class="required">*</span></p>
                         <div class="radio-options">
                             <div>
-                                <input type="radio" name="residence" value="House" id="house" required>
+                                <input type="radio" name="housing" value="House" id="house" <?php echo (isset($_SESSION['housing']) && $_SESSION['housing'] == 'House') ? 'checked' : ''; ?>>
                                 <span>House</span>
                             </div>
                             <div>
-                                <input type="radio" name="residence" value="Apartment" id="apartment" required>
+                                <input type="radio" name="housing" value="Apartment" id="apartment" <?php echo (isset($_SESSION['housing']) && $_SESSION['housing'] == 'Apartment') ? 'checked' : ''; ?>>
                                 <span>Apartment</span>
                             </div>
                             <div>
-                                <input type="radio" name="residence" value="Condo" id="condo" required>
+                                <input type="radio" name="housing" value="Condo" id="condo" <?php echo (isset($_SESSION['housing']) && $_SESSION['housing'] == 'Condo') ? 'checked' : ''; ?>>
                                 <span>Condo</span>
                             </div>
                             <div>
-                                <input type="radio" name="residence" value="Other" id="other" onclick="showOtherInput(true)" required>
+                                <input type="radio" name="housing" value="Other" id="other" onclick="showOtherInput(true)" <?php echo (strpos($_SESSION['housing'] ?? '', 'Other:') === 0) ? 'checked' : ''; ?>>
                                 <span>Other...</span>
-                                <input type="text" class="other-input" name="residence_other" id="otherCaregiverInput" placeholder="Specify if Other" required>
+                                <input type="text" class="other-input" name="housing_other" id="otherResidence" placeholder="Specify if Other"
+                                    value="<?php echo (strpos($_SESSION['housing'] ?? '', 'Other:') === 0) ? htmlspecialchars(substr($_SESSION['housing'], 6)) : ''; ?>" />
                             </div>
                         </div>
+
                     </div>
 
                     <div class="question">
                         <p>Do you own the house you are currently residing in or are you a tenant renting the house?:<span class="required">*</span></p>
                         <div class="radio-options">
                             <div>
-                                <input type="radio" name="has_pets" value="own" id="own" required>
+                                <input type="radio" name="has_pets" value="own" id="own" <?php echo (isset($_SESSION['has_pets']) && $_SESSION['has_pets'] == 'own') ? 'checked' : ''; ?> >
                                 <span>Own/Landlord</span>
                             </div>
                             <div>
-                                <input type="radio" name="has_pets" value="rent" id="rent" required>
+                                <input type="radio" name="has_pets" value="rent" id="rent" <?php echo (isset($_SESSION['has_pets']) && $_SESSION['has_pets'] == 'rent') ? 'checked' : ''; ?> >
                                 <span>Rent/Tenant</span>
                             </div>
                         </div>
@@ -209,28 +271,26 @@ if (isset($_SESSION['user_id'])) {
                         <p>Are all members of your household in agreement with this adoption?:<span class="required">*</span></p>
                         <div class="radio-options">
                             <div>
-                                <input type="radio" name="outdoor_space" value="Yes" id="yes_outdoor" required>
+                                <input type="radio" name="outdoor_space" value="Yes" id="yes_outdoor" <?php echo (isset($_SESSION['outdoor_space']) && $_SESSION['outdoor_space'] == 'Yes') ? 'checked' : ''; ?> >
                                 <span>Yes</span>
                             </div>
                             <div>
-                                <input type="radio" name="outdoor_space" value="No" id="no_outdoor" required>
+                                <input type="radio" name="outdoor_space" value="No" id="no_outdoor" <?php echo (isset($_SESSION['outdoor_space']) && $_SESSION['outdoor_space'] == 'No') ? 'checked' : ''; ?> >
                                 <span>No</span>
                             </div>
                             <div>
-                                <input type="radio" name="outdoor_space" value="Other" id="other_outdoor" required>
-                                <span>Don't know/</span>
+                                <input type="radio" name="outdoor_space" value="Other" id="other_outdoor" <?php echo (isset($_SESSION['outdoor_space']) && $_SESSION['outdoor_space'] == 'Other') ? 'checked' : ''; ?> >
+                                <span>Don't know</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="btn-container">
-                    <button type="reset" class="btn-cancel">Cancel</button>
-                    <button type="submit" class="btn-confirm" onclick="location.href='/inquiry-form2'">Next</button>
+                    <button type="button" class="btn-cancel" onclick="location.href='/cat-details?post_id=<?php echo htmlspecialchars($postId); ?>'">Back</button>
+
+                    <button type="submit" class="btn-confirm">Next</button>
                 </div>
-
-
-               
             </form>
         </div>
     </div>
@@ -312,6 +372,205 @@ if (isset($_SESSION['user_id'])) {
             });
         });
     });
+
+    function toggleUserDropdown() {
+    const dropdown = document.getElementById("userDropdownContent");
+    dropdown.classList.toggle("show");
+}
+
+// Toggle the main dropdown
+function toggleDropdown() {
+    const dropdown = document.getElementById("dropdownContent");
+    dropdown.classList.toggle("show");
+}
+
+// Close the dropdowns if clicked outside
+function closeDropdowns(event) {
+    if (!event.target.closest('.user-dropdown') && !event.target.closest('.dropdown')) {
+        closeUserDropdown();
+        closeMainDropdown();
+    }
+}
+
+function closeUserDropdown() {
+    const userDropdown = document.getElementById("userDropdownContent");
+    if (userDropdown.classList.contains("show")) {
+        userDropdown.classList.remove("show");
+    }
+}
+
+function closeMainDropdown() {
+    const mainDropdown = document.getElementById("dropdownContent");
+    if (mainDropdown.classList.contains("show")) {
+        mainDropdown.classList.remove("show");
+    }
+}
+
+window.onclick = closeDropdowns;
+
+
+function addOption(companyName) {
+    const dropdownContent = document.getElementById("dropdownContent");
+
+    const option = document.createElement("div");
+    option.className = "dropdown-item";
+    option.textContent = companyName;
+
+    option.onclick = function () {
+        document.querySelector(".dropbtn").textContent = companyName;
+        document.getElementById('companyInput').value = companyName;
+        closeMainDropdown(); // Close the dropdown when an option is selected
+    };
+
+    dropdownContent.appendChild(option);
+}
+
+function showOtherInput(isVisible) {
+    const otherInput = document.getElementById('otherResidence');
+    otherInput.style.display = isVisible ? 'inline-block' : 'none';
+    if (!isVisible) {
+        otherInput.value = ''; // Clear value when hidden
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const isOtherSelected = document.getElementById('other').checked;
+    showOtherInput(isOtherSelected);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const savedCompany = '<?php echo htmlspecialchars($_SESSION['lastSelectedCompany'] ?? ''); ?>';
+
+    if (savedCompany) {
+        document.querySelector(".dropbtn").textContent = savedCompany;
+        document.getElementById('companyInput').value = savedCompany;
+    }
+
+    const companyOptions = [
+        "Homestay/HouseWife/HouseHusband",
+        "Student - High School/Senior Highschool",
+        "Student - College",
+        "Accountancy, banking & finance",
+        "Aerospace",
+        "Architecture, creative arts & design",
+        "Business, consulting & management",
+        "Charity & volunteer work",
+        "Education",
+        "Electronics, robotics, & mechanics",
+        "Energy & Utilities",
+        "Engineering, manufacturing & construction",
+        "Environment & agriculture",
+        "Food, food manufacturing",
+        "Healthcare",
+        "Hospitality & event management",
+        "Information technology & computer",
+        "Law",
+        "Law enforcement & security",
+        "Leisure, entertainment, sports & tourism",
+        "Marketing, advertising & PR",
+        "Media, news & internet",
+        "Mining",
+        "Public Services & administration",
+        "Recruitment & HR",
+        "Retail",
+        "Sales & E-commerce",
+        "Science & Pharmaceuticals",
+        "Social Care",
+        "Telecommunication and BPO",
+        "Transport & logistics",
+    ];
+
+    companyOptions.forEach(option => addOption(option));
+});
+
+function toggleOtherInput() {
+    const otherInput = document.getElementById('otherResidence');
+    const otherRadio = document.querySelector('input[name="housing"][value="Other"]');
+    otherInput.style.display = otherRadio.checked ? 'inline-block' : 'none';
+    if (!otherRadio.checked) {
+        otherInput.value = ''; // Clear value when hidden
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    toggleOtherInput();
+    const radioButtons = document.querySelectorAll('input[name="housing"]');
+    radioButtons.forEach((radio) => {
+        radio.addEventListener('change', toggleOtherInput);
+    });
+});
+
+document.getElementById('form').addEventListener('submit', function (event) {
+    let isValid = true;
+    const errorMessages = [];
+
+    const firstName = document.querySelector('input[name="name"]').value.trim();
+    const lastName = document.querySelector('input[name="lastname"]').value.trim();
+    const email = document.querySelector('input[name="email"]').value.trim();
+    const phone = document.querySelector('input[name="phone"]').value.trim();
+    const address = document.querySelector('input[name="address"]').value.trim();
+    const age = document.querySelector('input[name="age"]').value.trim();
+    const guardian = document.querySelector('input[name="guardian"]').value.trim();
+    const housing = document.querySelector('input[name="housing"]:checked');
+    const hasPets = document.querySelector('input[name="has_pets"]:checked');
+    const outdoorSpace = document.querySelector('input[name="outdoor_space"]:checked');
+
+    if (!firstName) {
+        isValid = false;
+        errorMessages.push("First name is required.");
+    }
+
+    if (!lastName) {
+        isValid = false;
+        errorMessages.push("Last name is required.");
+    }
+
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        isValid = false;
+        errorMessages.push("Valid email is required.");
+    }
+
+    if (!phone || !/^\d{10,15}$/.test(phone)) {
+        isValid = false;
+        errorMessages.push("Phone number must be 10-15 digits.");
+    }
+
+    if (!address) {
+        isValid = false;
+        errorMessages.push("Address is required.");
+    }
+
+    if (!age) {
+        isValid = false;
+        errorMessages.push("Age is required.");
+    }
+
+    if (age < 18 && !guardian) {
+        isValid = false;
+        errorMessages.push("Guardian details are required for applicants under 18.");
+    }
+
+    if (!housing) {
+        isValid = false;
+        errorMessages.push("Please select a housing type.");
+    }
+
+    if (!hasPets) {
+        isValid = false;
+        errorMessages.push("Please indicate your housing status.");
+    }
+
+    if (!outdoorSpace) {
+        isValid = false;
+        errorMessages.push("Please indicate your household agreement.");
+    }
+
+    if (!isValid) {
+        event.preventDefault();
+        alert(errorMessages.join('\n'));
+    }
+});
+
 </script>
 
 

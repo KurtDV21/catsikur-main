@@ -3,7 +3,6 @@
 use App\Core\Database;
 use App\Models\User;
 use App\Controllers\UserController;
-
 use App\Models\Inquiry;
 use App\Controllers\InquiryController;
 
@@ -12,19 +11,132 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 session_start();
 
 $database = new Database();
-$dbConnection = $database->connect();
+$dbConnection = $database->connect(); // Use this connection for queries
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
 if (isset($_SESSION['user_id'])) {
-  $userId = $_SESSION['user_id']; 
-  $user = $userModel->findUserById($userId); 
-  $name = $user['name'] ?? ''; 
+    $userId = $_SESSION['user_id'];
+    $user = $userModel->findUserById($userId);
+    $name = $user['name'] ?? '';
+    $phone = $user['Phone_number'] ?? '';
+    $email = $user['email'] ?? '';
 } else {
-  $name = ''; 
+    header('location:/loginto');
+    exit;
 }
 
+$postId = isset($_GET['post_id']) ? $_GET['post_id'] : '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Retrieve data from sessions
+    $name = $_SESSION['name'];
+    $email = $_SESSION['email'];
+    $phone = $_SESSION['phone'];
+    $address = $_SESSION['address'];
+    $age = $_SESSION['age'];
+    $guardian = $_SESSION['guardian'];
+    $lastSelectedCompany = $_SESSION['lastSelectedCompany'];
+    $facebook = $_SESSION['facebook'];
+    $housing = $_SESSION['housing'];
+    $has_pets = $_SESSION['has_pets'];
+    $outdoor_space = $_SESSION['outdoor_space'];
+
+    $caregiver = $_SESSION['caregiver'] ?? '';
+    $landlordPermission = $_SESSION['landlord_permission'] ?? '';
+    $restrictions = $_SESSION['restrictions'] ?? '';
+    $householdAdults = $_SESSION['household_adults'] ?? '';
+    $householdChildren = $_SESSION['household_children'] ?? '';
+    $childrenAges = $_SESSION['children_ages'] ?? '';
+    $childrenExperience = $_SESSION['children_experience'] ?? '';
+    $allergies = $_SESSION['allergies'] ?? '';
+    $allergyDetails = $_SESSION['allergy_details'] ?? '';
+
+    $pets = $_SESSION['pets'] ?? '';
+    $spayedNeutered = $_SESSION['spayed_neutered'] ?? '';
+    $status = $_SESSION['status'] ?? '';
+    $adoptedBefore = $_SESSION['adopted_before'] ?? '';
+    $supplies = json_encode($_SESSION['supplies'] ?? []);
+
+    $_SESSION['hours_alone'] = $_POST['hours_alone'] ?? '';
+    $_SESSION['sleep_location'] = $_POST['sleep_location'] ?? '';
+    $_SESSION['stress_awareness'] = $_POST['stress_awareness'] ?? '';
+    $_SESSION['work_through_issues'] = $_POST['work_through_issues'] ?? '';
+    $_SESSION['spay_neuter'] = $_POST['spay_neuter'] ?? '';
+    $_SESSION['commitment'] = $_POST['commitment'] ?? '';
+    $_SESSION['responsibility'] = $_POST['responsibility'] ?? '';
+    $_SESSION['truthfulness'] = $_POST['truthfulness'] ?? '';
+
+    // Retrieving stored data from $_SESSION
+    $hoursAlone = $_SESSION['hours_alone'] ?? '';
+    $sleepLocation = $_SESSION['sleep_location'] ?? '';
+    $stressAwareness = $_SESSION['stress_awareness'] ?? '';
+    $workThroughIssues = $_SESSION['work_through_issues'] ?? '';
+    $spayNeuter = $_SESSION['spay_neuter'] ?? '';
+    $commitment = $_SESSION['commitment'] ?? '';
+    $responsibility = $_SESSION['responsibility'] ?? '';
+    $truthfulness = $_SESSION['truthfulness'] ?? '';
+
+    try {
+        $dbConnection->begin_transaction();
+
+        // Insert data into `inquiries`
+        $stmt = $dbConnection->prepare("INSERT INTO inquiries (user_id, post_id, name, age, company_industry, Guardian_details, Facebook, address, Housing, Housing_role, Household_agreement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iisssssssss", $userId, $postId, $name, $age, $lastSelectedCompany, $guardian, $facebook, $address, $housing, $has_pets, $outdoor_space);
+        $stmt->execute();
+        $stmt->close(); 
+
+        // Insert data into `pet_adoption_inquiry`
+        $stmt = $dbConnection->prepare("INSERT INTO pet_adoption_inquiry (user_id, post_id, caregiver, landlord_permission, restrictions, household_adults, household_children, children_ages, children_experience, allergies, allergy_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iisssssssss", $userId, $postId, $caregiver, $landlordPermission, $restrictions, $householdAdults, $householdChildren, $childrenAges, $childrenExperience, $allergies, $allergyDetails);
+        $stmt->execute();
+        $stmt->close();
+
+        // Insert data into `adoption_inquiry_details`
+        $stmt = $dbConnection->prepare("INSERT INTO adoption_inquiry_details (user_id, post_id, pets, spayed_neutered, status, adopted_before, supplies) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iisssss", $userId, $postId, $pets, $spayedNeutered, $status, $adoptedBefore, $supplies);
+        $stmt->execute();
+        $stmt->close();
+
+        // Insert data into `adoption_commitment_inquiry`
+        $stmt = $dbConnection->prepare("INSERT INTO adoption_commitment_inquiry (user_id, post_id, hours_alone, sleep_location, stress_awareness, work_through_issues, spay_neuter, commitment, responsibility, truthfulness) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iissssssss", $userId, $postId, $hoursAlone, $sleepLocation, $stressAwareness, $workThroughIssues, $spayNeuter, $commitment, $responsibility, $truthfulness);
+        $stmt->execute();
+        $stmt->close();
+
+        $dbConnection->commit();
+
+        // Clear specific session data after insertion
+        session_unset();
+
+        // Retain the user login
+        $_SESSION['user_id'] = $userId;
+
+        // Redirect to a confirmation page or show a success message
+        header('Location: /user-homepage');
+        exit;
+    } catch (Exception $e) {
+        $dbConnection->rollback();
+        throw $e;
+    }
+
+    $dbConnection->close();
+}
+
+// Make sure to retrieve the values when the page is loaded
+$hoursAlone = $_SESSION['hours_alone'] ?? '';
+$sleepLocation = $_SESSION['sleep_location'] ?? '';
+$stressAwareness = $_SESSION['stress_awareness'] ?? '';
+$workThroughIssues = $_SESSION['work_through_issues'] ?? '';
+$spayNeuter = $_SESSION['spay_neuter'] ?? '';
+$commitment = $_SESSION['commitment'] ?? '';
+$responsibility = $_SESSION['responsibility'] ?? '';
+$truthfulness = $_SESSION['truthfulness'] ?? '';
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -76,84 +188,85 @@ if (isset($_SESSION['user_id'])) {
           <h1>Cat Adoption Application Form</h1>
         </div>
 
-        <form action="" id="form1">
+        <form id="form1"  method="POST">
 
         <div class="question-container">
             <p class="question-text">How many hours each day will your new cat be home alone?<span class="required">*</span></p>
-            <span class="example">Example: 8-10 hours | Estimate the usual hours the cat will be all alone in his/her new home.</span>
+            <span class="example">Example: 8-10 hours | Estimat   e the usual hours the cat will be all alone in his/her new home.</span>
             <div class="answer-options">
-                <input type="text" class="other-input" placeholder="Specify" required>
-              </label>  
+            <input type="text" name="hours_alone" class="other-input" placeholder="Specify" value="<?= htmlspecialchars($hoursAlone) ?>" required>
+            </label>  
             </div>
           </div>
 
           <div class="question-container">
             <p class="question-text">Where will your new cat sleep at night?:<span class="required">*</span></p>
             <div class="answer-options">
-              <label><input type="radio" name="status" value="bedroom" required> In our bedroom</label>
-              <label><input type="radio" name="status" value="cage"> In their own cage</label>
-              <label><input type="radio" name="status" value="anywhere"> Anywhere around the house as they are free to roam</label>
-              <label><input type="radio" name="status" value="outside"> Just outside our house but inside our lot</label>
+              <label><input type="radio" name="sleep_location" value="bedroom" <?= $sleepLocation === 'bedroom' ? 'checked' : '' ?> required> In our bedroom</label>
+              <label><input type="radio" name="sleep_location" value="cage" <?= $sleepLocation === 'cage' ? 'checked' : '' ?>> In their own cage</label>
+              <label><input type="radio" name="sleep_location" value="anywhere" <?= $sleepLocation === 'anywhere' ? 'checked' : '' ?>> Anywhere around the house as they are free to roam</label>
+              <label><input type="radio" name="sleep_location" value="outside" <?= $sleepLocation === 'outside' ? 'checked' : '' ?>> Just outside our house but inside our lot</label>
               <label class="other-option">
-              <input type="radio" name="status" value="other" onclick="showOtherInput(true)"> Other...
-              <input type="text" class="other" placeholder="Specify" id="otherCaregiverInput" style="display: none;" aria-placeholder="Please Specify:">
+                  <input type="radio" name="sleep_location" value="other" <?= $sleepLocation === 'other' ? 'checked' : '' ?> onclick="showOtherInput(true)"> Other...
+                  <input type="text" class="other" placeholder="Specify" id="otherCaregiverInput" style="display: none;" value="<?= htmlspecialchars($sleepLocation === 'other' ? $sleepLocation : '') ?>" aria-placeholder="Please Specify:">
               </label>
-   
-            </div>
+          </div>
+
           </div>
 
           <div class="question-container">
             <p class="question-text">Are you aware that a new environment is stressful for your new cat, and they may exhibit uncharacteristic behavior?<span class="required">*</span></p>
             <div class="answer-options">
-              <label><input type="radio" name="stressAwareness" value="me" required> Yes</label>
-              <label><input type="radio" name="stressAwareness" value="parents"> No</label>
-            </div>
+            <label><input type="radio" name="stress_awareness" value="yes" <?= $stressAwareness === 'yes' ? 'checked' : '' ?> > Yes</label>
+            <label><input type="radio" name="stress_awareness" value="no" <?= $stressAwareness === 'no' ? 'checked' : '' ?>> No</label>
+        </div>
+
           </div>
 
           <div class="question-container">
             <p class="question-text">Are you willing to work through your new cat's issues, if any?<span class="required">*</span></p>
             <div class="answer-options">
-              <label><input type="radio" name="workThroughIssues" value="me" required> Yes</label>
-              <label><input type="radio" name="workThroughIssues" value="parents"> No</label>
-            </div>
+            <label><input type="radio" name="work_through_issues" value="yes" <?= $workThroughIssues === 'yes' ? 'checked' : '' ?> > Yes</label>
+            <label><input type="radio" name="work_through_issues" value="no" <?= $workThroughIssues === 'no' ? 'checked' : '' ?>> No</label>
+        </div>
           </div>
 
           <div class="question-container">
             <p class="question-text">Are you willing to have your new cat spayed/neutered (kapon) to reduce unwanted kittens, overpopulation and for the over-all health & behavior of the cat?*
             Please declare the truth.<span class="required">*</span></p>
             <div class="answer-options">
-              <label><input type="radio" name="spayNeuter" value="me" required> Yes</label>
-              <label><input type="radio" name="spayNeuter" value="parents"> No</label>
+            <label><input type="radio" name="spay_neuter" value="yes" <?= $spayNeuter === 'yes' ? 'checked' : '' ?> > Yes</label>
+            <label><input type="radio" name="spay_neuter" value="no" <?= $spayNeuter === 'no' ? 'checked' : '' ?>> No</label>
             </div>
           </div>
 
           <div class="question-container">
             <p class="question-text">Do you understand that a cat can be a 20-year commitment, and will be very costly especially for vet care?<span class="required">*</span></p>
             <div class="answer-options">
-                <input type="text" class="other-input" placeholder="Specify" required>
-              </label>  
+            <input type="text" name="commitment" class="other-input" placeholder="Specify" value="<?= htmlspecialchars($commitment) ?>" required>
+            </label>  
             </div>
           </div>
 
           <div class="question-container">
             <p class="question-text">Do you understand that you assume full responsibility for the welfare of this cat from the date of adoption?<span class="required">*</span></p>
             <div class="answer-options">
-                <input type="text" class="other-input" placeholder="Specify" required>
-              </label>  
+            <input type="text" name="responsibility" class="other-input" placeholder="Specify" value="<?= htmlspecialchars($responsibility) ?>" required>
+            </label>  
             </div>
           </div>
 
           <div class="question-container">
             <p class="question-text">Do you swear that you have provided correct information for the questions above in this form?<span class="required">*</span></p>
             <div class="answer-options">
-                <input type="text" class="other-input" placeholder="Specify" required>
-              </label>  
+            <input type="text" name="truthfulness" class="other-input" placeholder="Specify" value="<?= htmlspecialchars($truthfulness) ?>" required>
+            </label>  
             </div>
           </div>
           
           <!-- Buttons inside the form-container and centered -->
           <div class="btn-container">
-            <button type="reset" class="btn-cancel">Back</button>
+            <button type="reset" class="btn-cancel" onclick="location.href='/inquiry-form3?post_id=<?php echo htmlspecialchars($postId); ?>'">Back</button>
             <button type="submit" class="btn-confirm">Confirm</button>
           </div>
 
