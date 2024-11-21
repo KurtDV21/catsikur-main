@@ -8,7 +8,15 @@ use App\Models\Inquiry;
 use App\Controllers\InquiryController;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
+
+$mysqli = new mysqli();
+$inquiryModel = new Inquiry($mysqli);
+
+$inquiryController = new InquiryController($inquiryModel);
 session_start();
+
+
+
 
 $database = new Database();
 $dbConnection = $database->connect();
@@ -16,14 +24,45 @@ $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
 if (isset($_SESSION['user_id'])) {
-  $userId = $_SESSION['user_id']; 
-  $user = $userModel->findUserById($userId); 
-  $name = $user['name'] ?? ''; 
+    $userId = $_SESSION['user_id'];  
+    $user = $userModel->findUserById($userId); 
+    $name = $user['name'] ?? ''; 
+    $phone = $user['Phone_number'] ?? '';
+    $email = $user['email'] ?? '';
 } else {
-  $name = '';
-  header('location:/loginto'); 
+    header('location:/loginto');
+    exit;
 }
 
+  $postId = isset($_GET['post_id']) ? $_GET['post_id'] : '';
+
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Storing form inputs in $_SESSION
+    $_SESSION['caregiver'] = $_POST['caregiver'] ?? '';
+    $_SESSION['landlord_permission'] = $_POST['landlord_permission'] ?? '';
+    $_SESSION['restrictions'] = $_POST['restrictions'] ?? '';
+    $_SESSION['household_adults'] = $_POST['household_adults'] ?? '';
+    $_SESSION['household_children'] = $_POST['household_children'] ?? '';
+    $_SESSION['children_ages'] = $_POST['children_ages'] ?? '';
+    $_SESSION['children_experience'] = $_POST['children_experience'] ?? '';
+    $_SESSION['allergies'] = $_POST['allergies'] ?? '';
+    $_SESSION['allergy_details'] = $_POST['allergy_details'] ?? '';
+
+    // Redirect to the next page or confirmation
+    header('Location: /inquiry-form3?post_id=' . $postId); // Change to the next step in your form process
+    exit;
+
+}
+
+$caregiver = $_SESSION['caregiver'] ?? '';
+$landlordPermission = $_SESSION['landlord_permission'] ?? '';
+$restrictions = $_SESSION['restrictions'] ?? '';
+$householdAdults = $_SESSION['household_adults'] ?? '';
+$householdChildren = $_SESSION['household_children'] ?? '';
+$childrenAges = $_SESSION['children_ages'] ?? '';
+$childrenExperience = $_SESSION['children_experience'] ?? '';
+$allergies = $_SESSION['allergies'] ?? '';
+$allergyDetails = $_SESSION['allergy_details'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -51,20 +90,17 @@ if (isset($_SESSION['user_id'])) {
                 <h1>Cat Adoption Application Form</h1>
             </div>
 
-            <form action="form1.php" id="form1" method="POST">
+            <form id="form1" method="POST">
 
                 <!-- Caregiver Question -->
                 <div class="question-container">
                     <p class="question-text">Who will be the pet's primary caregiver & will give financial support?:<span class="required">*</span></p>
                     <div class="answer-options">
-                        <label><input type="radio" name="caregiver" value="me" required> Me</label>
-                        <label><input type="radio" name="caregiver" value="parents" required> Parents/Guardian</label>
-                        <label><input type="radio" name="caregiver" value="partner" required> Partner</label>
-                        <label><input type="radio" name="caregiver" value="children" required> Kids/Children</label>
-                        <label class="other-option">
-                            <input type="radio" name="caregiver" value="other" onclick="showOtherInput(true)" required> Other...
-                            <input type="text" class="other-input" placeholder="Specify" id="otherCaregiverInput" style="display: none;" aria-placeholder="Please Specify:" required>
-                        </label>
+                      <label><input type="radio" name="caregiver" value="me" <?= $caregiver === 'me' ? 'checked' : '' ?> > Me</label>
+                        <label><input type="radio" name="caregiver" value="parents" <?= $caregiver === 'parents' ? 'checked' : '' ?> > Parents/Guardian</label>
+                        <label><input type="radio" name="caregiver" value="partner" <?= $caregiver === 'partner' ? 'checked' : '' ?> > Partner</label>
+                        <label><input type="radio" name="caregiver" value="children" <?= $caregiver === 'children' ? 'checked' : '' ?> > Kids/Children</label>
+                        <label><input type="radio" name="caregiver" value="other" <?= $caregiver === 'other' ? 'checked' : '' ?> > Other...</label>
                     </div>
                 </div>
 
@@ -72,9 +108,9 @@ if (isset($_SESSION['user_id'])) {
                 <div class="question-container">
                     <p class="question-text">Does your Landlord/Landlady allow pets?:<span class="required">*</span></p>
                     <div class="answer-options">
-                        <label><input type="radio" name="landlord_permission" value="yes" required> Yes</label>
-                        <label><input type="radio" name="landlord_permission" value="no" required> No</label>
-                        <label><input type="radio" name="landlord_permission" value="na" required> N/A (if you or your family owns your current residence)</label>
+                        <label><input type="radio" name="landlord_permission" value="yes" <?= $landlordPermission === 'yes' ? 'checked' : '' ?> required> Yes</label>
+                        <label><input type="radio" name="landlord_permission" value="no" <?= $landlordPermission === 'no' ? 'checked' : '' ?> required> No</label>
+                        <label><input type="radio" name="landlord_permission" value="na" <?= $landlordPermission === 'na' ? 'checked' : '' ?> required> N/A (if you or your family owns your current residence)</label>
                     </div>
                 </div>
 
@@ -82,10 +118,10 @@ if (isset($_SESSION['user_id'])) {
                 <div class="question-container">
                     <p class="question-text">Are there any restrictions from your landlord or subdivision/barangay regarding pets?:<span class="required">*</span></p>
                     <div class="answer-options">
-                        <label><input type="radio" name="restrictions" value="number" required> Number of Pets</label>
-                        <label><input type="radio" name="restrictions" value="size" required> Size or weight restrictions</label>
-                        <label><input type="radio" name="restrictions" value="breed" required> Breed restrictions</label>
-                        <label><input type="radio" name="restrictions" value="none" required> None</label>
+                        <label><input type="radio" name="restrictions" value="number" <?= $restrictions === 'number' ? 'checked' : '' ?> required> Number of Pets</label>
+                        <label><input type="radio" name="restrictions" value="size" <?= $restrictions === 'size' ? 'checked' : '' ?> required> Size or weight restrictions</label>
+                        <label><input type="radio" name="restrictions" value="breed" <?= $restrictions === 'breed' ? 'checked' : '' ?> required> Breed restrictions</label>
+                        <label><input type="radio" name="restrictions" value="none" <?= $restrictions === 'none' ? 'checked' : '' ?> required> None</label>
                     </div>
                 </div>
 
@@ -97,7 +133,7 @@ if (isset($_SESSION['user_id'])) {
                                 How many adults are in your household?<span class="required">*</span><br>
                                 <span class="example">Example: 4</span>
                             </label>
-                            <input type="text" id="household-adults" name="household_adults" placeholder="Your answer" required>
+                             <input type="text" id="household-adults" name="household_adults"  placeholder="Your answer" value="<?= htmlspecialchars($householdAdults) ?>" required>
                         </div>
 
                         <div class="input-question">
@@ -105,7 +141,7 @@ if (isset($_SESSION['user_id'])) {
                                 How many children are in your household?<span class="required">*</span><br>
                                 <span class="example">Example: 4</span>
                             </label>
-                            <input type="text" id="household-children" name="household_children" placeholder="Your answer" required>
+                            <input type="text" id="household-children" name="household_children" placeholder="Your answer" value="<?= htmlspecialchars($householdChildren) ?>" required>
                         </div>
                     </div>
 
@@ -115,22 +151,22 @@ if (isset($_SESSION['user_id'])) {
                                 If there are children in your household, what are their ages?<span class="required">*</span><br>
                                 <span class="example">Example: 3 and 7 Years old</span>
                             </label>
-                            <input type="text" id="children-ages" name="children_ages" placeholder="Your answer" required>
+                            <input type="text" id="children-ages" name="children_ages" placeholder="Your answer" value="<?= htmlspecialchars($householdChildren) ?>"required>
                         </div>
 
                         <div class="input-question">
                             <p>Have your children been around animals before?<span class="required">*</span></p>
                             <div class="radio-options">
                                 <div>
-                                    <input type="radio" name="children_experience" value="yes" required>
+                                    <input type="radio" name="children_experience" value="yes" <?= $childrenExperience === 'yes' ? 'checked' : '' ?> >
                                     <label for="home-rent">Yes</label>
                                 </div>
                                 <div>
-                                    <input type="radio" name="children_experience" value="no" required>
+                                    <input type="radio" name="children_experience" value="no" <?= $childrenExperience === 'no' ? 'checked' : '' ?>>
                                     <label for="home-own">No</label>
                                 </div>
                                 <div>
-                                    <input type="radio" name="children_experience" value="na" required>
+                                    <input type="radio" name="children_experience" value="na" <?= $childrenExperience === 'na' ? 'checked' : '' ?>>
                                     <label for="home-own">N/A (If you don't have children)</label>
                                 </div>
                             </div>
@@ -142,8 +178,8 @@ if (isset($_SESSION['user_id'])) {
                 <div class="question-container">
                     <p class="question-text">Does anyone in your home have allergies to cats or have asthma?:<span class="required">*</span></p>
                     <div class="answer-options">
-                        <label><input type="radio" name="allergies" value="yes" required> Yes</label>
-                        <label><input type="radio" name="allergies" value="no" required> No</label>
+                        <label><input type="radio" name="allergies" value="yes" <?= $allergies === 'yes' ? 'checked' : '' ?>> Yes</label>
+                        <label><input type="radio" name="allergies" value="no" <?= $allergies === 'no' ? 'checked' : '' ?>> No</label>
                     </div>
                 </div>
 
@@ -151,13 +187,13 @@ if (isset($_SESSION['user_id'])) {
                     <label for="allergy-details">
                         If you answered YES in the previous question, how many are allergic to cats in your family and do they take maintenance medicine for the allergies?<span class="required">*</span><br>
                     </label>
-                    <input type="text" id="allergy-details" name="allergy_details" placeholder="Your answer" required>
+                    <input type="text" id="allergy-details" name="allergy_details" placeholder="Your answer" value="<?= htmlspecialchars($allergyDetails) ?>" >
                 </div>
 
                 <!-- Buttons inside the form-container and centered -->
                 <div class="btn-container">
-                    <button type="reset" class="btn-cancel">Back</button>
-                    <button type="submit" class="btn-confirm" onclick="location.href='/inquiry-form3'">Next</button>
+                <button type="button" class="btn-cancel" onclick="location.href='/inquiry-form?post_id=<?php echo htmlspecialchars($postId); ?>'">Cancel</button>
+                <button type="submit" class="btn-confirm">Next</button>
                 </div>
 
             </form>

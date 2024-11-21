@@ -1,19 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 
-* {
+
+*{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-} 
+}
 
-
-body {  
-  margin-top: -10px;
-  /* background: url(/image/paws.png) no-repeat; */
-  background-position: top right;
-  background-size: auto; 
-  background-color: #FFEFEF;
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   overflow-x: hidden;
+}
+
+.logo{
+  width: 100px;
+  height: auto;
+  margin-left: 20px;
 }
 
 .hamburger {
@@ -25,7 +32,6 @@ body {
   cursor: pointer;
   position: absolute;
   top: 10%;
-
 }
 
 .bar {
@@ -33,74 +39,97 @@ body {
 height: 4px;
 background-color: #333;
 transition: all 0.3s ease;
-
 }
 
-
-/* navigation bar*/
-.logo{
-  width: 100px; /* Set the width */
-  height: auto; /* Maintain aspect ratio */
-  position: relative;
-  margin-left: 20px;
+section{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
 }
 
-header {
+#main{
+  width: 100vw;
+  height: 200vh;
+  background-image:url(/image/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#ourcats{
+  width: 100vw;
+  height: auto;
+  display: flex;
+  background-color: #f1f1f1 ;
+}
+
+#about{
+  width: 100vw;
+  height: 50vh;
+  display: flex;
+  background-color: #F7C9CB;
+}
+
+.header{
   font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
-
-  
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #AFA2D0;
 }
 
-#home{
-display: flex;
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  position: absolute;
+  top: 50px;
+  right: 70px;
 }
 
-.navbar {
+.hamburger span {
+  display: block;
+  width: 40px;
+  height: 5px;
+  background-color: #333;
+  transition: 0.3s;
+}
+
+.navbar{
+  margin-right: 10px;
   background-color: #92A8D1;
   position: fixed;
   display: flex;
-  justify-content: space-between; 
-  width: 100%; 
-  margin-right: 40px;
-  margin-top: 5px;   
+  width: 100%;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
   z-index: 9999;
-}
-
-.logo {
-  margin-right: auto; 
-}
-
-.nav-container {
-  display: flex; 
 }
 
 .nav-link {
   list-style-type: none;
   display: flex;
   gap: 20px; 
-  align-items: center; 
-  padding-right: 40px;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: end;
+  margin-left: auto;
 }
-
 
 .nav-link li {
-font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-font-size: 23px;
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;    font-size: 23px;
   margin-top: 0; 
-  display: inline;
+  display: inline; 
   position: relative;
-  
 }
 
-
-
-.nav-link a {
-font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+.nav-link a{
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   position: relative;
   text-decoration: none;
-  color: black;
+  color: white;
   font-weight: 500;
   line-height: 40px; 
 }
@@ -127,43 +156,34 @@ font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe 
 .login-btn a{
   text-decoration: none;
 }
-/* --------------------------------------------------------------------------------------------------------------- */
-/* LOGIN BUTTON */
-.login-btn {
-  background-color: #C3BEF0; 
-  color: white; 
-  border: none; 
-  border-radius: 5px; 
-  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  padding: 10px 20px; 
-  font-size: 23px; 
-  font-weight: 500; 
-  cursor: pointer; 
+
+.login-btn{
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: 500;
   transition: background-color 0.3s ease, transform 0.3s ease; 
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-  align-self: center; 
-  margin-right: 25px;
-}
-
-.login-btn:hover {
-  background-color: #AFA2D0; 
-  transform: translateY(-2px); 
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
+  cursor: pointer;
 }
 
 
 .form-container {
-  position: absolute;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  left: 475px;
-  top: 250px;
-  width: 600px;
-  margin: auto;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px; /* You can adjust this width as needed */
   padding: 20px;
-  border: 1px solid #ccc;
+  background-color: #FFFAF3;
   border-radius: 10px;
-  background-color: #FFEFEF;
-  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto; /* Adjust this margin to create space around the form */
+  position: relative;
 }
 
 
@@ -316,42 +336,95 @@ box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .user-dropdown-button {
+  width: 150px;
   font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
-  position: relative;
   text-decoration: none;
   color: black;
   font-weight: 500;
-  font-size: 16px; /* Ensure font size matches */
-  line-height: 40px; /* Keep this consistent */
-  padding: 10px 15px; /* Increase padding for inner space */
-  background-color: transparent; /* Make the button background transparent */
-  border: 1px solid #f7c9cb; /* Optional: Add a border color */
-  border-radius: 5px; /* Optional rounded corners */
-  cursor: pointer;
-  display: inline-block; /* Ensure proper sizing */
   font-size: 24px;
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
-  
+  line-height: 40px;
+  padding: 10px 15px;
+  background-color: transparent;
+  border: 1px solid #f7c9cb;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  position: relative; /* Needed to position dropdown content absolutely */
 }
 
-
+.user-dropdown-button:hover {
+  background-color: #f7c9cb; /* Optional hover effect for button */
+}
 
 .user-dropdown-content {
-  display: none; /* Hidden by default */
- 
-  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
-    position: relative;
-    text-decoration: none;
-    color: black;
-    font-weight: 500;
-    line-height: 40px; 
-    background: white; 
+  position: absolute;
+  text-align: center;
+  top: 100%; /* Position just below the button */
+  left: 0;
+  width: 100%; /* Adjust width as needed */
+  background-color: white;
+  border: 1px solid #f7c9cb;
+  border-radius: 5px;
+  overflow: hidden; /* Hide overflowing content */
+  opacity: 0; /* Start hidden */
+  transform: translateY(-10px); /* Start slightly above */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth opacity and slide down */
+  z-index: 1;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .user-dropdown-content.show {
-  display: block; /* Show when .show class is added */
+  opacity: 1;
+  transform: translateY(0); /* Slide down */
 }
-  
+
+.user-dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  color: black;
+  text-decoration: none;
+}
+
+.user-dropdown-content a:hover {
+  background-color: #f1f1f1; /* Hover effect for links */
+}
+
+.kurt {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%; /* Ensure it stretches across the form */
+  align-items: center; /* Center contents horizontally */
+}
+
+.input-box, .upload-box {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #92A8D1;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-top: 5px;
+}
+
+select {
+  cursor: pointer;
+}
+
+input[type="file"] {
+  padding: 5px;
+}

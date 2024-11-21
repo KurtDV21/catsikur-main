@@ -25,9 +25,7 @@ if (isset($_SESSION['user_id'])) {
 $logo = "/image/logo1.png";
 $name = $user['name'];
 
-$navbar = new Navbar($logo, $name);
 
-$navbar->render();
 ?>
 
 
@@ -75,7 +73,7 @@ $navbar->render();
 </header>
 
 
-
+<section id="addpost">
 <div class="form-container">
     <h2>Add Cat Adoption Post</h2>
     <form method="POST" enctype="multipart/form-data"  onsubmit="return openPopup(event)">
@@ -96,20 +94,35 @@ $navbar->render();
             <input type="text" id="location" name="location" required>
         </div>
 
-        <div class="input-box">
-            <label for="gender">Gender:</label>
-            <input type="text" id="gender" name="gender" required>
-        </div>
+        <div class="kurt">
 
-        <div class="input-box">
+          <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male" >Male</option>
+                <option value="Female" >Female</option>
+                <option value="Other" >Other</option>
+            </select>
+
+
             <label for="color">Color:</label>
-            <input type="text" id="color" name="color" required>
+            <select id="color" name="color" required>
+                <option value="" disabled selected>Select Color</option>
+                <option value="White" >White</option>
+                <option value="Brown" >Brown</option>
+                <option value="Orange" >Orange</option>
+                <option value="Black" >Black</option>
+                <option value="Grey" >Grey</option>
+                <option value="Mix" >Mix</option>
+            </select>
         </div>
 
         <div class="upload-box ">
             <label for="picture">Upload Picture:</label>
             <input type="file" id="picture" name="picture" accept="image/*" required>
         </div>
+
+        
 
         <button type="submit" class="btn">Submit Post</button>
         <div class="popup" id="popup">
@@ -121,7 +134,7 @@ $navbar->render();
         </div>
     </form>
 </div>
-
+</section>
 
 
 <script src="/js/add-post.js"></script>

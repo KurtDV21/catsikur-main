@@ -21,7 +21,7 @@ class User {
          
         if ($stmt->execute()) {
             // Send activation email
-            $this->sendActivationEmail($email, $activation_hash);
+            $this->sendActivationEmail($email, $activation_hash); 
             return true; // Indicate successful registration
         }
 

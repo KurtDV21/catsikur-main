@@ -28,6 +28,7 @@ function run() {
     echo "404 Not Found";
 }
 
+
 // Define routes
 route('/', function () {
     include __DIR__ . '/../resource/view/home.php';
@@ -35,6 +36,10 @@ route('/', function () {
 
 route('/loginto', function () {
     include __DIR__ . '/../resource/view/loginto.php';
+});
+
+route('/submit-form-part1', function () {
+    include __DIR__ . '/../resource/view/submit-form-part1.php';
 });
 
 route('/admin-login', function () {
@@ -146,6 +151,8 @@ route('/send-password-reset', function () {
 route('/updateApproval', function () {
     include __DIR__ . '/../public/process/updateApproval.php';
 });
+
+
 
 // Run the routing logic
 run();
