@@ -13,3 +13,6 @@ window.onclick = function(event) {
     }
 }
 
+$(document).ready(function() {
+    $('#myTable').DataTable(); 
+});

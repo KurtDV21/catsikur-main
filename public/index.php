@@ -83,6 +83,14 @@ route('/admin-homepage', function () {
     include __DIR__ . '/../resource/view/admin-homepage.php';
 });
 
+route('/admin-rescue', function () {
+    include __DIR__ . '/../resource/view/admin-rescue.php';
+});
+
+route('/admin-adoption', function () {
+    include __DIR__ . '/../resource/view/admin-adoption.php';
+});
+
 route('/admin', function () {
     include __DIR__ . '/../resource/view/admin.php';
 });
@@ -97,6 +105,10 @@ route('/process-admin-signup', function () {
 
 route('/signup-success', function () {
     include __DIR__ . '/../resource/view/layout/signup-success.php';
+});
+
+route('/ajaxFilterPosts', function () {
+    include __DIR__ . '/../resource/view/ajaxFilterPosts.php';
 });
 
 route('/activate-account', function () {

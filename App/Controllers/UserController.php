@@ -43,6 +43,4 @@ class UserController {
     public function confirmAccount($userId) {
         return $this->userModel->activateAccount($userId);
     }
-
-    
 }

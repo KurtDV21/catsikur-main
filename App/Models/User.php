@@ -80,6 +80,14 @@ class User {
         return $stmt->get_result()->fetch_assoc();
     }
 
+    public function showRescue($rescueId) {
+        $sql = "SELECT * FROM posts WHERE post_status = rescue" ;
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s", $rescueId); 
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc(); 
+    }
+
     public function activateAccount($userId) {
         $sql = "UPDATE user SET account_activation_hash = NULL WHERE id = ?";
         $stmt = $this->mysqli->prepare($sql);
@@ -90,7 +98,6 @@ class User {
     public function verifyPassword($user, $password) {
         return password_verify($password, $user['password_hash']);
     }
-
    
 }
 

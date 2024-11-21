@@ -22,12 +22,6 @@ if (isset($_SESSION['user_id'])) {
 }
 
     
-$logo = "/image/logo1.png";
-$name = $user['name'];
-
-$navbar = new Navbar($logo, $name);
-
-$navbar->render();
 ?>
 
 
@@ -44,34 +38,7 @@ $navbar->render();
 </head>
 <body>
 <header>
-  <nav class="navbar">
-    <img src="/image/logo1.png" alt="logo" class="logo">
-
-    <div class="nav-container">
-      <div class="hamburger" onclick="toggleMenu(this)">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-      </div>
-
-      <ul class="nav-link">
-        <li><a href="/user-homepage">HOME</a></li>
-        <li><a href="#ourcat">OUR CATS</a></li>
-        <li><a href="">ABOUT</a></li>
-        <li><a href="">FAQs</a></li>
-        <li>
-            <div class="user-dropdown">
-              <button class="user-dropdown-button" onclick="toggleUserDropdown()">
-                  <?php echo htmlspecialchars($name); ?>
-              </button>
-              <div class="user-dropdown-content" id="userDropdownContent">
-                  <a href="/logout">Logout</a>
-              </div>
-            </div>
-        </li>
-      </ul>
-    </div>
-  </nav>
+<?php include("header.php")?>   
 </header>
 
 

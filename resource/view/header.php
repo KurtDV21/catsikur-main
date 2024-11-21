@@ -10,7 +10,7 @@
 
       <ul class="nav-link">
         <li><a href="/user-homepage">HOME</a></li>
-        <li><a href="#ourcat">OUR CATS</a></li>
+        <li><a href="/ourcats">OUR CATS</a></li>
         <li><a href="#about">ABOUT</a></li>
         <li><a href="#faq">FAQs</a></li>
         <li>
