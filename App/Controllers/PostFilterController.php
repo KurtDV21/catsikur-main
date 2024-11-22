@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 class PostFilterController {
-
     private $postFilterModel;
 
     public function __construct($postFilterModel) {
@@ -18,8 +17,6 @@ class PostFilterController {
 
             $posts = $this->postFilterModel->filterPosts($color, $gender);
             echo json_encode($posts);
-        } else {
-            echo json_encode(['error' => 'Invalid request method.']);
         }
     }
 }

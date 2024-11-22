@@ -44,7 +44,6 @@ class AdminController {
         if ($this->adminModel->verifyPassword($admin, $password)) {
             return $admin;
         } else {
-            echo "Incorrect password.";
             return null;
         }
     }

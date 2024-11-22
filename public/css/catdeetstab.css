@@ -1,0 +1,784 @@
+@media screen and (max-width: 1550px) {
+    .logo {
+        width: 80px;
+        height: 80px;
+    }
+
+    .title {
+        font-size: 2rem;
+        margin-left: 10px;
+    }
+
+    .hamburger {
+        width: 25px;
+        height: 20px;
+    }
+
+    .hamburger span {
+        width: 30px;
+        height: 4px;
+    }
+
+    .nav-link li {
+        font-size: 20px;
+    }
+
+    .nav-link a {
+        font-size: 1.8rem;
+    }
+
+    .login-btn {
+        font-size: 1.8rem;
+        padding: 8px 16px;
+    }
+
+    .cat-card {
+        padding: 30px;
+        gap: 20px;
+        min-height: 400px;
+    }
+
+    .cat-image img {
+        width: 160px;
+        height: 160px;
+    }
+
+    .cat-info h2 {
+        font-size: 30px;
+    }
+
+    .cat-info .cat-details p {
+        font-size: 20px;
+    }
+
+    .inquire-btn {
+        font-size: 20px;
+        padding: 12px 20px;
+    }
+
+    .extra-info-box h3 {
+        font-size: 32px;
+    }
+
+    .extra-info-box p {
+        font-size: 20px;
+    }
+
+    .details-wrapper {
+        width: 1000px;
+        height: 550px;
+        padding: 15px;
+    }
+
+    .cat-detail-box {
+        width: 300px;
+        height: 450px;
+    }
+
+    .footer-container {
+        display: center;
+        justify-content: center; /* Centers the footer contents as a group */
+        gap: 15px;
+    }
+
+    .details, .about-company {
+        margin: 0 auto; /* Centers the elements horizontally */
+        margin-left: 100px;
+    }
+
+    .user-dropdown-button {
+        font-size: 20px;
+        width: 120px;
+    }
+
+    .user-dropdown-content a {
+        font-size: 18px;
+        padding: 10px 12px;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .logo {
+        width: 70px;
+        height: 70px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+        margin-left: 5px;
+    }
+
+    .hamburger {
+        width: 20px;
+        height: 18px;
+    }
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+    }
+
+    .nav-link li {
+        font-size: 18px;
+    }
+
+    .nav-link a {
+        font-size: 1.6rem;
+    }
+
+    .login-btn {
+        font-size: 1.6rem;
+        padding: 6px 12px;
+    }
+
+    .cat-card {
+        padding: 20px;
+        gap: 15px;
+        min-height: 350px;
+    }
+
+    .cat-image img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .cat-info h2 {
+        font-size: 28px;
+    }
+
+    .cat-info .cat-details p {
+        font-size: 18px;
+    }
+
+    .inquire-btn {
+        font-size: 18px;
+        padding: 10px 18px;
+    }
+
+    .extra-info-box h3 {
+        font-size: 30px;
+    }
+
+    .extra-info-box p {
+        font-size: 18px;
+    }
+
+    .details-wrapper {
+        width: 900px;
+        height: 500px;
+        padding: 10px;
+    }
+
+    .cat-detail-box {
+        width: 280px;
+        height: 420px;
+    }
+
+    .footer-container {
+        justify-content: center; /* Centers the footer contents as a group */
+        gap: 10px;
+    }
+
+    .details, .about-company {
+        margin: 0 auto; /* Centers the elements horizontally */
+    }
+
+    .user-dropdown-button {
+        font-size: 18px;
+        width: 110px;
+    }
+
+    .user-dropdown-content a {
+        font-size: 16px;
+        padding: 8px 10px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .title {
+        font-size: 1.6rem;
+        margin-left: 5px;
+    }
+
+    .hamburger {
+        width: 18px;
+        height: 15px;
+    }
+
+    .hamburger span {
+        width: 20px;
+        height: 3px;
+    }
+
+    .nav-link li {
+        font-size: 16px;
+    }
+
+    .nav-link a {
+        font-size: 1.4rem;
+    }
+
+    .login-btn {
+        font-size: 1.4rem;
+        padding: 5px 10px;
+    }
+
+    .cat-card {
+        padding: 15px;
+        gap: 10px;
+        min-height: 300px;
+    }
+
+    .cat-image img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .cat-info h2 {
+        font-size: 24px;
+    }
+
+    .cat-info .cat-details p {
+        font-size: 16px;
+    }
+
+    .inquire-btn {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+
+    .extra-info-box h3 {
+        font-size: 26px;
+    }
+
+    .extra-info-box p {
+        font-size: 16px;
+    }
+
+    .details-wrapper {
+        width: 800px;
+        height: 450px;
+        padding: 10px;
+    }
+
+    .cat-detail-box {
+        width: 250px;
+        height: 350px;
+    }
+
+    .footer-container {
+        justify-content: center; /* Centers the footer contents as a group */
+        gap: 8px;
+        margin-left: 50px;
+    }
+
+    .details, .about-company {
+        margin: 0 auto; /* Centers the elements horizontally */
+    }
+
+    .user-dropdown-button {
+        font-size: 16px;
+        width: 100px;
+    }
+
+    .user-dropdown-content a {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .title {
+        font-size: 1.4rem;
+        margin-left: 5px;
+    }
+
+    .hamburger {
+        width: 15px;
+        height: 12px;
+    }
+
+    .hamburger span {
+        width: 18px;
+        height: 3px;
+    }
+
+    .nav-link li {
+        font-size: 14px;
+    }
+
+    .nav-link a {
+        font-size: 1.2rem;
+    }
+
+    .login-btn {
+        font-size: 1.2rem;
+        padding: 4px 8px;
+    }
+
+    .cat-card {
+        padding: 10px;
+        gap: 10px;
+        min-height: 250px;
+    }
+
+    .cat-image img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .cat-info h2 {
+        font-size: 30px;
+    }
+
+    .cat-info .cat-details p {
+        font-size: 20px;
+    }
+
+    .inquire-btn {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    .extra-info-box h3 {
+        font-size: 30px;
+    }
+
+    .extra-info-box p {
+        font-size: 20px;
+    }
+
+    .details-wrapper {
+        width: 700px;
+        height: 400px;
+        padding: 8px;
+    }
+
+    .cat-detail-box {
+        width: 220px;
+        height: 300px;
+    }
+
+    .footer-container {
+        flex-direction: column; /* Change to column layout */
+        justify-content: center; /* Center vertically */
+        align-items: center; /* Center horizontally */
+        gap: 20px; /* Space between footer elements */
+        margin-left: 200px;
+        margin-top: 20px;
+    }
+
+    .details, .about-company {
+        text-align: center; /* Center text for readability */
+        font-size: 1.2rem;
+    }
+
+    .user-dropdown-button {
+        font-size: 14px;
+        width: 90px;
+    }
+
+    .user-dropdown-content a {
+        font-size: 12px;
+        padding: 5px 6px;
+    }
+
+    #main{
+        width: 100vw;
+        height: auto;
+    }
+
+    #about{
+        height: auto;
+    }
+}
+
+@media (max-width: 768px){
+   .hamburger {
+        display: flex; /* Show the hamburger button */
+        position: absolute;
+        top: 40px;
+    }
+
+    .nav-link {
+        display: none; /* Hide the navigation links */
+        flex-direction: column; /* Arrange the links vertically */
+        position: absolute; /* Position them over the content */
+        top: 70px; /* Adjust to appear below the navbar */
+        right: 0;
+        background-color: #92A8D1; /* Background for dropdown */
+        width: 100%; /* Full width */
+        padding: 20px 0; /* Spacing around links */
+        gap: 20px; /* Space between links */
+        z-index: 9999; /* Ensure it appears on top */
+    }
+
+    .nav-link.active {
+        display: flex; /* Show the links when active */
+    }
+
+    .nav-link a {
+        text-align: center; /* Center-align text */
+        font-size: 1.6rem; /* Adjust font size */
+        color: white;
+    }
+
+    .cat-card {
+       
+        padding: 10px;
+        gap: 10px;
+        min-height: 250px;
+    }
+
+    .cat-image img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .cat-info h2 {
+        font-size: 20px;
+    }
+
+    .cat-info .cat-details p {
+        font-size: 14px;
+    }
+
+    .inquire-btn {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    .extra-info-box h3 {
+        font-size: 22px;
+    }
+
+    .extra-info-box p {
+        font-size: 14px;
+    }
+
+    .details-wrapper {
+        width: 700px;
+        height: 400px;
+        padding: 8px;
+    }
+
+    .cat-detail-box {
+        width: 220px;
+        height: 300px;
+    }
+
+    .footer-container {
+        flex-direction: column; /* Change to column layout */
+        justify-content: center; /* Center vertically */
+        align-items: center; /* Center horizontally */
+        gap: 20px; /* Space between footer elements */
+        margin-left: 60px;
+        margin-top: 20px;
+    }
+
+    .details {
+        text-align: center; /* Center text for readability */
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .about-company{
+        margin-bottom: 20px;
+    }
+    .user-dropdown-button {
+        font-size: 14px;
+        width: 90px;
+    }
+
+    .user-dropdown-content a {
+        font-size: 12px;
+        padding: 5px 6px;
+    }
+
+    #main{
+        width: 100vw;
+        height: auto;
+    }
+
+    #about{
+        height: auto;
+    }
+
+}
+
+@media (max-width: 620px) {
+    .hamburger {
+        display: flex; /* Show the hamburger button */
+        position: absolute;
+        top: 40px;
+        right: 60px; /* Ensure proper positioning */
+    }
+
+    .nav-link {
+        display: none; /* Hide the navigation links */
+        flex-direction: column; /* Arrange the links vertically */
+        position: absolute; /* Position them over the content */
+        top: 100px; /* Adjust to appear below the navbar */
+        right: 0;
+        background-color: #92A8D1; /* Background for dropdown */
+        width: 100%; /* Full width */
+        padding: 15px 0; /* Spacing around links */
+        gap: 15px; /* Space between links */
+        z-index: 9999; /* Ensure it appears on top */
+    }
+
+    .logo{
+        width: 70px;
+        height: 70px;
+    }
+
+    .title{
+        font-size: 30px;
+        margin-top: 15px;
+    }
+
+    .nav-link.active {
+        display: flex; /* Show the links when active */
+    }
+
+    .nav-link a {
+        text-align: center; /* Center-align text */
+        font-size: 1.4rem; /* Adjust font size */
+        color: white;
+    }
+
+    .cat-card {
+        padding: 5px;
+        gap: 5px;
+        min-height: 200px;
+    }
+
+    .cat-container{
+        margin-top: 40px;
+    }
+
+    .cat-image img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cat-info h2 {
+        font-size: 24px;
+    }
+
+    .cat-info .cat-details p {
+        font-size: 18px;
+    }
+
+    .inquire-btn {
+        font-size: 18px;
+        padding: 4px 8px;
+    }
+
+    .extra-info-box h3 {
+        font-size: 26px;
+    }
+
+    .extra-info-box p {
+        font-size: 18px;
+    }
+
+    .details-wrapper {
+        width: 550px;
+        height: 350px;
+        padding: 5px;
+    }
+
+    .cat-detail-box {
+        width: 160px;
+        height: 250px;
+    }
+
+    .footer-container {
+        flex-direction: column; /* Change to column layout */
+        justify-content: center; /* Center vertically */
+        align-items: center; /* Center horizontally */
+        gap: 15px; /* Space between footer elements */
+        margin-left: 20px;
+        margin-top: 15px;
+    }
+
+    .details {
+        text-align: center; /* Center text for readability */
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .about-company {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .user-dropdown-button {
+        font-size: 12px;
+        width: 80px;
+    }
+
+    .user-dropdown-content a {
+        font-size: 10px;
+        padding: 4px 5px;
+    }
+
+    #main {
+        width: 100vw;
+        height: auto;
+    }
+
+    #about {
+        height: auto;
+    }
+}
+
+@media (max-width: 425px) {
+    .hamburger {
+        display: flex; /* Show the hamburger button */
+        position: absolute;
+        top: 30px;
+        right: 40px; /* Ensure proper positioning */
+    }
+
+    .nav-link {
+        display: none; /* Hide the navigation links */
+        flex-direction: column; /* Arrange the links vertically */
+        position: absolute; /* Position them over the content */
+        top: 80px; /* Adjust to appear below the navbar */
+        right: 0;
+        background-color: #92A8D1; /* Background for dropdown */
+        width: 100%; /* Full width */
+        padding: 10px 0; /* Spacing around links */
+        gap: 10px; /* Space between links */
+        z-index: 9999; /* Ensure it appears on top */
+    }
+
+    .logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .title {
+        font-size: 24px;
+        margin-top: 10px;
+    }
+
+    .nav-link.active {
+        display: flex; /* Show the links when active */
+    }
+
+    .nav-link a {
+        text-align: center; /* Center-align text */
+        font-size: 1.2rem; /* Adjust font size */
+        color: white;
+    }
+
+    .cat-card {
+        padding: 5px;
+        gap: 5px;
+        min-height: 180px;
+        width: 100%;
+    }
+
+    .cat-container {
+        margin-top: 20px;
+    }
+
+    .cat-image img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .cat-info h2 {
+        font-size: 20px;
+    }
+
+    .cat-info .cat-details p {
+        font-size: 16px;
+    }
+
+    .inquire-btn {
+        font-size: 14px;
+        padding: 4px 6px;
+    }
+
+    .extra-info-box{
+        min-width: 100px;
+    }
+
+    .extra-info-box h3 {
+        font-size: 18px;
+    }
+
+    .extra-info-box p {
+        font-size: 14px;
+    }
+
+    .details-wrapper {
+        width: 400px;
+        height: 300px;
+        padding: 5px;
+    }
+
+    .cat-detail-box {
+        display: flex; /* Enable flexbox */
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center; /* Center content horizontally */
+        justify-content: center; /* Center content vertically */
+        width: 100%; /* Make it responsive */
+        height: auto; /* Allow height to adjust dynamically */
+        padding: 10px;
+        gap: 10px; /* Add spacing between child elements */
+        box-sizing: border-box; /* Include padding in width and height */
+    }
+
+    .footer-container {
+        flex-direction: column; /* Change to column layout */
+        justify-content: center; /* Center vertically */
+        align-items: center; /* Center horizontally */
+        gap: 10px; /* Space between footer elements */
+        margin: 10px 0; /* Adjust margins */
+    }
+
+    .details {
+        text-align: center; /* Center text for readability */
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .about-company {
+        margin-bottom: 10px;
+        font-size: 0.8rem;
+    }
+
+    .user-dropdown-button {
+        font-size: 10px;
+        width: 70px;
+    }
+
+    .user-dropdown-content a {
+        font-size: 8px;
+        padding: 3px 4px;
+    }
+
+    #main {
+        width: 100vw;
+        height: auto;
+    }
+
+    #about {
+        height: auto;
+    }
+}

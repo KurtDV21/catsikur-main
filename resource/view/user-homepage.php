@@ -50,8 +50,6 @@ if (isset($_SESSION['user_id'])) {
     <?php include("header.php") ?>
   </header>
 
-
-
   <section id="main" class="main">
     <div class="main-container">
       <h1 class="text1">Find Your Purr-fect<br> Companion: Adopt<br> a Cat Today!</h1>
@@ -62,13 +60,13 @@ if (isset($_SESSION['user_id'])) {
   <section id="ourcats" class="ourcats">
     <div class="container">
       <div class="buttons-container">
-        <!-- Color Filter Dropdown -->
           <div class="dropdown">
               <button class="dropbtn">
                   <span class="button-text"><b>COLOR</b></span>
                   <span class="arrow-down-1"><ion-icon name="chevron-down"></ion-icon></span>
               </button>
               <div class="dropdown-content">
+                  <a href="#" class="filter-option" data-filter="default-color" data-value="default-color">Default</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="white">White</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="orange">Orange</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="black">Black</a>
@@ -76,7 +74,6 @@ if (isset($_SESSION['user_id'])) {
               </div>
           </div>
 
-          <!-- Gender Filter Dropdown -->
           <div class="dropdown">
               <button class="dropbtn">
                   <span class="button-text"><b>GENDER</b></span>
@@ -84,17 +81,15 @@ if (isset($_SESSION['user_id'])) {
                   <span class="gender"><ion-icon name="male-female-outline"></ion-icon></span>
               </button>
               <div class="dropdown-content">
+                  <a href="#" class="filter-option" data-filter="default-gender" data-value="default-gender">Default</a>
                   <a href="#" class="filter-option" data-filter="gender" data-value="male">Male</a>
                   <a href="#" class="filter-option" data-filter="gender" data-value="female">Female</a>
               </div>
           </div>
 
-
         <div class="dropdown">
-          <li>
             <button class="addbtn" onclick="location.href='/add-post?user_id=<?php echo htmlspecialchars($userId); ?>'">
               Add Post </button>
-          </li>
         </div>
 
       </div>
@@ -106,20 +101,19 @@ if (isset($_SESSION['user_id'])) {
             <?php if (isset($_SESSION['user_id'])): ?>
               <a href="/cat-details?post_id=<?php echo urlencode($post['id']); ?>">
               <?php else: ?>
-                <a href="/loginto">
+                <a href="/loginto"> 
                 <?php endif; ?>
                 <div class="cat-card">
                   <img src="<?php echo htmlspecialchars($post['picture']); ?>" alt="Cat Image" class="cat-image">
                   <h2><?php echo htmlspecialchars($post['cat_name']); ?></h2>
+                  <p>Color: <?php echo htmlspecialchars($post['color']); ?> </p>
                   <p>Age: <?php echo htmlspecialchars($post['age']); ?> years</p>
                   <p>Location: <?php echo htmlspecialchars($post['location']); ?></p>
                 </div>
-                <button class="btn-adopt">Adopt Me</button>
               </a>
           </div>
         <?php endforeach; ?>
       </div>
-
     </div>
   </section>
 
@@ -141,13 +135,11 @@ if (isset($_SESSION['user_id'])) {
         </div>
       </div>
 
-
       <div class="details">
         <h3>ABOUT COMPANY</h3>
         <p>Lorem ipsum dolor sit amet. Ex officiis molestias et sapiente<br> doloremque et dolores doloribus est animi
           maiores. Ut fugiat <br> molestiae nam quia earum qui aliquid aliquid ab corrupti officiis. Et<br> temporibus
           quia 33 incidunt adipisci ea deleniti vero 33<br> reprehenderit repellat.</p>
-
 
         <a href="https://www.facebook.com/groups/1591906714301364" target="_blank">
           <img src="/image/facebook.png" alt="Facebook" class="fb-icon">
@@ -156,21 +148,17 @@ if (isset($_SESSION['user_id'])) {
         <a href="https://www.messenger.com" target="_blank">
           <img src="/image/messenger.png" alt="Messenger" class="mess-icon">
         </a>
-
       </div>
     </div>
-
   </section>
-
 
   <footer class="footer">
     Cats Free Adoption & Rescue Philippines
   </footer>
 
   <script src="/js/filter.js"></script>
-<script src="/js/package.js"></script>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
+  <script src="/js/package.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

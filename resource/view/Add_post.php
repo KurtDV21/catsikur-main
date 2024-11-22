@@ -22,6 +22,10 @@ if (isset($_SESSION['user_id'])) {
 }
 
     
+$logo = "/image/logo1.png";
+$name = $user['name'];
+
+
 ?>
 
 
@@ -38,11 +42,39 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body>
 <header>
-<?php include("header.php")?>   
+  <nav class="navbar">
+    <img src="/image/logo1.png" alt="logo" class="logo">
+
+    <div class="nav-container">
+      <div class="hamburger" onclick="toggleMenu(this)">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+      </div>
+
+      <ul class="nav-link">
+        <li><a href="/user-homepage">HOME</a></li>
+        <li><a href="#ourcat">OUR CATS</a></li>
+        <li><a href="">ABOUT</a></li>
+        <li><a href="">FAQs</a></li>
+        <li>
+            <div class="user-dropdown">
+              <button class="user-dropdown-button" onclick="toggleUserDropdown()">
+                  <?php echo htmlspecialchars($name); ?>
+              </button>
+              <div class="user-dropdown-content" id="userDropdownContent">
+                  <a href="/logout">Logout</a>
+              </div>
+            </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </header>
 
 
-
+<section id="addpost">
+  <div class="parent-container">
 <div class="form-container">
     <h2>Add Cat Adoption Post</h2>
     <form method="POST" enctype="multipart/form-data"  onsubmit="return openPopup(event)">
@@ -53,30 +85,70 @@ if (isset($_SESSION['user_id'])) {
             <input type="text" id="name" name="name"  required>
         </div>
         
-        <div class="input-box">
-            <label for="age">Age:</label>
-            <input type="text" id="age" name="age" required>
-        </div>
-
+        
         <div class="input-box">
             <label for="location">Location:</label>
             <input type="text" id="location" name="location" required>
         </div>
 
         <div class="input-box">
-            <label for="gender">Gender:</label>
-            <input type="text" id="gender" name="gender" required>
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" required>
+        </div>
+
+        <div class="kurt">
+
+        <label for="age_unit">Age unit:</label>
+          <select id="age_unit" name="age_unit" required>
+              <option value="" disabled selected>Select age unit</option>
+              <option value="months">Months</option>
+              <option value="years">Years</option>
+            </select>
+
+        <label for="type">Post Type:</label>
+            <select id="type" name="type" required>
+                <option value="" disabled selected>Selct Post Type</option>
+                <option value="Adoption" >Adoption</option>
+                <option value="Rescue" >Rescue</option>
+            </select>
+
+          <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male" >Male</option>
+                <option value="Female" >Female</option>
+            </select>
+
+
+            <label for="color">Color:</label>
+            <select id="color" name="color" required>
+                <option value="" disabled selected>Select Color</option>
+                <option value="White" >White</option>
+                <option value="Brown" >Brown</option>
+                <option value="Orange" >Orange</option>
+                <option value="Black" >Black</option>
+                <option value="Grey" >Grey</option>
+                <option value="Mix" >Mix</option>
+            </select>
         </div>
 
         <div class="input-box">
-            <label for="color">Color:</label>
-            <input type="text" id="color" name="color" required>
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required>
         </div>
 
         <div class="upload-box ">
-            <label for="picture">Upload Picture:</label>
+            <label for="picture">Upload Cat Profile Picture:</label>
             <input type="file" id="picture" name="picture" accept="image/*" required>
         </div>
+
+        <div class="upload-box">
+            <label for="extra_pictures">Upload More Pictures (Up to 3):</label>
+            <input type="file" id="extra_pictures" name="extra_pictures[]" accept="image/*" multiple required>
+            <small>Max 3 files allowed.</small>
+          </div>
+
+        
 
         <button type="submit" class="btn">Submit Post</button>
         <div class="popup" id="popup">
@@ -88,7 +160,8 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </form>
 </div>
-
+</div>
+</section>
 
 
 <script src="/js/add-post.js"></script>

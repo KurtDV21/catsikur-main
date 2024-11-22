@@ -63,6 +63,16 @@ class User {
     }
 
 
+    
+    public function updateResetToken($userId, $tokenHash, $expiresAt) {
+        $sql = "UPDATE user SET reset_token_hash = ?, reset_token_expires_at = ? WHERE id = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param('ssi', $tokenHash, $expiresAt, $userId);
+        $stmt->execute();
+    }
+    
+    
+
 
     public function findByEmail($email) {
         $sql = "SELECT * FROM user WHERE email = ?";

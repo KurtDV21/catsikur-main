@@ -13,17 +13,17 @@ class PostFilterModel {
     }
 
     public function filterPosts($color = null, $gender = null) {
-        $sql = "SELECT id, cat_name, age, location, gender, color, picture FROM post WHERE 1=1";
+        $sql = "SELECT id, cat_name, age, location, gender, color, picture FROM post WHERE approval = 'approved'";
         $params = [];
         $types = "";
 
-        if ($color) {
+        if (!is_null($color)) {
             $sql .= " AND color = ?";
             $params[] = $color;
             $types .= "s";
         }
 
-        if ($gender) {
+        if (!is_null($gender)) {
             $sql .= " AND gender = ?";
             $params[] = $gender;
             $types .= "s";

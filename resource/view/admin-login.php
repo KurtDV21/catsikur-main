@@ -34,12 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mail->Subject = 'Your OTP Code';
         $mail->Body = "Your OTP code is: $otp";
 
-        // Redirect based on role
         if ($_SESSION["role"] === 'admin') {
             header("Location: /admin");
-            exit; // Ensure that the script stops after redirection
+            exit; 
         } else {
-            // If the login is invalid or not an admin, set the error flag
             $is_invalid = true;
         }   
     } else {
@@ -60,9 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
 
-<?php if ($is_invalid): ?>
-    <em>Invalid login. Please check your email and password.</em>   
-<?php endif ?>
     
 <header>
   <nav class="navbar">
@@ -97,6 +92,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           <input type="password" id="password" name="password" required>
           <label for="password">Password</label>
         </div>
+
+        <?php if ($is_invalid): ?>
+            <p style="color: red;"><em>Invalid login. Please check your email and password.</em></p></br>   
+        <?php endif ?>
 
         <div class="remember-forgot">
           <a href="/forgot-password" class="forgot"><b>FORGOT PASSWORD?</b></a>

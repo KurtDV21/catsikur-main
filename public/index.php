@@ -108,6 +108,7 @@ route('/signup-success', function () {
 });
 
 route('/ajaxFilterPosts', function () {
+    
     include __DIR__ . '/../resource/view/ajaxFilterPosts.php';
 });
 
@@ -135,9 +136,23 @@ route('/forgot-password', function () {
     include __DIR__ . '/../resource/view/layout/forgot-password.php';
 });
 
+route('/reset-password', function () {
+    include __DIR__ . '/../resource/view/layout/reset-password.php';
+});
+
+route('/changepass-success', function () {
+    include __DIR__ . '/../resource/view/layout/changepass-success.php';
+});
+
+
+route('/email-check', function () {
+    include __DIR__ . '/../resource/view/layout/email-check.php';
+});
+
 route('/process-reset-password', function () {
     include __DIR__ . '/../resource/view/auth/process-reset-password.php';
 });
+
 
 route('/cat-details', function () {
     include __DIR__ . '/../resource/view/catdetails.php';
