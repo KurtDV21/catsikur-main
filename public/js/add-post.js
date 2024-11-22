@@ -46,3 +46,11 @@ window.onclick = function(event) {
         }
     }
 }
+
+document.getElementById('extra_pictures').addEventListener('change', function (event) {
+    const files = event.target.files;
+    if (files.length > 3) {
+        alert('You can only upload up to 3 files.');
+        event.target.value = ''; // Clear the file input
+    }
+});

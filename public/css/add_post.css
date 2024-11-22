@@ -56,6 +56,13 @@ section{
   background-position: center;
 }
 
+#addpost{
+  width: 100vw;
+  height: 170vh;
+  display: flex;
+  background-color: #fff;
+}
+
 #ourcats{
   width: 100vw;
   height: auto;
@@ -170,6 +177,16 @@ section{
   cursor: pointer;
 }
 
+ .parent-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensures the container takes at least the full height of the viewport */
+  background-color: #fff; /* Set the background color to match your design */
+  padding: 20px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
 
 .form-container {
   display: flex;

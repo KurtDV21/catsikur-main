@@ -74,6 +74,7 @@ $name = $user['name'];
 
 
 <section id="addpost">
+  <div class="parent-container">
 <div class="form-container">
     <h2>Add Cat Adoption Post</h2>
     <form method="POST" enctype="multipart/form-data"  onsubmit="return openPopup(event)">
@@ -84,24 +85,38 @@ $name = $user['name'];
             <input type="text" id="name" name="name"  required>
         </div>
         
-        <div class="input-box">
-            <label for="age">Age:</label>
-            <input type="text" id="age" name="age" required>
-        </div>
-
+        
         <div class="input-box">
             <label for="location">Location:</label>
             <input type="text" id="location" name="location" required>
         </div>
 
+        <div class="input-box">
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" required>
+        </div>
+
         <div class="kurt">
+
+        <label for="age_unit">Age unit:</label>
+          <select id="age_unit" name="age_unit" required>
+              <option value="" disabled selected>Select age unit</option>
+              <option value="months">Months</option>
+              <option value="years">Years</option>
+            </select>
+
+        <label for="type">Post Type:</label>
+            <select id="type" name="type" required>
+                <option value="" disabled selected>Selct Post Type</option>
+                <option value="Adoption" >Adoption</option>
+                <option value="Rescue" >Rescue</option>
+            </select>
 
           <label for="gender">Gender:</label>
             <select id="gender" name="gender" required>
                 <option value="" disabled selected>Select Gender</option>
                 <option value="Male" >Male</option>
                 <option value="Female" >Female</option>
-                <option value="Other" >Other</option>
             </select>
 
 
@@ -117,10 +132,21 @@ $name = $user['name'];
             </select>
         </div>
 
+        <div class="input-box">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required>
+        </div>
+
         <div class="upload-box ">
-            <label for="picture">Upload Picture:</label>
+            <label for="picture">Upload Cat Profile Picture:</label>
             <input type="file" id="picture" name="picture" accept="image/*" required>
         </div>
+
+        <div class="upload-box">
+            <label for="extra_pictures">Upload More Pictures (Up to 3):</label>
+            <input type="file" id="extra_pictures" name="extra_pictures[]" accept="image/*" multiple required>
+            <small>Max 3 files allowed.</small>
+          </div>
 
         
 
@@ -133,6 +159,7 @@ $name = $user['name'];
             <button type="button" class="popbtn" onclick="closePopup()">Cancel</button>
         </div>
     </form>
+</div>
 </div>
 </section>
 

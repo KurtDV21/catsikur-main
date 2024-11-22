@@ -84,9 +84,7 @@ if (isset($_SESSION['user_id'])) {
         </div>
 
         <div class="dropdown"> 
-            <li>
            <button class="addbtn" onclick="location.href='/add-post?user_id=<?php echo htmlspecialchars($userId); ?>'"> Add Post </button>
-            </li>
         </div> 
  
     </div>

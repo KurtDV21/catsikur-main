@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2024 at 05:10 PM
+-- Generation Time: Nov 21, 2024 at 12:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -38,8 +38,19 @@ CREATE TABLE `adoption_commitment_inquiry` (
   `spay_neuter` varchar(255) NOT NULL,
   `commitment` varchar(255) NOT NULL,
   `responsibility` varchar(255) NOT NULL,
-  `truthfulness` varchar(255) NOT NULL
+  `truthfulness` varchar(255) NOT NULL,
+  `approval` varchar(30) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `adoption_commitment_inquiry`
+--
+
+INSERT INTO `adoption_commitment_inquiry` (`id`, `user_id`, `post_id`, `hours_alone`, `sleep_location`, `stress_awareness`, `work_through_issues`, `spay_neuter`, `commitment`, `responsibility`, `truthfulness`, `approval`, `created_at`) VALUES
+(3, 69, 3, '1', 'cage', 'yes', 'yes', 'yes', 'asdasd', 'ad', 'asd', '', '2024-11-21 09:00:13'),
+(4, 69, 3, '1', 'bedroom', 'yes', 'yes', 'yes', '21', 'asd', 'asd', '', '2024-11-21 09:00:13'),
+(5, 69, 1, '1', 'bedroom', 'yes', 'no', 'no', 'asdasd', 'asd', 'qwe', '', '2024-11-21 09:01:24');
 
 -- --------------------------------------------------------
 
@@ -56,9 +67,18 @@ CREATE TABLE `adoption_inquiry_details` (
   `status` enum('alive','dead','given','adopt','none') NOT NULL,
   `adopted_before` enum('yes','no') NOT NULL,
   `supplies` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`supplies`)),
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `approval` varchar(30) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `adoption_inquiry_details`
+--
+
+INSERT INTO `adoption_inquiry_details` (`id`, `user_id`, `post_id`, `pets`, `spayed_neutered`, `status`, `adopted_before`, `supplies`, `approval`, `created_at`) VALUES
+(3, 69, 3, 'asd', 'na', 'given', 'yes', '[\"milk\",\"food\",\"flee\"]', '', '2024-11-21 09:00:26'),
+(4, 69, 3, '123', 'na', 'alive', 'yes', '[\"food\",\"litter\",\"bedding\"]', '', '2024-11-21 09:00:26'),
+(5, 69, 1, 'na', 'na', 'dead', 'yes', '[\"litter\",\"bedding\",\"flee\"]', '', '2024-11-21 09:01:24');
 
 -- --------------------------------------------------------
 
@@ -68,18 +88,45 @@ CREATE TABLE `adoption_inquiry_details` (
 
 CREATE TABLE `inquiries` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `post_id` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `age` varchar(20) NOT NULL,
   `company_industry` varchar(255) NOT NULL,
   `Guardian_details` varchar(255) DEFAULT NULL,
-  `Facebook` int(11) NOT NULL,
+  `Facebook` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `Housing` varchar(20) NOT NULL,
   `Housing_role` varchar(59) NOT NULL,
-  `Household_agreement` varchar(10) NOT NULL
+  `Household_agreement` varchar(10) NOT NULL,
+  `approval` varchar(30) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inquiries`
+--
+
+INSERT INTO `inquiries` (`id`, `user_id`, `post_id`, `name`, `age`, `company_industry`, `Guardian_details`, `Facebook`, `address`, `Housing`, `Housing_role`, `Household_agreement`, `approval`, `created_at`) VALUES
+(2, 69, 3, 'user spaopodaw', '23', '', '', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', 'House', '', 'own', '', '2024-11-21 08:50:11'),
+(3, 69, 3, 'user spaopodaw', '12', '', '32131', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', 'House', '', 'own', '', '2024-11-21 08:50:11'),
+(4, 69, 1, 'user', '12', '', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'kurt kalang', 'Apartment', '', 'own', '', '2024-11-21 08:50:11'),
+(5, 69, 1, 'user', '8', '', 'midksa', 'https://www.facebook.com/sherw1n', 'kurt', '', 'rent', 'Other', '', '2024-11-21 08:50:11'),
+(6, 69, 1, 'user', '12', '', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', '', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(7, 69, 1, 'user', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', '', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(8, 69, 1, 'user', '12', 'Telecommunication & BPO', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', '', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(9, 69, 1, 'user', '12', 'Telecommunication &amp; BPO', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', 'otehr', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(10, 69, 1, 'user', '12', 'Telecommunication &amp;amp;amp;amp; BPO', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', '', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(11, 69, 1, 'user', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', '', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(12, 69, 1, 'user', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', '', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(13, 69, 1, 'user', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', '', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(14, 69, 1, 'user', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', 'aaa', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(15, 69, 1, 'user', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', 'Condo', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(16, 69, 1, 'user', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', 'Other', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(17, 69, 1, 'user', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', 'House', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(18, 69, 1, 'user', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', 'Other: aaaa', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(19, 69, 1, 'user spaopodaw', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', 'Other: aaaa', 'own', 'Yes', '', '2024-11-21 08:50:11'),
+(20, 69, 1, 'user spaopodaw', '12', 'Homestay/HouseWife/HouseHusband', 'kurthidhfds', 'https://www.facebook.com/sherw1n', 'sa caloocan lang', 'Other: aaaa', 'own', 'Yes', '', '2024-11-21 09:01:24');
 
 -- --------------------------------------------------------
 
@@ -94,15 +141,24 @@ CREATE TABLE `pet_adoption_inquiry` (
   `caregiver` varchar(255) NOT NULL,
   `landlord_permission` varchar(255) NOT NULL,
   `restrictions` varchar(255) NOT NULL,
-  `household_adults` int(11) NOT NULL,
-  `household_children` int(11) NOT NULL,
+  `household_adults` varchar(11) NOT NULL,
+  `household_children` varchar(11) NOT NULL,
   `children_ages` varchar(255) NOT NULL,
   `children_experience` enum('yes','no','na') NOT NULL,
   `allergies` enum('yes','no') NOT NULL,
   `allergy_details` text DEFAULT NULL,
-  `other_caregiver` varchar(255) DEFAULT NULL,
+  `approval` varchar(30) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pet_adoption_inquiry`
+--
+
+INSERT INTO `pet_adoption_inquiry` (`id`, `user_id`, `post_id`, `caregiver`, `landlord_permission`, `restrictions`, `household_adults`, `household_children`, `children_ages`, `children_experience`, `allergies`, `allergy_details`, `approval`, `created_at`) VALUES
+(3, 69, 3, 'me', 'yes', 'size', '3', '2', '2', 'yes', 'yes', 'okie', '', '2024-11-21 03:44:07'),
+(4, 69, 3, 'parents', 'no', 'number', '2', '2', '2', 'yes', 'yes', '2', '', '2024-11-21 05:42:19'),
+(5, 69, 1, 'parents', 'no', 'number', '3', '2', '2', 'yes', 'yes', 'osjfishdofdswufhowe', '', '2024-11-21 09:01:24');
 
 -- --------------------------------------------------------
 
@@ -223,7 +279,8 @@ ALTER TABLE `adoption_commitment_inquiry`
 --
 ALTER TABLE `adoption_inquiry_details`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`,`post_id`);
+  ADD KEY `user_id` (`user_id`,`post_id`),
+  ADD KEY `post_id` (`post_id`);
 
 --
 -- Indexes for table `inquiries`
@@ -238,7 +295,8 @@ ALTER TABLE `inquiries`
 --
 ALTER TABLE `pet_adoption_inquiry`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`,`post_id`);
+  ADD KEY `user_id` (`user_id`,`post_id`),
+  ADD KEY `post_id` (`post_id`);
 
 --
 -- Indexes for table `post`
@@ -264,25 +322,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `adoption_commitment_inquiry`
 --
 ALTER TABLE `adoption_commitment_inquiry`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `adoption_inquiry_details`
 --
 ALTER TABLE `adoption_inquiry_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `inquiries`
 --
 ALTER TABLE `inquiries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `pet_adoption_inquiry`
 --
 ALTER TABLE `pet_adoption_inquiry`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `post`
@@ -308,11 +366,25 @@ ALTER TABLE `adoption_commitment_inquiry`
   ADD CONSTRAINT `adoption_commitment_inquiry_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`);
 
 --
+-- Constraints for table `adoption_inquiry_details`
+--
+ALTER TABLE `adoption_inquiry_details`
+  ADD CONSTRAINT `adoption_inquiry_details_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `adoption_inquiry_details_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`);
+
+--
 -- Constraints for table `inquiries`
 --
 ALTER TABLE `inquiries`
   ADD CONSTRAINT `inquiries_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `inquiries_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`);
+
+--
+-- Constraints for table `pet_adoption_inquiry`
+--
+ALTER TABLE `pet_adoption_inquiry`
+  ADD CONSTRAINT `pet_adoption_inquiry_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `pet_adoption_inquiry_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`);
 
 --
 -- Constraints for table `post`
