@@ -83,7 +83,7 @@ if (isset($_SESSION['user_id'])) {
                                 <th>Location</th>
                                 <th>Gender</th>
                                 <th>Color</th>
-                                <th>Post Status</th>
+                                <th>Post Type</th>
                                 <th>Approval</th>
                             </tr>
                         </thead>
@@ -96,7 +96,7 @@ if (isset($_SESSION['user_id'])) {
                                 die("Connection Failed: " . $dbConnection->connect_error);
                             }
 
-                            $sql = "SELECT cat_name, age, location, gender, color, post_status , approval FROM post WHERE post_status = 'rescue'";
+                            $sql = "SELECT cat_name, age, location, gender, color, post_type , approval FROM post WHERE post_type = 'rescue'";
                             $result = $dbConnection->query($sql);
 
                             if (!$result) {
@@ -110,7 +110,7 @@ if (isset($_SESSION['user_id'])) {
                                     <td>" . htmlspecialchars($row["location"]) . "</td>
                                     <td>" . htmlspecialchars($row["gender"]) . "</td>
                                     <td>" . htmlspecialchars($row["color"]) . "</td>
-                                    <td>" . htmlspecialchars($row["post_status"]) . "</td>    
+                                    <td>" . htmlspecialchars($row["post_type"]) . "</td>    
                                     <td>" . htmlspecialchars($row["approval"]) . "</td> 
                                     </tr>";
                             }
