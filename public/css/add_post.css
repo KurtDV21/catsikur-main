@@ -60,7 +60,7 @@ section{
   width: 100vw;
   height: 170vh;
   display: flex;
-  background-color: #fff;
+  background-color: #FFEFEF;
 }
 
 #ourcats{
@@ -181,11 +181,13 @@ section{
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Ensures the container takes at least the full height of the viewport */
+  height: auto; /* Changed from min-height: 100vh to height: auto */
   background-color: #fff; /* Set the background color to match your design */
   padding: 20px;
   box-sizing: border-box;
   margin: 0 auto;
+  background-color: #FFEFEF;
+
 }
 
 .form-container {
