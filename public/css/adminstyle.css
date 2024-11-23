@@ -124,7 +124,8 @@
 
   .container {
     padding-bottom: 30px;
-    padding-right: 50px;
+    width: 50px;
+    padding-right: 18vw;
     display: flex;    
     flex-direction: column;
     gap: 20px;

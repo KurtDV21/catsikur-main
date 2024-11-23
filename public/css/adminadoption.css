@@ -136,14 +136,14 @@
 
 
 .container-admin {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #EFEFEF;
-    padding: 20px;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EFEFEF;
+  padding: 20px;
 }
 
 /* Background Card */

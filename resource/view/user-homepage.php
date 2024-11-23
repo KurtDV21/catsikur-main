@@ -32,6 +32,7 @@ if (isset($_SESSION['user_id'])) {
   $name = '';
   header("Location:/loginto");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +40,7 @@ if (isset($_SESSION['user_id'])) {
 
 <head>
   <link rel="stylesheet" href="/css/user.css">
+  <link rel="stylesheet" href="/css/usertab.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,6 +70,7 @@ if (isset($_SESSION['user_id'])) {
               <div class="dropdown-content">
                   <a href="#" class="filter-option" data-filter="default-color" data-value="default-color">Default</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="white">White</a>
+                  <a href="#" class="filter-option" data-filter="color" data-value="brown">Brown</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="orange">Orange</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="black">Black</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="mixed">Mixed</a>
@@ -88,7 +91,7 @@ if (isset($_SESSION['user_id'])) {
           </div>
 
         <div class="dropdown">
-            <button class="addbtn" onclick="location.href='/add-post?user_id=<?php echo htmlspecialchars($userId); ?>'">
+            <button class="dropbtn" onclick="location.href='/add-post?user_id=<?php echo htmlspecialchars($userId); ?>'">
               Add Post </button>
         </div>
 
@@ -107,7 +110,7 @@ if (isset($_SESSION['user_id'])) {
                   <img src="<?php echo htmlspecialchars($post['picture']); ?>" alt="Cat Image" class="cat-image">
                   <h2><?php echo htmlspecialchars($post['cat_name']); ?></h2>
                   <p>Color: <?php echo htmlspecialchars($post['color']); ?> </p>
-                  <p>Age: <?php echo htmlspecialchars($post['age']); ?> years</p>
+                  <p>Age: <?php echo htmlspecialchars($post['age']); ?> </p>
                   <p>Location: <?php echo htmlspecialchars($post['location']); ?></p>
                 </div>
               </a>

@@ -112,6 +112,16 @@ route('/ajaxFilterPosts', function () {
     include __DIR__ . '/../resource/view/ajaxFilterPosts.php';
 });
 
+route('/admin-restrict', function () {
+    
+    include __DIR__ . '/../resource/view/admin-restrict.php';
+});
+
+route('/restrict-user', function () {
+    
+    include __DIR__ . '/../resource/view/restrict-user.php';
+});
+
 route('/activate-account', function () {
     include __DIR__ . '/../resource/view/auth/activate-account.php';    
 });

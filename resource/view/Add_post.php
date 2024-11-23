@@ -13,15 +13,20 @@ $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
+
 if (isset($_SESSION['user_id'])) {
   $userId = $_SESSION['user_id']; 
   $user = $userModel->findUserById($userId); 
+  if ($user['is_restricted']) { 
+    echo "<script>alert('You are restricted from posting.'); window.location.href = 'user-homepage';</script>"; 
+    exit; 
+  }
   $name = $user['name'] ?? ''; 
 } else {
   header("Location:/loginto");
 }
 
-    
+
 $logo = "/image/logo1.png";
 $name = $user['name'];
 

@@ -17,11 +17,34 @@ body{
     overflow-x: hidden;
 }
 
-.logo{
-    width: 100px;
-    height: auto;
+.img {
+    justify-content: flex-start;
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Vertically align items */
+    gap: 10px; /* Add space between the logo and the title */
+    padding: 10px; /* Add some padding around the container */
+}
+
+.img a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.logo {
+    width: 100px; /* Adjust the size of the logo */
+    height: 100px; /* Maintain aspect ratio by using equal width and height */
+    object-fit: contain; /* Ensure the logo fits within the bounds */
+}
+
+.title {
+    font-family: 'Montserrat', sans-serif; /* Use a clean font */
+    font-size: 2.5rem; /* Adjust the font size */
+    color: #ffffff; /* Set text color (white for contrast) */
+    font-weight: 500; /* Make the title bold */
+    text-align: left; /* Align text to the left */
     margin-left: 20px;
 }
+
 
 .hamburger {
     display: none;
@@ -47,13 +70,13 @@ section{
     display: flex;
 }
 
-#main{
+#main {
     width: 100vw;
-    height: 100vh;
-    background-image:url(/image/background.png);
+    height: 100vh; /* Adjusted the height */
+    background-image: url(/image/background.png);
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;    
+    background-size: cover; /* Reduces the image size while maintaining its aspect ratio */
+    background-position: center;
 }
 
 #ourcats{
@@ -96,6 +119,8 @@ section{
     transition: 0.3s;
 }
 
+
+
 .navbar{
     margin-right: 10px;
     background-color: #92A8D1;
@@ -111,11 +136,12 @@ section{
 .nav-link {
     list-style-type: none;
     display: flex;
-    gap: 20px; 
+    gap: 30px; 
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     text-align: end;
-    margin-left: auto;
+    margin-left: 0;
+    padding-right: 20px;
 }
 
 .nav-link li {
@@ -126,6 +152,7 @@ section{
 }
 
 .nav-link a{
+    font-size: 2rem;
     font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     position: relative;
     text-decoration: none;
@@ -158,30 +185,30 @@ section{
 }
 
 .login-btn{
-    background-color: white;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 20px;
-    font-weight: 500;
-    transition: background-color 0.3s ease, transform 0.3s ease; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    cursor: pointer;
+  background-color: #AFA2D0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 2rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  cursor: pointer;
 }
 
 .login-btn:hover {
-    background-color: #AFA2D0; 
-    transform: translateY(-2px); 
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
-  }
+  background-color: #7457bd; 
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
+}
 
   .main-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start; 
     justify-content: center; 
-    margin-left: 50px; 
+    margin-left: 200px; 
     height: 100vh; 
     gap: 20px; 
 }
@@ -189,7 +216,7 @@ section{
 .text1 {
     font-family: 'Aoboshi One', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
     margin-top: 100px;
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     text-align: left; 
 }
 
@@ -200,7 +227,7 @@ section{
     border: none;
     border-radius: 10px;
     padding: 10px 20px;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -282,79 +309,79 @@ section{
 
 h1 {
     margin-top: 30px;
-    font-size: 4rem;
+    font-size: 3rem;
     color: #333;
     text-align: center;
     font-family: 'Montserrat', sans-serif; /* Apply a custom font */
 }
 
-.cat-container{
+.cat-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Creates 5 equal-width columns */
-    grid-template-rows: repeat(4, auto); /* Creates 3 rows with automatic height */
-    gap: 20px; /* Space between grid items */
+    grid-template-columns: repeat(4, 1fr); /* Keeps 4 equal-width columns */
+    grid-template-rows: repeat(4, auto); /* Keeps automatic row heights */
+    gap: 15px; /* Reduced space between grid items */
     max-width: 100%;
-    margin: 20px auto; /* Centers the grid container */
-    padding: 0 20px; /* Optional: adds padding inside container */
+    margin: 15px auto; /* Centers the grid container */
+    padding: 0 15px; /* Reduced padding inside the container */
     justify-items: center; /* Centers items within each grid cell */
 }
 
-.cat-wrapper{
+.cat-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center; /* Centers items inside the wrapper */
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Reduced bottom margin */
 }
 
-.cat-card{
-    padding: 10px;
+.cat-card {
+    padding: 8px; /* Slightly reduced padding */
     background-color: #92A8D1;
     border: 2px solid black;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 310px;
-    height: 395px;
+    border-radius: 8px; /* Slightly reduced border radius */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* Slightly reduced shadow */
+    width: 250px; /* Reduced width */
+    height: 300px; /* Reduced height */
     overflow: hidden;
-    margin: 10px;
+    margin: 40px; /* Reduced margin */
 }
 
-.cat-image{
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 10px;
+.cat-image {
+    width: 100%;
+    height: 160px; /* Reduced height */
+    overflow: hidden;
+    border-radius: 8px; /* Matches the card's border radius */
 }
 
-.cat-image img{
+.cat-image img {
     width: 100%;
     height: auto;
     display: block;
 }
 
-.cat-container a{
-  text-decoration: none;
-  color: black;
-  flex-direction: column;
+.cat-container a {
+    text-decoration: none;
+    color: black;
+    flex-direction: column;
 }
 
-.cat-card h2, p{
-    margin-top: 20px;
+.cat-card h2, p {
+    margin-top: 15px; /* Reduced top margin */
     text-decoration: none;
 }
 
-.btn-adopt{
+.btn-adopt {
     font-family: 'Aoboshi One', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
-    padding: 10px;
-    margin-top: 10px;
+    padding: 8px; /* Reduced padding */
+    margin-top: 8px; /* Reduced margin */
     background-color: #9F7f7f;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 1em;
+    border-radius: 4px; /* Slightly reduced border radius */
+    font-size: 0.9em; /* Slightly reduced font size */
     cursor: pointer;
     text-align: center;
-    width: 95%;
+    width: 100%; /* Slightly reduced width */
 }
 
 .btn-next, .btn-prev {
@@ -452,6 +479,7 @@ h1 {
 }
 
 .footer{
+    margin-left: 10px;
     background-color: #F7C9CB;
     font-size: 2rem;
 }

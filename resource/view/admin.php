@@ -106,6 +106,12 @@ $posts = $postsModel->getPosts($limit, $offset);
                     <div onclick="location.href='/admin-rescue'" class="rescue-posts">
                         Rescue Total Posts
                     </div>
+                    <div onclick="location.href='/admin-restrict'" class="rescue-posts">
+                        Restrict User
+                    </div>
+                    <div class="rescue-posts">
+                        Form Approval
+                    </div>
                 </div>
                 <div class="approval-list">
                 <?php foreach ($posts as $post): ?>
