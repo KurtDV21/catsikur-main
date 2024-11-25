@@ -129,29 +129,55 @@ $allergyDetails = $_SESSION['allergy_details'] ?? '';
                 <div class="survey-container">
                     <div class="questions-row">
                         <div class="input-question">
-                            <label for="household-adults">
+                        <label for="household-adults">
                                 How many adults are in your household?<span class="required">*</span><br>
                                 <span class="example">Example: 4</span>
                             </label>
-                             <input type="text" id="household-adults" name="household_adults"  placeholder="Your answer" value="<?= htmlspecialchars($householdAdults) ?>" required>
+                            <input 
+                                type="text" 
+                                id="household-adults" 
+                                name="household_adults" 
+                                placeholder="Your answer" 
+                                value="<?= htmlspecialchars($householdAdults ?? '') ?>" 
+                                required 
+                                maxlength="2"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2)"
+                            >
                         </div>
 
                         <div class="input-question">
-                            <label for="household-children">
+                        <label for="household-children">
                                 How many children are in your household?<span class="required">*</span><br>
                                 <span class="example">Example: 4</span>
                             </label>
-                            <input type="text" id="household-children" name="household_children" placeholder="Your answer" value="<?= htmlspecialchars($householdChildren) ?>" required>
+                            <input 
+                                type="text" 
+                                id="household-children" 
+                                name="household_children" 
+                                placeholder="Your answer" 
+                                value="<?= htmlspecialchars($householdChildren ?? '') ?>" 
+                                required 
+                                maxlength="2"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2)"
+                            >
                         </div>
                     </div>
 
                     <div class="questions-row">
                         <div class="input-question">
-                            <label for="children-ages">
+                                <label for="children-ages">
                                 If there are children in your household, what are their ages?<span class="required">*</span><br>
-                                <span class="example">Example: 3 and 7 Years old</span>
+                                <span class="example">Example: 3, 7</span>
                             </label>
-                            <input type="text" id="children-ages" name="children_ages" placeholder="Your answer" value="<?= htmlspecialchars($householdChildren) ?>"required>
+                            <input 
+                                type="text" 
+                                id="children-ages" 
+                                name="children_ages" 
+                                placeholder="Your answer" 
+                                value="<?= htmlspecialchars($householdChildren ?? '') ?>" 
+                                required
+                                oninput="this.value = this.value.replace(/[^0-9, ]/g, '').replace(/(\d{3,})/g, match => match.slice(0, 2))"
+                            >
                         </div>
 
                         <div class="input-question">

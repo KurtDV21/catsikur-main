@@ -17,14 +17,12 @@ class PostApprovalController {
     public function updateApproval() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $postId = $_POST['post_id'];
-            $action = $_POST['action'];   // Get action (approve or deny)
+            $action = $_POST['action']; 
             
-            // Set approval status based on the action
             $approvalStatus = ($action === 'approve') ? 'approved' : 'denied';
-
-            // Call the updateApproval method to update the approval status
+            $postStatus = ($action === 'available') ? 'available' : 'denied';
+            
             if ($this->postApprovalModel->updateApproval($postId, $approvalStatus)) {
-                // Redirect back to the approval page (or show a success message)
                 header("location:/admin");
                 exit;
             } else {

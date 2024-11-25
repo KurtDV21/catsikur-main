@@ -16,11 +16,11 @@
 
     <div class="nav-container"> <!-- New div to contain nav links -->
       <ul class="nav-link">
-        <li><a href="#home">HOME</a></li>
+        <li><a href="/">HOME</a></li>
         <li><a href="">OUR CATS</a></li>
         <li><a href="">ABOUT</a></li>
         <li><a href="">FAQs</a></li>
-        <button class="login-btn"> <a href="/loginto">Login</a></button>
+        <li><button class="login-btn" onclick="location.href='/loginto'">Login</button></li>     
       </ul>
     </div>
   </nav>
