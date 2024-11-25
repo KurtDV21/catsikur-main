@@ -117,6 +117,28 @@ route('/admin-restrict', function () {
     include __DIR__ . '/../resource/view/admin-restrict.php';
 });
 
+route('/admin-pdf', function () {
+    
+    include __DIR__ . '/../resource/view/admin-pdf.php';
+});
+
+route('/fpdf', function () {
+    
+    include __DIR__ . '/../resource/view/fpdf/fpdf.php';
+});
+
+route('/chat', function () {
+    
+    include __DIR__ . '/../resource/view/chat.php';
+});
+
+
+route('/process-form-approval', function () {
+    
+    include __DIR__ . '/../resource/view/process-form-approval.php';
+});
+
+
 route('/restrict-user', function () {
     
     include __DIR__ . '/../resource/view/restrict-user.php';

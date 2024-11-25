@@ -112,7 +112,7 @@ $supplies = $_SESSION['supplies'] ?? [];
 </div>
 
 <div class="question-container">
-  <p class="question-text">How many of these pets are spayed/neutered?:<span class="required">*</span></p>
+  <p class="question-text">How many of these pets are spayed/neutered? (kapon):<span class="required">*</span></p>
   <span class="example">Type N/A if you don't have any pets.</span>
   <div class="answer-options">
   <input type="text" name="spayed_neutered" class="other-input" placeholder="Specify" value="<?= htmlspecialchars($spayedNeutered) ?>" required>  </div>

@@ -33,14 +33,7 @@ class InquiryController {
                 return; // Stop execution if validation fails
             }
 
-            // Call the model method to insert the data into the inquiries table
-            if ($this->inquiryModel->createAdoptionInquiry($user_id, $post_id, $name, $occupation, $address, $email, $phone, $message)) {
-                // Redirect to success page or show success message
-                echo "Inquiry submitted successfully!";
-                // Optionally: header('Location: success.php'); // Redirect to a success page
-            } else {
-                echo "Failed to submit inquiry.";
-            }
+           
         }
     }
 }

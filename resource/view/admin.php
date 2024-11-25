@@ -109,7 +109,7 @@ $posts = $postsModel->getPosts($limit, $offset);
                     <div onclick="location.href='/admin-restrict'" class="rescue-posts">
                         Restrict User
                     </div>
-                    <div class="rescue-posts">
+                    <div onclick="location.href='/admin-pdf'" class="rescue-posts">
                         Form Approval
                     </div>
                 </div>

@@ -75,6 +75,9 @@ if (isset($_SESSION['user_id'])) {
                     <div onclick="location.href='/admin-restrict'" class="rescue-posts">
                         Restrict User
                     </div>
+                    <div onclick="location.href='/admin-pdf'" class="rescue-posts">
+                        Form Approval
+                    </div>
                 </div>
     
                 <div class="pending">
