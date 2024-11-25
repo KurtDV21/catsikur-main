@@ -70,6 +70,8 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                     <div onclick="location.href='/admin-rescue'" class="rescue-posts">
                         Rescue Total Posts
+                    </div><div onclick="location.href='/admin-rescue'" class="rescue-posts">
+                        Restrict User
                     </div>
                 </div>
 

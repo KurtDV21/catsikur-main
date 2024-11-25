@@ -192,7 +192,7 @@ $truthfulness = $_SESSION['truthfulness'] ?? '';
 
         <div class="question-container">
             <p class="question-text">How many hours each day will your new cat be home alone?<span class="required">*</span></p>
-            <span class="example">Example: 8-10 hours | Estimat   e the usual hours the cat will be all alone in his/her new home.</span>
+            <span class="example">Example: 8-10 hours | Estimat   the usual hours the cat will be all alone in his/her new home.</span>
             <div class="answer-options">
             <input type="text" name="hours_alone" class="other-input" placeholder="Specify" value="<?= htmlspecialchars($hoursAlone) ?>" required>
             </label>  

@@ -15,37 +15,67 @@ $userController = new UserController($userModel);
   
 $is_invalid = false;
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $user = $userController->login($_POST["email"], $_POST["password"]);
-  
-  if ($user) {
-      // Generate OTP
-      $otp = rand(100000, 999999);
-      session_regenerate_id();
-      $_SESSION["user_id"] = $user["id"];
-      $_SESSION["user_name"] = $user["name"];
-      $_SESSION["otp"] = $otp;
-      $_SESSION["role"] = $user["role"];
-      
-      // Mailer for sending OTP
-      $mail = require __DIR__ . "/auth/mailer.php";
-      $mail->setFrom('noreply@yourdomain.com', 'Your App');
-      $mail->addAddress($user["email"]);
-      $mail->Subject = 'Your OTP Code';
-      $mail->Body = "Your OTP code is: $otp";
+// Initialize session variables for tracking login attempts and lockout time
+if (!isset($_SESSION['login_attempts'])) {
+  $_SESSION['login_attempts'] = 0;
+  $_SESSION['lockout_time'] = null;
+}
 
-      // Check if the user has the 'user' role
-      if ($_SESSION["role"] === 'user') {
-          // Redirect to user homepage if role is 'user'
-          header("Location: /user-homepage");
-          exit; // Make sure the script stops after redirection
-      } else {
-          // Set the invalid flag if role is not 'user'
-          $is_invalid = true;
-      }
-  } else {
-      // Set the invalid flag if user does not exist
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  // Check if the user is currently locked out
+  if ($_SESSION['lockout_time'] && time() < $_SESSION['lockout_time']) {
+      $lockout_remaining = $_SESSION['lockout_time'] - time();
       $is_invalid = true;
+      $lockout_message = "Too many login attempts. Please try again in";
+  } else {
+      // Reset lockout if lockout period has expired
+      if ($_SESSION['lockout_time'] && time() >= $_SESSION['lockout_time']) {
+          $_SESSION['login_attempts'] = 0;
+          $_SESSION['lockout_time'] = null;
+      }
+
+      // Process login
+      $user = $userController->login($_POST["email"], $_POST["password"]);
+
+      if ($user) {
+          // Reset attempts on successful login
+          $_SESSION['login_attempts'] = 0;
+
+          // Generate OTP
+          $otp = rand(100000, 999999);
+          session_regenerate_id();
+          $_SESSION["user_id"] = $user["id"];
+          $_SESSION["user_name"] = $user["name"];
+          $_SESSION["otp"] = $otp;
+          $_SESSION["role"] = $user["role"];
+
+          // Mailer for sending OTP
+          $mail = require __DIR__ . "/auth/mailer.php";
+          $mail->setFrom('noreply@yourdomain.com', 'Your App');
+          $mail->addAddress($user["email"]);
+          $mail->Subject = 'Your OTP Code';
+          $mail->Body = "Your OTP code is: $otp";
+
+          // Redirect based on role
+          if ($_SESSION["role"] === 'user') {
+              header("Location: /user-homepage");
+              exit;
+          } else {
+              $is_invalid = true;
+          }
+      } else {
+          // Increment login attempts on failure
+          $_SESSION['login_attempts']++;
+
+          // Lockout after 5 failed attempts
+          if ($_SESSION['login_attempts'] >= 5) {
+              $_SESSION['lockout_time'] = time() + 300; // 5 minutes lockout
+              $is_invalid = true;
+              $lockout_message = "Too many login attempts. Please try again in 5 minutes.";
+          } else {
+              $is_invalid = true;
+          }
+      }
   }
 }
 
@@ -99,8 +129,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
 
         <?php if ($is_invalid): ?>
-            <p style="color: red;"><em>Invalid login. Please check your email and password.</em></p></br>   
-        <?php endif ?>
+            <p style="color: red;">
+                <?= isset($lockout_message) ? htmlspecialchars($lockout_message) : "Invalid login. Please check your email and password."; ?>
+                <span id="countdown"></span>.
+            </p><br>
+        <?php endif; ?>
 
         <div class="remember-forgot">
           <a href="/forgot-password" class="forgot"><b>FORGOT PASSWORD?</b></a>
@@ -109,13 +142,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="login-register">
           <p >Don't have an account? <a href="/register-form" class="register-link"><b>Register</b></a></p>
-          <p><a href="/admin-login" class="register-link"><b>Admin</b></a></p>
 
         </div>
       </form>
     </div>
 
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const countdownElement = document.getElementById("countdown");
+    const remainingTime = <?= isset($lockout_remaining) ? $lockout_remaining : 0 ?>;
 
+    if (remainingTime > 0) {
+        let timeLeft = remainingTime;
+
+        const updateCountdown = () => {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            countdownElement.textContent = `${minutes}m ${seconds}s`;
+
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                countdownElement.textContent = "You can try logging in now.";
+                clearInterval(timer);
+            }
+        };
+
+        // Initial call to display immediately
+        updateCountdown();
+
+        // Update every second
+        const timer = setInterval(updateCountdown, 1000);
+    }
+});
+    </script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

@@ -16,9 +16,9 @@
         <li>
           <div class="user-dropdown">
             <button class="user-dropdown-button" onclick="toggleUserDropdown()">
-              <?php echo htmlspecialchars($name); ?>
-            </button>
+            <img src="<?php echo htmlspecialchars($user['profile_image_path']); ?>" alt="Profile Image" class="profile-image">            </button>
             <div class="user-dropdown-content" id="userDropdownContent">
+              <a href="/MyPost">My Post</a>
               <a href="/logout">Logout</a>
             </div>
           </div>

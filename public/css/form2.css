@@ -16,10 +16,32 @@ body{
     overflow-x: hidden;
 }
 
-.logo{
-    width: 100px;
-    height: auto;
-    margin-left: 20px;
+.img {
+  justify-content: flex-start;
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Vertically align items */
+  gap: 10px; /* Add space between the logo and the title */
+  padding: 10px; /* Add some padding around the container */
+}
+
+.img a{
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.logo {
+  width: 100px; /* Adjust the size of the logo */
+  height: 100px; /* Maintain aspect ratio by using equal width and height */
+  object-fit: contain; /* Ensure the logo fits within the bounds */
+}
+
+.title {
+  font-family: 'Montserrat', sans-serif; /* Use a clean font */
+  font-size: 2.5rem; /* Adjust the font size */
+  color: #ffffff; /* Set text color (white for contrast) */
+  font-weight: 500; /* Make the title bold */
+  text-align: left; /* Align text to the left */
+  margin-left: 20px;
 }
 
 .hamburger {
@@ -101,7 +123,7 @@ section{
 
 .navbar{
     margin-right: 10px;
-    background-color: #AFA2D0;
+    background-color: #92A8D1;
     position: fixed;
     display: flex;
     width: 100%;
@@ -178,21 +200,32 @@ section{
     transform: translateY(-2px); 
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
   }
-.outer-container {
-    margin-bottom: 50px;
-    margin-top: 200px;
-    margin-left: 400px;
+
+  .parent-container{
+    margin-top: 80px; /* Adjust this value based on your header height */
     display: flex;
-    align-self: center;
     justify-content: center;
     align-items: center;
-    width: auto;          /* Set width to 1172px */
-    height: auto;         /* Set height to 1470px */
-    border: 5px solid #000;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    width: 100%;
+    max-width: 1200px; /* Limit width for better layout */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px; /* Add padding for spacing around content */
+    box-sizing: border-box; /* Ensures padding doesn't add to element width */
+}
+
+.outer-container {
+  margin: 200px auto 50px; /* Combined margin properties */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 900px; /* Set a maximum width */
+  width: 100%; /* Allow it to be responsive */
+  border: 5px solid #000;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
   .form-container{

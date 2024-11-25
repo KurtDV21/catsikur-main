@@ -174,5 +174,27 @@ route('/updateApproval', function () {
     include __DIR__ . '/../public/process/updateApproval.php';
 });
 
+route('/MyPost', function () {
+    include __DIR__ . '/../resource/view/user-post.php';
+});
+
+route('/MyPost-catdetails', function () {
+    include __DIR__ . '/../resource/view/user-post-cat-details.php';
+});
+
+route('/pdf-index', function () {
+    include __DIR__ . '/../resource/view/pdf_index.php';
+});
+
+route('/admin-restrict', function () {
+    
+    include __DIR__ . '/../resource/view/admin-restrict.php';
+});
+
+route('/restrict-user', function () {
+    
+    include __DIR__ . '/../resource/view/restrict-user.php';
+});
+
 // Run the routing logic
 run();

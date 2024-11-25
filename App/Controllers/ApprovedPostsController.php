@@ -17,4 +17,9 @@ class ApprovedPostsController {
     public function showApprovedPosts() {
         return $this->approvedPostsModel->getUserApprovedPosts();
     }
+
+    public function getUserPosts($userId) {
+        return $this->approvedPostsModel->getPostsByUser($userId);
+    }
+    
 }

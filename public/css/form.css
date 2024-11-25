@@ -16,11 +16,34 @@ body{
     overflow-x: hidden;
 }
 
-.logo{
-    width: 100px;
-    height: auto;
-    margin-left: 20px;
+.img {
+  justify-content: flex-start;
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Vertically align items */
+  gap: 10px; /* Add space between the logo and the title */
+  padding: 10px; /* Add some padding around the container */
 }
+
+.img a{
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.logo {
+  width: 100px; /* Adjust the size of the logo */
+  height: 100px; /* Maintain aspect ratio by using equal width and height */
+  object-fit: contain; /* Ensure the logo fits within the bounds */
+}
+
+.title {
+  font-family: 'Montserrat', sans-serif; /* Use a clean font */
+  font-size: 2.5rem; /* Adjust the font size */
+  color: #ffffff; /* Set text color (white for contrast) */
+  font-weight: 500; /* Make the title bold */
+  text-align: left; /* Align text to the left */
+  margin-left: 20px;
+}
+
 
 .hamburger {
     display: none;
@@ -101,7 +124,7 @@ section{
 
 .navbar{
     margin-right: 10px;
-    background-color: #AFA2D0;
+    background-color: #92A8D1;
     position: fixed;
     display: flex;
     width: 100%;
@@ -179,241 +202,203 @@ section{
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
   }
 
-  .outer-container {
-    margin-bottom: 50px;
-    margin-top: 200px;
-    margin-left: 400px;
+  .parent-container{
+    margin-top: 80px; /* Adjust this value based on your header height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Limit width for better layout */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px; /* Add padding for spacing around content */
+    box-sizing: border-box; /* Ensures padding doesn't add to element width */
+}
+
+.outer-container {
+    margin: 50px auto; /* Center the container horizontally */
+    margin-top: 150px; /* Adjust top margin */
     display: flex;
     align-self: center;
     justify-content: center;
     align-items: center;
-    width: auto;          /* Set width to 1172px */
-    height: auto;         /* Set height to 1470px */
-    border: 5px solid #000;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 900px; /* Reduce the width */
+    height: auto; /* Allow dynamic height based on content */
+    border: 3px solid #000; /* Reduced border thickness */
+    border-radius: 10px; /* Smaller corner radius */
+    padding: 15px; /* Reduce padding inside the container */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
     background-color: #fff;
 }
 
-  .form-container{
-   display: flex;
-   flex-direction: column;
-   background-color: #f8c7c7;
-   padding: 50px;
-   border-radius: 10px;
-   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+.form-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8c7c7;
+  padding: 30px; /* Reduced padding */
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
 
-.text h1{
-  margin-bottom: 15px;
-  font-size: 2rem;
-  font-family: 'Montseratt', sans-serif;
+.text h1 {
+  margin-bottom: 10px; /* Reduced margin */
+  font-size: 1.8rem; /* Reduced font size */
+  font-family: 'Montserrat', sans-serif;
 }
-.text h2{
-  margin-bottom: 30px;
+
+.text h2 {
+  margin-bottom: 20px; /* Reduced margin */
+  font-size: 1.5rem; /* Reduced font size */
 }
 
 .question-container {
-    margin-top: 20px;
-    background-color: #f8d7da; /* Light pink background */
-    padding: 15px;
-    border-radius: 5px;
-    max-width: 1000px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .question-text {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .required {
-    color: red;
-  }
-  
-  .answer-options label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    font-size: 1.2rem;
-    color: #333;
-  }
-  
-  input[type="radio"] {
-    margin-right: 10px;
-    accent-color: #333; /* Ensures visibility of the radio button */
-    width: 16px;
-    height: 16px;
-  }
-  
-  .other-option {
-    display: flex;
-    align-items: center;
-  }
-  
-  .other-input {
-    width: 20%;
-    border: none;
-    border-bottom: 2px solid #333; /* Creates the underline */
-    padding: 5px;
-    font-size: 16px;
-    outline: none;
-    margin-top: 5px;
-    box-sizing: border-box;
-    background-color: transparent; /* Removes the box background */
-  }
-  
-.container{
+  margin-top: 20px;
+  background-color: #f8d7da;
+  padding: 15px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 1.3rem; /* Simplified font size */
+}
+
+.question-text {
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: bold;
+}
+
+.required {
+  color: red;
+}
+
+.answer-options label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+input[type="radio"] {
+  margin-right: 8px; /* Reduced margin */
+  width: 14px; /* Reduced size */
+  height: 14px;
+}
+
+.other-input {
+  width: 20%;
+  border: none;
+  border-bottom: 2px solid #333;
+  padding: 5px;
+  font-size: 14px; /* Reduced font size */
+  background-color: transparent;
+}
+
+.container {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Space between the rows */
+  gap: 15px; /* Reduced gap */
   margin-top: 20px;
 }
 
-  .questions-row {
-    display: flex;
-    gap: 50px; /* Space between the two questions */
-    margin-top: 20px;
-    align-items: flex-start; /* Align items at the top */
-  }
-  
-  .input-question {
-    background-color: #f4cccc; /* Light pink background */
-    padding: 15px;
-    font-family: 'Arial', sans-serif;
-    border-radius: 5px;
-    width: 450px; /* Ensure both divs have the same width */
-    box-sizing: border-box; /* Include padding in width calculation */
-    display: flex;
-    flex-direction: column; /* Stack label and input vertically */
-  }
-  
-  .input-question label, .input-question p {
-    font-size: 1.4rem;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  .input-question .required {
-    color: red;
-  }
-  
-  .input-question .example {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 8px;
-  }
-  
-  .input-question input[type="text"] {
-    width: 100%;
-    border: none;
-    border-bottom: 2px solid #333; /* Creates the underline */
-    padding: 5px;
-    font-size: 16px;
-    outline: none;
-    margin-top: 5px;
-    box-sizing: border-box;
-    background-color: transparent; /* Removes the box background */
-  }
-  
-  /* Styles for radio options */
-  .radio-options {
-    margin-top: 10px;
-  }
+.questions-row {
+  display: flex;
+  gap: 30px; /* Reduced gap */
+  margin-top: 20px;
+}
 
-  .radio-options label{
-    font-size: 14px;
-    color: #333;
-  }
-  
-  .radio-options div {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    font-size: 1rem;
-  }
-  
-  .radio-options input[type="radio"] {
-    margin-right: 8px;
-  }
-  
-  .new-question {
-    margin-top: 20px;
-    background-color: #f4cccc; /* Match the background color of other questions */
-    padding: 15px;
-    font-family: 'Arial', sans-serif;
-    border-radius: 5px;
-    width: 1000px; /* Adjust width as needed */
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .new-question label {
-    font-size: 1.4rem;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  .new-question .required {
-    color: red;
-  }
-  
-  
-  .new-question input[type="text"] {
-    width: 100%;
-    border: none;
-    border-bottom: 2px solid #333; /* Creates the underline */
-    padding: 5px;
-    font-size: 16px;
-    outline: none;
-    margin-top: 5px;
-    box-sizing: border-box;
-    background-color: transparent; /* Removes the box background */
-  }
+.input-question {
+  background-color: #f4cccc;
+  padding: 15px;
+  border-radius: 5px;
+  width: 48%; /* Adjusted width for two-column layout */
+  font-family: Arial, sans-serif;
+}
 
-  .btn-container {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 60px;
+.input-question label,
+.input-question p {
+  font-size: 1.2rem; /* Reduced font size */
+  color: #333;
+}
+
+.input-question input[type="text"] {
+  margin-top: 20px;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #333;
+  padding: 5px;
+  font-size: 14px; /* Reduced font size */
+  background-color: transparent;
+}
+
+.radio-options {
+  margin-top: 10px;
+}
+
+.radio-options div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.new-question {
+  margin-top: 20px;
+  background-color: #f4cccc;
+  padding: 15px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.new-question label {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.new-question input[type="text"] {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #333;
+  padding: 5px;
+  font-size: 14px; /* Reduced font size */
+  background-color: transparent;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Reduced gap */
+  margin-top: 40px; /* Reduced margin */
 }
 
 .btn-container button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 232px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-    border-radius: 40px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 40px;
+  font-size: 14px; /* Reduced font size */
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
 }
 
-.btn-confirm a{
+.btn-confirm a {
   text-decoration: none;
   color: #333;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .btn-cancel {
-    background-color: #C3BEF0;
-    color: #000;
+  background-color: #C3BEF0;
+  color: #000;
 }
 
 .btn-confirm {
-    background-color: #C3BEF0;
-    color: #000;
+  background-color: #C3BEF0;
+  color: #000;
 }
 
 .error {
-  border: 2px solid red; /* Light red background for better visibility */
+  border: 2px solid red;
 }
+
 
 .footer-container {
     display: flex;

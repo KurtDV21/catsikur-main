@@ -16,6 +16,10 @@ $userController = new UserController($userModel);
 if (isset($_SESSION['user_id'])) {
   $userId = $_SESSION['user_id']; 
   $user = $userModel->findUserById($userId); 
+  if ($user['is_restricted']) { 
+    echo "<script>alert('You are restricted from posting.'); window.location.href = 'user-homepage';</script>"; 
+    exit; 
+  }
   $name = $user['name'] ?? ''; 
 } else {
   header("Location:/loginto");
@@ -92,9 +96,19 @@ $name = $user['name'];
         </div>
 
         <div class="input-box">
-          <label for="age">Age:</label>
-          <input type="number" id="age" name="age" required>
-        </div>
+  <label for="age">Age:</label>
+  <input 
+    type="text" 
+    id="age" 
+    name="age" 
+    maxlength="2" 
+    required 
+    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2);"
+    pattern="[0-9]{1,2}" 
+    title="Please enter a valid age between 1 and 99"
+  >
+</div>
+
 
         <div class="kurt">
 
@@ -128,7 +142,7 @@ $name = $user['name'];
                 <option value="Orange" >Orange</option>
                 <option value="Black" >Black</option>
                 <option value="Grey" >Grey</option>
-                <option value="Mix" >Mix</option>
+                <option value="Mixed" >Mixed</option>
             </select>
         </div>
 

@@ -16,10 +16,32 @@ body{
     overflow-x: hidden;
 }
 
-.logo{
-    width: 100px;
-    height: auto;
-    margin-left: 20px;
+.img {
+  justify-content: flex-start;
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Vertically align items */
+  gap: 10px; /* Add space between the logo and the title */
+  padding: 10px; /* Add some padding around the container */
+}
+
+.img a{
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.logo {
+  width: 100px; /* Adjust the size of the logo */
+  height: 100px; /* Maintain aspect ratio by using equal width and height */
+  object-fit: contain; /* Ensure the logo fits within the bounds */
+}
+
+.title {
+  font-family: 'Montserrat', sans-serif; /* Use a clean font */
+  font-size: 2.5rem; /* Adjust the font size */
+  color: #ffffff; /* Set text color (white for contrast) */
+  font-weight: 500; /* Make the title bold */
+  text-align: left; /* Align text to the left */
+  margin-left: 20px;
 }
 
 .hamburger {
@@ -101,7 +123,7 @@ section{
 
 .navbar{
     margin-right: 10px;
-    background-color: #AFA2D0;
+    background-color: #92A8D1;
     position: fixed;
     display: flex;
     width: 100%;
@@ -178,136 +200,134 @@ section{
     transform: translateY(-2px); 
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
   }
-.outer-container {
-    margin-bottom: 50px;
-    margin-top: 200px;
-    margin-left: 400px;
+
+  .parent-container{
+    margin-top: 80px; /* Adjust this value based on your header height */
     display: flex;
-    align-self: center;
     justify-content: center;
     align-items: center;
-    width: auto;          /* Set width to 1172px */
-    height: auto;         /* Set height to 1470px */
-    border: 5px solid #000;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-}
-
-  .form-container{
-   display: flex;
-   flex-direction: column;
-   background-color: #f8c7c7;
-   padding: 50px;
-   border-radius: 10px;
-   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
-
-.text h1{
-    margin-bottom: 15px;
-    font-size: 2rem;
-    font-family: 'Montseratt', sans-serif;
-  }
-
-  .question-container {
-    margin-top: 20px;
-    background-color: #f8d7da; /* Light pink background */
-    padding: 15px;
-    border-radius: 5px;
-    max-width: 1000px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .question-text {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .required {
-    color: red;
-  }
-  
-  .answer-options label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    font-size: 1.2rem;
-    color: #333;
-  }
-  
-  input[type="radio"] {
-    margin-right: 10px;
-    accent-color: #333; /* Ensures visibility of the radio button */
-    width: 16px;
-    height: 16px;
-  }
-  
-  .other-option {
-    display: flex;
-    align-items: center;
-  }
-  
-  .other-input {
     width: 100%;
-    border: none;
-    border-bottom: 2px solid #333; /* Creates the underline */
-    padding: 5px;
-    font-size: 16px;
-    outline: none;
-    margin-top: 5px;
-    box-sizing: border-box;
-    background-color: transparent; /* Removes the box background */
-  }
+    max-width: 1200px; /* Limit width for better layout */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px; /* Add padding for spacing around content */
+    box-sizing: border-box; /* Ensures padding doesn't add to element width */
+}
 
-  .question-container .example {
-    font-size: 1.3rem;
-    color: #555;
-    margin-bottom: 8px;
-  }
+.outer-container {
+  margin: 200px auto 50px; /* Combined margin properties */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 900px; /* Set a maximum width */
+  width: 100%; /* Allow it to be responsive */
+  border: 5px solid #000;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
 
-  .check-options{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+.form-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8c7c7;
+  padding: 40px; /* Adjusted padding */
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
 
-  .check-options label{
-    gap: 10px;
-    font-size: 1.3rem;
-    color: #333;
-  }
-  
-  .btn-container {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 60px;
+.text h1 {
+  margin-bottom: 15px;
+  font-size: 2rem;
+  font-family: 'Montserrat', sans-serif; /* Fixed spelling */
+}
+
+.question-container {
+  margin-top: 20px;
+  background-color: #f8d7da;
+  padding: 15px;
+  border-radius: 5px;
+  max-width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.question-text {
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.required {
+  color: red;
+}
+
+.answer-options label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  accent-color: #333; /* Ensures visibility */
+}
+
+.other-input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #333;
+  padding: 5px;
+  font-size: 16px;
+  margin-top: 5px;
+  background-color: transparent;
+}
+
+.question-container .example {
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+  color: #555;
+}
+
+.check-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.check-options label {
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Reduced gap */
+  margin-top: 40px; /* Reduced margin */
 }
 
 .btn-container button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 232px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-    border-radius: 40px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  border: none;
+  border-radius: 40px;
+  width: 232px;
+  cursor: pointer;
 }
 
-.btn-cancel {
-    background-color: #C3BEF0;
-    color: #000;
+.btn-cancel, .btn-confirm {
+  background-color: #C3BEF0;
+  color: #000;
 }
 
-.btn-confirm {
-    background-color: #C3BEF0;
-    color: #000;
-}
 
 
   .footer-container {

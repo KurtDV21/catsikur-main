@@ -20,11 +20,34 @@ body{
     overflow-x: hidden;
 }
 
-.logo{
-    width: 100px;
-    height: auto;
+.img {
+    justify-content: flex-start;
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Vertically align items */
+    gap: 10px; /* Add space between the logo and the title */
+    padding: 10px; /* Add some padding around the container */
+}
+
+.img a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.logo {
+    width: 100px; /* Adjust the size of the logo */
+    height: 100px; /* Maintain aspect ratio by using equal width and height */
+    object-fit: contain; /* Ensure the logo fits within the bounds */
+}
+
+.title {
+    font-family: 'Montserrat', sans-serif; /* Use a clean font */
+    font-size: 2.5rem; /* Adjust the font size */
+    color: #ffffff; /* Set text color (white for contrast) */
+    font-weight: 500; /* Make the title bold */
+    text-align: left; /* Align text to the left */
     margin-left: 20px;
 }
+
 
 .hamburger {
     display: none;
@@ -182,167 +205,156 @@ section {
 
 
   /* FORM SECTION */
-  .outer-container {
-    margin-bottom: 50px;
-    margin-top: 200px;
-    margin-left: 300px;
+  .parent-container{
+    margin-top: 80px; /* Adjust this value based on your header height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Limit width for better layout */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px; /* Add padding for spacing around content */
+    box-sizing: border-box; /* Ensures padding doesn't add to element width */
+}
+  
+.outer-container {
+    margin: 50px auto; /* Center the container horizontally */
+    margin-top: 150px; /* Adjust top margin */
     display: flex;
     align-self: center;
     justify-content: center;
     align-items: center;
-    width: 1172px;          /* Set width to 1172px */
-    height: auto;         /* Set height to 1470px */
-    border: 5px solid #000;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 900px; /* Reduce the width */
+    height: auto; /* Allow dynamic height based on content */
+    border: 3px solid #000; /* Reduced border thickness */
+    border-radius: 10px; /* Smaller corner radius */
+    padding: 15px; /* Reduce padding inside the container */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
     background-color: #fff;
 }
 
-  .form-container{
-   display: flex;
-   flex-direction: column;
-   background-color: #f8c7c7;
-   padding: 50px;
-   border-radius: 10px;
-   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8c7c7;
+    padding: 30px;       /* Reduced padding */
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
 
-.adoptform{
-    margin-top: 50px;
-    margin-bottom: 50px;
+.adoptform {
+    margin-top: 30px;    /* Reduced margin */
+    margin-bottom: 30px; /* Reduced margin */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    transform: translate(-50%, -50%); /* Adjust the position to center it */
-    
-    background-color: #f8caca; /* Light pink background */
-    border: 3px solid #000; /* Blue border */
-    width: 1293px; /* Set a fixed width */
+    transform: translate(-50%, -50%);
+    background-color: #f8caca;
+    border: 3px solid #000;
+    width: 1100px;       /* Reduced width */
     height: auto;
-    padding: 20px; /* Add some space inside the container */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-
+    padding: 15px;       /* Reduced padding */
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .adoptform h2 {
-    
     font-family: 'Montserrat Alternates', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    position: relative;
-    font-size: 55px;
+    font-size: 48px;    /* Reduced font size */
     font-weight: bold;
-    color: #000; /* Black text color */
-    margin-bottom: 20px;
-    margin-top: 15px;
-    
+    color: #000;
+    margin-bottom: 15px; /* Reduced margin */
+    margin-top: 10px;    /* Reduced margin */
 }
 
 .adotpform p {
-    margin-top: 50px;
-    position: relative;
+    margin-top: 40px;    /* Reduced margin */
     font-family: 'Inter', sans-serif;
-    font-size: 40px;
-    color: #000; /* Black text */
-    line-height: 1.5; /* Space between lines */
-    
+    font-size: 36px;     /* Reduced font size */
+    color: #000;
+    line-height: 1.5;
 }
 
-
-
-
-
 .info h1 {
-    margin-top: 30px;
+    margin-top: 20px;    /* Reduced margin */
     font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    justify-content: flex-start;
     color: #333;
-    margin-bottom: 40px;
-    font-size: 40px;
+    margin-bottom: 30px; /* Reduced margin */
+    font-size: 36px;     /* Reduced font size */
 }
 
 .info h2 {
-    margin-bottom: 30px; /* Added more space before the next input */
+    margin-bottom: 20px; /* Reduced margin */
     color: #555;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.info p{
-    margin-bottom: 30px;
+.info p {
+    margin-bottom: 20px; /* Reduced margin */
     font-family: 'Lato', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.3rem;    /* Reduced font size */
 }
 
 .input-group {
-    display: flex; /* Use flexbox to arrange inputs in a row */
-    gap: 40px; /* Space between the inputs */
+    display: flex;
+    gap: 30px; /* Reduced space between inputs */
 }
-.input-box input[name="name"] {
-    width: 460px; /* Set width for the name input */
+
+.input-box input[name="name"],
+.input-box input[name="email"],
+.input-box input[name="phone"],
+.input-box input[name="age"],
+.input-box input[name="fb"] {
+    width: 350px;   /* Reduced width */
     background-color: white;
 }
 
-.input-box input[name="lastname"]{
-    width: 240px;
-}
-
-.input-box input[name="email"]{
-    width: 396px;
+.input-box input[name="address"]{
     background-color: white;
 }
 
-.input-box input[name="phone"]{
-    width: 396px;
+.input-box input[name="lastname"] {
+    width: 200px;   /* Reduced width */
     background-color: white;
 }
 
-.input-box input[name="phone"]{
-    width: 396px;
+.input-box input[name="guardian"] {
+    width: 450px;   /* Reduced width */
     background-color: white;
 }
 
-.input-box input[name="age"]{
-    width: 396px;
-    background-color: white;
-}
-
-.input-box input[name="guardian"]{
-    width: 560px;
-    background-color: white;
-
-}.input-box input[name="fb"]{
-    width: 400px;
-    background-color: white;
+.guardian{
+    margin-bottom: 20px;
 }
 
 .button-container {
-    margin-top: 20px;
+    margin-top: 15px;  /* Reduced margin */
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    gap: 20px;
-    
+    gap: 15px;        /* Reduced gap */
 }
-
 
 .dropdown {
     position: relative;
 }
 
 .dropbtn {
-    width: 500px;
+    width: 400px;    /* Reduced width */
     font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #fff;
     color: black;
-    padding: 10px 20px;
-    font-size: 1.3rem;
+    padding: 8px 18px; /* Reduced padding */
+    font-size: 1.2rem;  /* Reduced font size */
     border: none;
     border-radius: 5px;
-    gap: 20px;
+    gap: 15px;         /* Reduced gap */
     cursor: pointer;
     position: relative;
 }
@@ -350,8 +362,8 @@ section {
 .caret {
     display: inline-block;
     margin-left: 10px;
-    transition: transform 0.3s ease; /* Smooth rotation transition */
-    border:  solid black;
+    transition: transform 0.3s ease;
+    border: solid black;
     border-width: 0 5px 5px 0;
     padding: 4px;
     transform: rotate(45deg);
@@ -362,7 +374,7 @@ section {
     display: none;
     position: absolute;
     background-color: white;
-    min-width: 160px;
+    min-width: 140px;  /* Reduced min-width */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     padding: 0;
@@ -377,7 +389,7 @@ section {
 
 .dropdown-content li {
     color: black;
-    padding: 12px 16px;
+    padding: 10px 14px; /* Reduced padding */
     text-decoration: none;
     display: block;
     cursor: pointer;
@@ -389,25 +401,20 @@ section {
 
 /* Rotate caret when dropdown is active */
 .dropbtn.active .caret {
-    transform: rotate(225deg); /* Rotate 180 degrees */
+    transform: rotate(225deg);
 }
 
 .dropdown-content.show {
     display: block;
 }
 
-
-.drop{
-    min-width: 15em;
+.drop {
+    min-width: 13em;    /* Reduced min-width */
     position: relative;
-    margin: 2em;
+    margin: 1.5em;      /* Reduced margin */
 }
 
-.drop *{
-    box-sizing: border-box;
-}
-
-.select{
+.select {
     background: #fff;
     color: black;
     display: flex;
@@ -415,43 +422,34 @@ section {
     align-items: center;
     border: 2px #000 solid;
     border-radius: 0.5em;
-    padding: 1em;
+    padding: 0.8em;     /* Reduced padding */
     cursor: pointer;
     transition: 0.3s;
 }
 
-.select-clicked{
+.select-clicked {
     border: 2px #000 solid;
     box-shadow: 0 0 0.8em #000;
 }
 
-.select:hover{
+.select:hover {
     background: #f1f1f1;
 }
 
-/* .caret{
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid #000;
-    transition: 0.3s;
-} */
-
-.caret-rotate{
+.caret-rotate {
     transform: rotate(180deg);
 }
 
-.menu{
+.menu {
     list-style: none;
     padding: 0.2em 0.5em;
     background: #F7C9CB;
     border: 1px #000 solid;
-    box-shadow: 0 0.5em 1em rgba(0,0,0,02);
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
     border-radius: 0.5em;
     color: black;
     position: absolute;
-    top: 3em;
+    top: 2.5em;        /* Adjusted position */
     left: 30%;
     width: 100%;
     transform: translateX(-50%);
@@ -461,47 +459,40 @@ section {
     z-index: 1;
 }
 
-.menu li{
-    padding:0.7em 0.5em ;
+.menu li {
+    padding: 0.6em 0.5em;  /* Reduced padding */
     margin: 0.3em 0;
     border-radius: 0.5em;
     cursor: pointer;
 }
 
-.menu li:hover{
+.menu li:hover {
     background-color: #f1f1f1;
 }
 
-.active{
+.active {
     background: #f1f1f1;
 }
 
-.menu-open{
+.menu-open {
     display: block;
     opacity: 1;
 }
 
-
-.guardian {
-    margin-bottom: 20px;
-}
-
 .input-box {
-    margin-bottom: 25px; /* Added space between input fields */
+    margin-bottom: 20px;  /* Reduced margin */
     position: relative;
-    border: 5px;
-    background-color: white;
 }
 
 .input-box input,
 .input-box textarea {
     width: 100%;
-    padding: 10px;
+    padding: 8px;         /* Reduced padding */
     background: none;
     border: 1px solid black;
     border-radius: 5px;
     outline: none;
-    font-size: 16px;
+    font-size: 14px;      /* Reduced font size */
     transition: border-color 0.3s;
 }
 
@@ -512,8 +503,8 @@ section {
 
 label {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 8px;            /* Reduced top position */
+    left: 8px;           /* Reduced left position */
     pointer-events: none;
     transition: 0.5s;
 }
@@ -522,66 +513,73 @@ input:focus ~ label,
 input:not(:placeholder-shown) ~ label,
 textarea:focus ~ label,
 textarea:not(:placeholder-shown) ~ label {
-    top: -20px;
+    top: -18px;          /* Reduced top position */
     left: 5px;
     font-size: 12px;
     color: #333;
 }
 
 .input-box textarea {
-    height: 300px;
     resize: none;
+    height: 100px;       /* Reduced height */
 }
+
+input[type="radio"],
+input[type="checkbox"] {
+    transform: scale(0.8);   /* Reduced size */
+}
+
 
 /* Container to align questions side by side */
 .questions-container {
     margin-top: 40px;
-    display: flex;
-    gap: 40px; /* Space between the first two questions */
-    flex-wrap: wrap; /* Ensures wrapping when necessary */
-  }
-  
-  /* Style for the first and second question containers */
-  .question {
-    font-family: 'Lato', sans-serif;
-    width: 48%; /* This makes the first two questions sit side by side */
-    box-sizing: border-box; /* Prevents padding from affecting width */
-  }
-  
-  .question p {
-    font-size: 1.5rem;
-    color: #333;
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
-  
-  .radio-options {
+    display: flex; /* Use flexbox to align questions side by side */
+    gap: 20px; /* Space between the two questions */
+    justify-content: space-between; /* Ensures proper spacing */
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+.question {
+    width: 48%; /* Makes each question take up 48% of the container width */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.question p{
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.radio-options {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Space between each option */
-  }
-  
-  .radio-options div {
+    gap: 8px; /* Space between radio buttons */
+}
+
+.radio-options div {
     display: flex;
     align-items: center;
-  }
-  
-  .radio-options input[type="radio"] {
-    margin-right: 10px;
-  }
+}
 
-  .other-input {
+.radio-options input[type="radio"] {
+    margin-right: 10px;
+}
+
+.other-input {
     display: none;
     width: 50%;
     border: none;
-    border-bottom: 2px solid #333; /* Creates the underline */
+    border-bottom: 2px solid #333;
     padding: 5px;
     font-size: 16px;
     outline: none;
     margin-top: 5px;
     box-sizing: border-box;
-    background-color: transparent; /* Removes the box background */
-  }
+    background-color: transparent;
+}
+
+.required {
+    color: red;
+}
   
   .radio-options span {
     font-size: 1.3rem;

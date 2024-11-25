@@ -188,10 +188,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="input-group">
                     <div class="input-box">
-                        <input type="number" name="age" required placeholder=" " value="<?php echo isset($_SESSION['age']) ? $_SESSION['age'] : ''; ?>" />
+                        <input 
+                            type="text" 
+                            name="age" 
+                            required 
+                            placeholder=" " 
+                            maxlength="3" 
+                            value="<?php echo isset($_SESSION['age']) ? $_SESSION['age'] : ''; ?>" 
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 3);"
+                            pattern="[0-9]{1,3}" 
+                            title="Please enter a valid age (1-999)."
+                        />
                         <label>Age</label>
                     </div>
                 </div>
+
 
                 <div class="guardian">
                     <p>Guardian Name - Relationship - Contact Number: (FOR 18 YRS OLD & BELOW ONLY) <br> Example: Melinda Reyes - Mother - 0917522634 | FOR 18yrs old and below ONLY.</p>
