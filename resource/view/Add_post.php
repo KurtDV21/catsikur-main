@@ -13,6 +13,7 @@ $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
+
 if (isset($_SESSION['user_id'])) {
   $userId = $_SESSION['user_id']; 
   $user = $userModel->findUserById($userId); 
@@ -25,7 +26,7 @@ if (isset($_SESSION['user_id'])) {
   header("Location:/loginto");
 }
 
-    
+
 $logo = "/image/logo1.png";
 $name = $user['name'];
 
