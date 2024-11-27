@@ -41,6 +41,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           // Reset attempts on successful login
           $_SESSION['login_attempts'] = 0;
 
+          $insertQuery = "INSERT INTO user_logins (user_id, login_time) VALUES (?, NOW())";
+        $stmt = $dbConnection->prepare($insertQuery);
+
+        if ($stmt) {
+            $stmt->bind_param("i", $user['id']);
+            $stmt->execute();
+        }
+
           // Generate OTP
           $otp = rand(100000, 999999);
           session_regenerate_id();

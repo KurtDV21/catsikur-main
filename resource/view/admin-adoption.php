@@ -28,7 +28,11 @@ if (isset($_SESSION['user_id'])) {
     $showPic = $userModel->findUserById($userId);
 } else {
     $name = "";
+    header("Location:/");
+  exit; // Ensure the script stops after redirection
 }
+
+
 
 
 

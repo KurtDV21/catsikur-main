@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="/css/catdeets.css">
     <link rel="stylesheet" href="/css/catdeetstab.css">
+    <link rel="stylesheet" href="/css/sample-picture.css">  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat Details</title>
@@ -37,7 +38,10 @@ if (isset($_SESSION['user_id'])) {
     $name = $user['name'] ?? ''; 
 } else {
     $name = ''; 
+    header("Location:/loginto");
+  exit; // Ensure the script stops after redirection
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $_POST['status'] ?? '';
@@ -122,10 +126,15 @@ if ($post): // If a valid post is found
                     <label for="status"><strong>Status:</strong></label> 
                         <select id="status" name="status" required>
                         <option value="" disabled selected>Select Status</option> 
-                        <option value="available">Available</option> 
-                        <option value="adopted">Adopted</option> 
-                        <option value="rescued">Rescued</option>
+                        <?php if ($post['post_type'] === 'Adoption'): ?>
+                            <option value="available">Available</option> 
+                            <option value="adopted">Adopted</option>
+                        <?php elseif ($post['post_type'] === 'Rescue'): ?>
+                            <option value="available">Available</option>
+                            <option value="rescued">Rescued</option>
+                        <?php endif; ?>
                         </select>
+
 
                         <button type="submit">Update Status</button>
                         </form>

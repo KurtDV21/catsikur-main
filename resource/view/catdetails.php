@@ -3,6 +3,8 @@
 <head>
     <link rel="stylesheet" href="/css/catdeets.css">
     <link rel="stylesheet" href="/css/catdeetstab.css">
+    <link rel="stylesheet" href="/css/sample-picture.css">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat Details</title>
@@ -37,6 +39,8 @@ if (isset($_SESSION['user_id'])) {
     $name = $user['name'] ?? ''; 
 } else {
     $name = ''; 
+    header("Location:/loginto");
+  exit; // Ensure the script stops after redirection
 }
 
 if ($post): // If a valid post is found
@@ -124,6 +128,8 @@ if ($post): // If a valid post is found
 <?php else: ?>
     <p>No sample pictures available for <?php echo htmlspecialchars($post['cat_name']); ?>.</p>
 <?php endif; ?>
+
+
 
 <!-- Modal Structure -->
 <div id="imageModal" class="modal">

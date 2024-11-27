@@ -36,6 +36,8 @@ class UserController {
             
         }
 
+        
+
     public function activate($token_hash) {
         return $this->userModel->findByActivationToken($token_hash);
     }

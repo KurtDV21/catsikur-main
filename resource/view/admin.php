@@ -28,8 +28,9 @@ if (isset($_SESSION['user_id'])) {
     $showPic = $userModel->findUserById($userId);
     $pic = $userModel->findUserById($userId);
 } else {
-    header('Location:/loginto');
-}
+    header("Location:/");
+    exit; // Ensure the script stops after redirection
+    }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $postApprovalController->updateApproval();

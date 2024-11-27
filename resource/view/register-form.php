@@ -43,9 +43,13 @@
 
         <div class="input-box">
           <span class="icon"><ion-icon name="people"></ion-icon></span>
-          <input type="email" name="email" id="email" value="<?= htmlspecialchars($_POST["email"] ?? "")?>" required>
+          <input type="email" name="email" id="email" value="<?= htmlspecialchars($_POST["email"] ?? "") ?>" required>
           <label for="email">Email</label>
+          <?php if (isset($_GET['error']) && $_GET['error'] === 'email_exists'): ?>
+              <p style="color:red;">This email is already registered. Please use a different email.</p>
+          <?php endif; ?>
         </div>
+
 
         <div class="input-box">
           <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>

@@ -26,7 +26,8 @@ if (isset($_SESSION['user_id'])) {
   $name = $user['name'] ?? ''; 
 } else {
   $name = ''; 
-  header("Location:/loginto");
+  header("Location:/");
+  exit;
 }
 ?>
 

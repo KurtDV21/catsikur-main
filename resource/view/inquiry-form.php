@@ -18,6 +18,8 @@ if (isset($_SESSION['user_id'])) {
     $userId = $_SESSION['user_id'];  
     $user = $userModel->findUserById($userId); 
     $name = $user['name'] ?? ''; 
+    $firstname = $user['first_name'] ?? ''; 
+     $lastname = $user['last_name'] ?? ''; 
     $phone = $user['Phone_number'] ?? '';
     $email = $user['email'] ?? '';
 } else {
@@ -124,6 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 <head>
     <link rel="stylesheet" href="css/adoptform.css">
+    <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -159,12 +162,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="input-group">
                     <div class="input-box">
-                        <input type="text" name="name" required value="<?php echo htmlspecialchars($name); ?>">
+                        <input type="text" name="name" required value="<?php echo htmlspecialchars($firstname); ?>">
                         <label>First Name</label>
                     </div>
 
                     <div class="input-box">
-                        <input type="text" name="lastname" required placeholder=" " value="<?php echo isset($_SESSION['lastname']) ? $_SESSION['lastname'] : ''; ?>" />
+                        <input type="text" name="lastname" required placeholder=" " value="<?php echo htmlspecialchars($lastname); ?>" />
                         <label>Last Name</label>
                     </div>
                 </div>
@@ -176,9 +179,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
 
                     <div class="input-box">
-                        <input type="tel" name="phone" required value="<?php echo isset($_SESSION['phone']) ? $_SESSION['phone'] : ''; ?>" />
-                        <label>Phone Number</label>
-                    </div>
+                        <input 
+                            type="tel" 
+                            id="phoneNumber" 
+                            name="phone" 
+                            required 
+                            value="<?php echo isset($_SESSION['phone']) ? '+63' . substr($_SESSION['phone'], -10) : '+63'; ?>" 
+                            pattern="^\+63[0-9]{10}$" 
+                            title="Phone number must start with +63 and contain 10 additional digits."
+                            oninput="this.value = '+63' + this.value.slice(3).replace(/\D/g, '').slice(0, 10)"
+                            maxlength="13" 
+                        />
+                        <label for="phoneNumber">Phone Number</label>
+                        </div>
+
                 </div>
 
                 <div class="input-box">
@@ -541,10 +555,6 @@ document.getElementById('form').addEventListener('submit', function (event) {
         errorMessages.push("Valid email is required.");
     }
 
-    if (!phone || !/^\d{10,15}$/.test(phone)) {
-        isValid = false;
-        errorMessages.push("Phone number must be 10-15 digits.");
-    }
 
     if (!address) {
         isValid = false;

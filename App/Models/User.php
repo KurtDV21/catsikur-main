@@ -28,6 +28,25 @@ class User {
         return false; // Indicate failure
     }
 
+    public function isEmailRegistered($email) {
+        $sql = "SELECT COUNT(*) as count FROM user WHERE email = ?";
+        $stmt = $this->mysqli->prepare($sql);
+
+        // Check if the statement was prepared successfully
+        if ($stmt === false) {
+            // Debug message
+            echo "Error preparing statement: " . $this->mysqli->error;
+            exit;
+        }
+
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+    
+        return $row['count'] > 0; // Returns true if the email exists
+    }
+
     private function sendActivationEmail($email, $activation_hash) {
         // Build the activation link dynamically using the current server settings
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';

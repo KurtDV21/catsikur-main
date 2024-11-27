@@ -1,0 +1,36 @@
+.details-wrapper {
+    margin: 20px auto;
+    text-align: center;
+    max-width: 1200px; /* Adjust based on your layout needs */
+}
+
+.cat-details-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the items */
+    gap: 10px; /* Adjust gap between pictures */
+    align-items: center; /* Center items vertically */
+}
+
+.cat-detail-box {
+    flex: 1 1 300px; /* Ensure boxes have a minimum width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px; /* Ensure boxes don't exceed a certain width */
+    box-sizing: border-box;
+}
+
+.cat-detail-box img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;  /* Ensures the image covers the entire container without distortion */
+    display: block;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.cat-detail-box img:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}

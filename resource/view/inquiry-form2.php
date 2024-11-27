@@ -73,6 +73,7 @@ $allergyDetails = $_SESSION['allergy_details'] ?? '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat Adoption</title>
     <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
 </head>
 
 <body>

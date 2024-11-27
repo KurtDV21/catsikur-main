@@ -24,6 +24,7 @@ if (isset($_SESSION['user_id'])) {
   $name = $user['name'] ?? ''; 
 } else {
   header("Location:/loginto");
+  exit;
 }
 
 
@@ -41,40 +42,15 @@ $name = $user['name'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Cat Adoption Post</title>
     <link rel="stylesheet" href="/css/add_post.css"> <!-- Add your CSS file link if needed -->
+    <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
+
     <style>
         
     </style>
 </head>
 <body>
 <header>
-  <nav class="navbar">
-    <img src="/image/logo1.png" alt="logo" class="logo">
-
-    <div class="nav-container">
-      <div class="hamburger" onclick="toggleMenu(this)">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-      </div>
-
-      <ul class="nav-link">
-        <li><a href="/user-homepage">HOME</a></li>
-        <li><a href="#ourcat">OUR CATS</a></li>
-        <li><a href="">ABOUT</a></li>
-        <li><a href="">FAQs</a></li>
-        <li>
-            <div class="user-dropdown">
-              <button class="user-dropdown-button" onclick="toggleUserDropdown()">
-                  <?php echo htmlspecialchars($name); ?>
-              </button>
-              <div class="user-dropdown-content" id="userDropdownContent">
-                  <a href="/logout">Logout</a>
-              </div>
-            </div>
-        </li>
-      </ul>
-    </div>
-  </nav>
+<?php include("header.php") ?>
 </header>
 
 

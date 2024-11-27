@@ -215,6 +215,13 @@
     top: -5px;
 }
 
+.input-box.telephone label {
+  top: -5px; /* Position above */
+  font-size: 0.9em; /* Slightly smaller font size for consistency */
+  color: black;
+  pointer-events: none;
+}
+
   .input-box input{
     width: 100%;
     height: 100%;

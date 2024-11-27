@@ -12,19 +12,26 @@ $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = $_POST["email"];
     $role = 'user';
+
+    // Check if email is already registered
+    if ($userModel->isEmailRegistered($email)) {
+        header("Location: /register-form?error=email_exists"); // Redirect with error parameter
+        exit; // Stop further execution
+    }
+
     // Register the user and get the activation hash
-    $activation_hash = $userController->register($role, $_POST["name"], $_POST["email"], $_POST["password"]);
-    
-    // Retrieve the newly registered user's ID
-    $newUserId = $dbConnection->insert_id;
+    if ($userModel->create($role, $_POST["name"], $email, $_POST["password"])) {
+        // Retrieve the newly registered user's ID
+        $newUserId = $dbConnection->insert_id;
 
-    // Send activation email with the activation link
-    $activation_link = "http://localhost/activate-account.php?token=" . $activation_hash; // Update your domain
-    // Use PHPMailer or similar library to send the email here
-
-    // Redirect to profile creation page, passing user ID
-    header("Location: /profile2?user_id=" . $newUserId);
-    exit;
+        // Redirect to profile creation page, passing user ID
+        header("Location: /profile2?user_id=" . $newUserId);
+        exit;
+    } else {
+        echo "Error: Registration failed.";
+        exit; // Stop further execution
+    }
 }
 ?>

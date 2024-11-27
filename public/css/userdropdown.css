@@ -1,0 +1,43 @@
+.user-dropdown-content {
+    position: absolute;
+    text-align: center;
+    top: 100%; /* Position just below the button */
+    left: 0;
+    width: 150px; /* Adjusted for better visibility */
+    background-color: white;
+    border: 1px solid #f7c9cb;
+    border-radius: 5px;
+    overflow: hidden; /* Hide overflowing content */
+    opacity: 0; /* Start hidden */
+    transform: translateY(-10px); /* Start slightly above */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth opacity and slide down */
+    z-index: 1;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    pointer-events: none; /* Disable pointer events by default */
+}
+  
+.user-dropdown-content.show {
+    opacity: 1;
+    transform: translateY(0); /* Slide down */
+    pointer-events: auto; /* Enable pointer events when visible */
+}
+  
+.user-dropdown-content a {
+    display: block;
+    padding: 10px 12px;  /* Adjusted padding for better visibility */
+    font-size: 14px;  /* Adjusted font size */
+    color: black;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+  
+.user-dropdown-content a:hover {
+    background-color: #f1f1f1; /* Hover effect for links */
+}
+  
+.profile-image {
+    width: 50px;  /* Adjusted width to fit within the button */
+    height: 50px;  /* Adjusted height to fit within the button */
+    object-fit: cover;  /* Ensures the image covers the entire container without distortion */
+    border-radius: 50%;
+}
