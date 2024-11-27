@@ -7,7 +7,7 @@ use App\Components\Navbar;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 session_start();
-
+  
 $database = new Database();
 $dbConnection = $database->connect();
 $userModel = new User($dbConnection);

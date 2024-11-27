@@ -10,7 +10,6 @@
 <body>
 
 <?php
-// Include the PostController
 use App\Core\Database;
 use App\Models\PostByIdModel;
 use App\Controllers\PostDetailsController;
@@ -19,7 +18,6 @@ use App\Controllers\UserController;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-// Initialize Database and Models
 $database = new Database();
 $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
@@ -27,7 +25,7 @@ $userController = new UserController($userModel);
 
 $postModel = new PostByIdModel($dbConnection);
 $postController = new PostDetailsController($postModel);
-$post = $postController->showSelectedPost(); // Get selected cat post
+$post = $postController->showSelectedPost(); 
 
 session_start();
 
@@ -55,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("si", $status, $postId);
 
         if ($stmt->execute()) {
-            // Refresh the page to show updated status
             header("Location: " . $_SERVER['REQUEST_URI']);
             exit;
         } else {
@@ -68,10 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-if ($post): // If a valid post is found
+if ($post): 
 ?>
 
-<!-- HEADER -->
 <header>
     <nav class="navbar">
         <div class="img">
@@ -104,15 +100,12 @@ if ($post): // If a valid post is found
 
 <section id="main">
     <div class="parent-container">
-        <!-- Cat Card -->
         <div class="cat-card">
             <div class="cat-container">
-                <!-- Cat Image -->
                 <div class="cat-image">
                     <img src="<?php echo htmlspecialchars($post['picture']); ?>" alt="Cat Image">
                 </div>
 
-                <!-- Cat Info -->
                 <div class="cat-info">
                     <h2>Meet <?php echo htmlspecialchars($post['cat_name']); ?></h2>
                     <div class="cat-details">
@@ -137,7 +130,6 @@ if ($post): // If a valid post is found
                 </div>
             </div>
 
-            <!-- Additional Information Box -->
             <div class="extra-info-box">
                 <h3>Additional Information</h3>
                 <p><strong>Description:</strong> <?php echo htmlspecialchars($post['Description']); ?></p>
@@ -146,7 +138,6 @@ if ($post): // If a valid post is found
     </div>
 </section>
 
-<!-- Display Sample Pictures -->
 <?php if (!empty($post['sample_pictures'])): ?>
     <section id="ourcats">
         <div class="details-wrapper">
@@ -164,14 +155,12 @@ if ($post): // If a valid post is found
     <p>No sample pictures available for <?php echo htmlspecialchars($post['cat_name']); ?>.</p>
 <?php endif; ?>
 
-<!-- Modal Structure -->
 <div id="imageModal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImage">
 </div>
 
 
-<!-- About Section -->
 <section id="about" class="about">
     <div class="footer-container">
         <div class="about-company">

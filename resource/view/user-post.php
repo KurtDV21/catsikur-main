@@ -33,7 +33,7 @@ if (isset($_SESSION['user_id'])) {
 } else {
   $userPosts = [];
   header("Location:/loginto");
-  exit; // Ensure the script stops after redirection
+  exit; 
 }
 
 ?>
