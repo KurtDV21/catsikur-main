@@ -30,6 +30,8 @@ class PostDetailsController {
                 $post['picture'] = htmlspecialchars($post['picture']);
                 $post['Description'] = htmlspecialchars($post['Description']); // Corrected to use 'Description'                
                 $post['post_type'] = htmlspecialchars($post['post_type']);
+                $post['post_status'] = htmlspecialchars($post['post_status']);
+
 
 
                 // Decode the JSON string into an array

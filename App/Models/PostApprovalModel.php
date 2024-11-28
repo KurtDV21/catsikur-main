@@ -12,10 +12,10 @@ class PostApprovalModel {
         $this->mysqli = $mysqli;
     }
 
-    public function updateApproval($postId, $status) {
-        $sql = "UPDATE post SET approval = ? WHERE id = ?";
+    public function updateApproval($postId, $status,  $postStatus) {
+        $sql = "UPDATE post SET approval = ?, post_status = ? WHERE id = ?";
         $stmt = $this->mysqli->prepare($sql);
-        $stmt->bind_param("si", $status, $postId); // "si" for string (status) and integer (postId)
+        $stmt->bind_param("ssi", $status, $postStatus, $postId); // "si" for string (status) and integer (postId)
         return $stmt->execute();
     }
 }

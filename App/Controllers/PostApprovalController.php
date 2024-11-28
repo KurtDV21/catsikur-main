@@ -22,7 +22,7 @@ class PostApprovalController {
             $approvalStatus = ($action === 'approve') ? 'approved' : 'denied';
             $postStatus = ($action === 'available') ? 'available' : 'denied';
             
-            if ($this->postApprovalModel->updateApproval($postId, $approvalStatus)) {
+            if ($this->postApprovalModel->updateApproval($postId, $approvalStatus, $postStatus)) {
                 header("location:/admin");
                 exit;
             } else {

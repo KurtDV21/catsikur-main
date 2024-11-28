@@ -21,7 +21,8 @@ class PostByIdModel {
             post.picture,
             post.sample_pictures,
             post.Description,
-            post.post_type
+            post.post_type,
+            post.post_status
                 FROM post 
                 WHERE id = ?";
         $stmt = $this->mysqli->prepare($sql);

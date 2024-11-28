@@ -1,18 +1,12 @@
-function toggleUserDropdown() {
-    const dropdown = document.getElementById("userDropdownContent");
-    if (dropdown.style.display === "block") {
-        dropdown.style.display = "none"; // Hide dropdown
-    } else {
-        dropdown.style.display = "block"; // Show dropdown
-    }
-}
-
-// Close the dropdown when clicking outside of it
-window.onclick = function (event) {
-    if (!event.target.matches('.user-dropdown-button')) {
-        const dropdowns = document.getElementsByClassName("user-dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-            dropdowns[i].style.display = "none";
-        }
-    }
-};
+	
+<label for="status"><strong>Status:</strong></label> 
+                        <select id="status" name="status" required>
+                        <option value="" disabled selected>Select Status</option> 
+                        <?php if ($post['post_type'] === 'Adoption'): ?>
+                            <option value="available">Available</option> 
+                            <option value="adopted">Adopted</option>
+                        <?php elseif ($post['post_type'] === 'Rescue'): ?>
+                            <option value="available">Available</option>
+                            <option value="rescued">Rescued</option>
+                        <?php endif; ?>
+                        </select>

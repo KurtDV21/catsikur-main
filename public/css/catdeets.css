@@ -540,3 +540,19 @@ h2 {
 .cat-detail-box img { 
     cursor: pointer; /* Makes the cursor a hand icon when hovering over images */ 
     }
+
+    .edit-icon {
+        width: 60px; /* Small size for the icon */
+        height: 50px;
+        margin-left: 8px; /* Space between text and icon */
+        vertical-align: middle; /* Aligns the icon with the middle of the text */
+        cursor: pointer; /* Changes cursor to pointer on hover */
+        transition: transform 0.3s ease; /* Smooth transition effect */
+        top: -10px; /* Moves the icon slightly up */
+        position: relative; /* Position relative to adjust its position */
+    }
+    
+    .edit-icon:hover {
+        transform: scale(1.1); /* Slight zoom on hover */
+    }
+    

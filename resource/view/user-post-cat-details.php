@@ -118,30 +118,15 @@ if ($post): // If a valid post is found
 
                 <!-- Cat Info -->
                 <div class="cat-info">
-                    <h2>Meet <?php echo htmlspecialchars($post['cat_name']); ?></h2>
+                    <h2>Meet <span class="cat-name-wrapper"><?php echo htmlspecialchars($post['cat_name']); ?>
+                        <img src="/image/edit.png" alt="Edit" class="edit-icon" onclick="enableEditing()">
+                    </span></h2>
                     <div class="cat-details">
-                    <form method="POST" action="">
-                    <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($_GET['post_id']); ?>">
-
-                    <label for="status"><strong>Status:</strong></label> 
-                        <select id="status" name="status" required>
-                        <option value="" disabled selected>Select Status</option> 
-                        <?php if ($post['post_type'] === 'Adoption'): ?>
-                            <option value="available">Available</option> 
-                            <option value="adopted">Adopted</option>
-                        <?php elseif ($post['post_type'] === 'Rescue'): ?>
-                            <option value="available">Available</option>
-                            <option value="rescued">Rescued</option>
-                        <?php endif; ?>
-                        </select>
-
-
-                        <button type="submit">Update Status</button>
-                        </form>
-                        <p><strong>Type:</strong> <?php echo htmlspecialchars($post['post_type']); ?></p>
-                        <p><strong>Age:</strong> <?php echo htmlspecialchars($post['age']); ?></p>
-                        <p><strong>Gender:</strong> <?php echo htmlspecialchars($post['gender']); ?></p>
-                        <p><strong>Color:</strong> <?php echo htmlspecialchars($post['color']); ?></p>
+                        <p><strong>Status:</strong> <span id="status-text"><?php echo htmlspecialchars($post['post_status']); ?></span></p>
+                        <p><strong>Type:</strong> <span id="type-text"><?php echo htmlspecialchars($post['post_type']); ?></span></p>
+                        <p><strong>Age:</strong> <span id="age-text"><?php echo htmlspecialchars($post['age']); ?></span></p>
+                        <p><strong>Gender:</strong> <span id="gender-text"><?php echo htmlspecialchars($post['gender']); ?></span></p>
+                        <p><strong>Color:</strong> <span id="color-text"><?php echo htmlspecialchars($post['color']); ?></span></p>
                     </div>
                 </div>
             </div>
@@ -150,7 +135,7 @@ if ($post): // If a valid post is found
             <div class="extra-info-box">
                 <h3>Additional Information</h3>
                 <p><strong>Description:</strong> <?php echo htmlspecialchars($post['Description']); ?></p>
-               </div>
+            </div>
         </div>
     </div>
 </section>
@@ -178,7 +163,6 @@ if ($post): // If a valid post is found
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImage">
 </div>
-
 
 <!-- About Section -->
 <section id="about" class="about">
@@ -221,12 +205,53 @@ else:
 endif;
 ?>
 
+
 <script src="/js/cat-details.js"></script>
 <script>
-  function toggleMenu() {
+function toggleMenu() {
     const navLinks = document.querySelector('.nav-link');
     navLinks.classList.toggle('active');
 }
+
+function enableEditing() {
+    // Get the current text content
+    const statusText = document.getElementById('status-text').textContent.trim();
+    const postTypeText = document.getElementById('type-text').textContent.trim();
+    
+    // Determine the options based on the post type
+    let statusOptions = '';
+    if (postTypeText === "Adoption") {
+        statusOptions = `
+            <option value="available" ${statusText === 'available' ? 'selected' : ''}>Available</option>
+            <option value="adopted" ${statusText === 'adopted' ? 'selected' : ''}>Adopted</option>
+        `;
+    } else if (postTypeText === "Rescue") {
+        statusOptions = `
+            <option value="available" ${statusText === 'available' ? 'selected' : ''}>Available</option>
+            <option value="rescued" ${statusText === 'rescued' ? 'selected' : ''}>Rescued</option>
+        `;
+    }
+
+    // Replace status text with a form and dropdown
+    document.getElementById('status-text').innerHTML = `
+        <form method="POST" action="">
+            <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($_GET['post_id']); ?>">
+            <select id="status" name="status" required>
+                ${statusOptions}
+            </select>
+            <button type="submit">Update Status</button>
+        </form>
+    `;
+
+    // Replace type text with a dropdown
+    document.getElementById('type-text').innerHTML = `
+        <select id="type" name="type" required>
+            <option value="Adoption" ${postTypeText === 'Adoption' ? 'selected' : ''}>Adoption</option>
+            <option value="Rescue" ${postTypeText === 'Rescue' ? 'selected' : ''}>Rescue</option>
+        </select>
+    `;
+}
+
 </script>
 
 </body>
