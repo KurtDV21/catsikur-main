@@ -132,6 +132,25 @@ route('/chat', function () {
     include __DIR__ . '/../resource/view/chat.php';
 });
 
+route('/send_message', function () {
+    
+    include __DIR__ . '/../resource/view/send_message.php';
+});
+
+route('/typing_status', function () {
+    
+    include __DIR__ . '/../resource/view/typing_status.php';
+});
+
+route('/update_modal_seen', function () {
+    
+    include __DIR__ . '/../resource/view/update_modal_seen.php';
+});
+
+route('/fetch_messages', function () {
+    
+    include __DIR__ . '/../resource/view/fetch_messages.php';
+});
 
 route('/process-form-approval', function () {
     

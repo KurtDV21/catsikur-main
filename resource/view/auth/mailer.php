@@ -15,8 +15,8 @@ $mail->Port = 2525;
 $mail->Username = '2078dd9b83a328';
 $mail->Password = '7d6b474b619e9b'; 
 
-$mail->isHTML(true);
-
+$mail->isHTML(true);    
+    
 // Looking to send emails in production? Check out our Email API/SMTP product!
 return $mail;       
 ?>

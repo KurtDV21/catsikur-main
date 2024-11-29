@@ -97,7 +97,7 @@ if (isset($_SESSION['user_id'])) {
 
       </div>
       <h1 class="avail"><b>AVAILABLE CATS</b></h1>
-
+  
       <div class="cat-container">
         <?php foreach ($approvedPosts as $post): ?>
           <div class="cat-wrapper">

@@ -126,6 +126,21 @@ header {
     position: relative;
     left: 100px;
 }
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
 .login-btn {
 
     margin-right: 50px;
@@ -180,11 +195,12 @@ h1 {
 }
 
 .chat-container {
-    border-radius: 10px;
     display: flex;
-    width: 80%;
-    border: 1px solid black;
-}
+    height: 100vh;
+    background-color: #f5f5f5;
+    flex-direction: row;
+  }
+  
 
 .chat-sidebar {
     width: 30%;
@@ -199,33 +215,65 @@ h1 {
 }
 
 .chat-list {
-    max-height: 500px; /* Set a max-height for the chat list */
-    overflow-y: auto;  /* Allow vertical scrolling */
-    display: flex;
-    flex-direction: column;
-    height: 1000px;
+  width: 250px;  /* Adjust width as needed */
+  height: 100vh; /* Make the chat list occupy the full viewport height */
+  overflow-y: auto; /* Allow scrolling if there are too many chats */
+  border-right: 2px solid #ddd; /* Optional: to separate the chat list from the chat window */
+  padding: 10px;
+  box-sizing: border-box;
 }
-
+  
 .chat-item {
-    background-color: #f7b7b7;
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
     padding: 10px;
-    border-radius: 8px;
-    font-size: 16px;
     cursor: pointer;
-}
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis for long text */
+    transition: background-color 0.3s ease;
+  }
+
+  #typingIndicator {
+    display: none;  /* Hidden by default */
+    font-style: italic;
+    color: #999;
+    text-align: center;
+    padding: 10px;
+  }
+
+
+  .chat-item h3 {
+    display: block;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 
 .chat-item:hover {
-    background-color: #fca5a5;
-}
+    cursor: pointer;
+    background-color: #f1f1f1; /* Light gray on hover */
+  }
 
-.chat-window {
-    width: 70%;
+  .chat-item.new-message {
+    background-color: #f0f8ff;
+    font-weight: bold;
+    color: #007bff;
+  }
+
+.chat-item.selected {
+    background-color: #e0f7fa; /* Light blue background to indicate selection */
+    border: 2px solid #00796b; /* Darker border to highlight the selected item */
+    font-weight: bold; /* Optional: make the text bold for emphasis */
+  }
+
+.chat-window-container {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    border-left: 1px solid #000;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .chat-header {
@@ -236,17 +284,22 @@ h1 {
     font-weight: bold;
 }
 
-.messages {
-    flex: 1;
-    margin: 20px 0;
-    overflow-y: auto;
+
+
+.message p {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+.message strong {
+    font-weight: bold;
 }
 
-.message {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 8px;
-}
+.message small {
+    font-size: 15px;
+    color: #888;
+  }
+  
 
 .received {
     background-color: #e6e6e6;
@@ -264,13 +317,44 @@ h1 {
     padding: 10px;
 }
 
-.message-input input {
-    width: 90%;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background-color: #9D8989;
+.message-sender {
+    background-color: #0084ff; /* Blue for sender */
     color: white;
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 60%; /* Limit the width */
+    margin-left: auto; /* Push to the right */
+    text-align: right;
+    word-wrap: break-word; /* Ensure long words wrap properly */
+    margin-bottom: 10px; /* Add spacing between messages */
+    align-self: flex-end; /* Align to the right in flex container */
+}
+
+  .message-receiver {
+    background-color: #f1f1f1; /* Light gray for receiver */
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 60%; /* Limit the width */
+    margin-right: auto; /* Push to the left */
+    text-align: left;
+    word-wrap: break-word; /* Ensure long words wrap properly */
+    margin-bottom: 10px; /* Add spacing between messages */
+    align-self: flex-start; /* Align to the left in flex container */
+}
+
+#messageForm {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+#messageInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
 }
 
 input::placeholder{
@@ -411,3 +495,77 @@ input::placeholder{
     margin-bottom: 20px;
   }
   
+
+  .chat-window {
+    padding: 10px;
+    height: 800px;
+    overflow-y: scroll;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column; /* Ensure messages stack vertically */
+}
+  
+  
+  /* Style for each message */
+  .message {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.message .timestamp {
+    display: none;
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-top: 5px;
+  }
+  
+  .message.sent {
+    background-color: #dcf8c6; /* Light green like in WhatsApp/Messenger */
+    margin-left: auto; /* Align to the right */
+    text-align: right;
+  }
+  /* Receiver's message (left-aligned) */
+  .message.received {
+    background-color: #f1f1f1; /* Light gray for received messages */
+    align-self: flex-start; /* Align to the left */
+    text-align: left;
+  }
+  
+  /* Sender's message text */
+  .message.sent p {
+    color: #333;
+    font-size: 14px;
+  }
+  
+  /* Receiver's message text */
+  .message.received p {
+    color: #333;
+    font-size: 14px;
+  }
+  
+  /* Time of message (hidden by default) */
+  .timestamp {
+    font-size: 0.8em;
+    color: #888;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  
+  /* Show timestamp on hover */
+  .message:hover .timestamp {
+    display: block;
+  }
+  
+  /* Optional: style for typing indicator */
+  .typing-indicator p {
+    font-size: 14px;
+    color: #888;
+  }
+  /* Style for the no messages message */
+  .no-messages {
+    font-size: 18px;
+    color: #bbb;
+    text-align: center;
+  }
