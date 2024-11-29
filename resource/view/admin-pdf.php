@@ -183,7 +183,7 @@ if ($stmt) {
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="/css/adminadoption.css">
+    <link rel="stylesheet" href="/css/adminpdf.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Details</title>
@@ -191,50 +191,64 @@ if ($stmt) {
 
 <body>
     <div class="container-admin">
-        <div class="background-card">
-            <div class="header">
-                <div class="image-placeholder">
-                    <img src="<?php echo htmlspecialchars($user['profile_image_path']); ?>" alt="Admin Profile">
-                    <h2>ADMIN</h2>
+      
+        <div class="sidebar">
+                <div class="user-profile">
+                    <div class="image-placeholder">
+                        <img src="<?php echo htmlspecialchars($showPic['profile_image_path']); ?>" alt="Admin Profile">
+                        <h2>ADMIN</h2>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <div class="container">
+                        <div onclick="location.href='/admin'" class="approval-card">
+                            <a href="/admin">Approval</a>
+                        </div>  
+                        <div class="adoption-posts">
+                            <a href="/admin-adoption">Adoption Total Posts</a>
+                        </div>
+                        <div onclick="location.href='/admin-rescue'" class="rescue-posts">
+                            <a href="">Rescue Total Posts</a>
+                        </div>
+                        <div onclick="location.href='/admin-restrict'" class="rescue-posts">
+                            <a href="/admin-restrict">Restrict User</a>
+                        </div>
+                        <div onclick="location.href='/admin-pdf'" class="rescue-posts">
+                            <a href="/admin-pdf">Form Approval</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="sherwin">
-                <div class="container">
-                    <div onclick="location.href='/admin'" class="approval-card">Approval</div>
-                    <div onclick="location.href='/admin-adoption'" class="adoption-posts">Adoption Total Posts</div>
-                    <div class="rescue-posts">Rescue Total Posts</div>
-                    <div onclick="location.href='/admin-restrict'" class="rescue-posts">Restrict User</div>
-                    <div onclick="location.href='/admin-pdf'" class="rescue-posts">Form Approval</div>
-                </div>
-                <div class="pending">
-                    <table id="inquiryTable" class="table">
-                        <thead>
-                            <tr>
-                                <th>Inquirer ID</th>
-                                <th>Inquirer Name</th>
-                                <th>Post ID</th>
-                                <th>Author ID</th>
-                                <th>PDF</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($inquiries as $inquiry): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($inquiry['user_id']); ?></td>
-                                    <td><?php echo htmlspecialchars($inquiry['user_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($inquiry['post_id']); ?></td>
-                                    <td><?php echo htmlspecialchars($inquiry['post_name']); ?></td>
-                                    <td><a href="?action=generate_pdf&inquiry_id=<?php echo $inquiry['id']; ?>"
-                                            target="_blank">View PDF</a></td>
-                                    <td><a href="?action=approve&inquiry_id=<?php echo $inquiry['id']; ?>">Approve</a></td>
-                                    <td><a href="?action=deny&inquiry_id=<?php echo $inquiry['id']; ?>">Deny</a></td>
 
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
+                <div class="main-content">
+                <d<div class="pending">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Inquirer ID</th>
+                <th>Inquirer Name</th>
+                <th>Post ID</th>
+                <th>Author ID</th>
+                <th>PDF</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($inquiries as $inquiry): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($inquiry['user_id']); ?></td>
+                    <td><?php echo htmlspecialchars($inquiry['user_name']); ?></td>
+                    <td><?php echo htmlspecialchars($inquiry['post_id']); ?></td>
+                    <td><?php echo htmlspecialchars($inquiry['post_name']); ?></td>
+                    <td><a href="?action=generate_pdf&inquiry_id=<?php echo $inquiry['id']; ?>" target="_blank" class="view-pdf">View PDF</a></td>
+                    <td><a href="?action=approve&inquiry_id=<?php echo $inquiry['id']; ?>" class="approve-btn">Approve</a></td>
+                    <td><a href="?action=deny&inquiry_id=<?php echo $inquiry['id']; ?>" class="deny-btn">Deny</a></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
             </div>
         </div>
     </div>
