@@ -43,6 +43,7 @@ if (isset($_SESSION['user_id'])) {
 
 <head>
     <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

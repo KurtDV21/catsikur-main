@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/css/catdeets.css">
     <link rel="stylesheet" href="/css/catdeetstab.css">
     <link rel="stylesheet" href="/css/sample-picture.css">
-
+    <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat Details</title>
@@ -48,33 +48,7 @@ if ($post): // If a valid post is found
 
 <!-- HEADER -->
 <header>
-    <nav class="navbar">
-        <div class="img">
-            <img src="/image/logo1.png" alt="logo" class="logo">
-            <h2 class="title"><a href="">Cat Free Adoption</a></h2>
-        </div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-link">
-            <li><a href="/user-homepage">HOME</a></li>
-            <li><a href="#ourcat">OUR CATS</a></li>
-            <li><a href="#">ABOUT</a></li>
-            <li><a href="#">FAQs</a></li>
-            <li>
-                <div class="user-dropdown">
-                    <button class="user-dropdown-button" onclick="toggleUserDropdown()">
-                        <?php echo htmlspecialchars($name); ?>
-                    </button>
-                    <div class="user-dropdown-content" id="userDropdownContent">
-                        <a href="/logout">Logout</a>
-                    </div>
-                </div>
-            </li>
-        </ul> 
-    </nav>
+<?php include("header.php"); ?>
 </header>
 
 <section id="main">

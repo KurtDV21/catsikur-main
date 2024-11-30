@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="/css/catdeets.css">
     <link rel="stylesheet" href="/css/catdeetstab.css">
     <link rel="stylesheet" href="/css/sample-picture.css">  
+    <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat Details</title>
@@ -11,16 +12,17 @@
 <body>
 
 <?php
-// Include the PostController
+session_start();
+
+// Include the necessary files and initialize database and models
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 use App\Core\Database;
 use App\Models\PostByIdModel;
 use App\Controllers\PostDetailsController;
 use App\Models\User;
 use App\Controllers\UserController;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
-// Initialize Database and Models
 $database = new Database();
 $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
@@ -28,36 +30,48 @@ $userController = new UserController($userModel);
 
 $postModel = new PostByIdModel($dbConnection);
 $postController = new PostDetailsController($postModel);
-$post = $postController->showSelectedPost(); // Get selected cat post
-
-session_start();
+$post = $postController->showSelectedPost();
 
 if (isset($_SESSION['user_id'])) {
-    $userId = $_SESSION['user_id']; 
-    $user = $userModel->findUserById($userId); 
-    $name = $user['name'] ?? ''; 
+    $userId = $_SESSION['user_id'];
+    $user = $userModel->findUserById($userId);
+    $name = $user['name'] ?? '';
 } else {
-    $name = ''; 
+    $name = '';
     header("Location:/loginto");
-  exit; // Ensure the script stops after redirection
+    exit;
 }
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Capture POST data
     $status = $_POST['status'] ?? '';
+    $type = $_POST['type'] ?? '';
+    $age = $_POST['age'] ?? '';
+    $ageUnit = $_POST['age_unit'] ?? '';
+    $gender = $_POST['gender'] ?? '';
+    $color = $_POST['color'] ?? '';
+    $description = $_POST['description'] ?? '';
     $postId = $_POST['post_id'] ?? '';
 
-    if ($status && $postId) {
-        $sqlUpdate = "UPDATE post SET post_status = ? WHERE id = ?";
-        $stmt = $dbConnection->prepare($sqlUpdate);
+    // Debugging: Log the captured POST data
+    var_dump($_POST);
 
+    if ($status && $type && $age && $ageUnit && $gender && $color && $description && $postId) {
+        // Concatenate age and age unit correctly
+        $concatenatedAge = $age . ' ' . $ageUnit;
+
+        // Prepare SQL update query
+        $sqlUpdate = "UPDATE post SET post_status = ?, post_type = ?, age = ?, gender = ?, color = ?, Description = ? WHERE id = ?";
+        $stmt = $dbConnection->prepare($sqlUpdate);
+        
         if ($stmt === false) {
             echo "Error preparing statement: " . $dbConnection->error;
             exit;
         }
-
-        $stmt->bind_param("si", $status, $postId);
-
+        
+        // Bind the parameters (all string types except postId which is integer)
+        $stmt->bind_param("ssssssi", $status, $type, $concatenatedAge, $gender, $color, $description, $postId);
+        
         if ($stmt->execute()) {
             // Refresh the page to show updated status
             header("Location: " . $_SERVER['REQUEST_URI']);
@@ -65,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo "Error updating status: " . $stmt->error;
         }
-
+        
         $stmt->close();
     } else {
         echo "Invalid request.";
@@ -77,33 +91,7 @@ if ($post): // If a valid post is found
 
 <!-- HEADER -->
 <header>
-    <nav class="navbar">
-        <div class="img">
-            <img src="/image/logo1.png" alt="logo" class="logo">
-            <h2 class="title"><a href="">Cat Free Adoption</a></h2>
-        </div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-link">
-            <li><a href="/user-homepage">HOME</a></li>
-            <li><a href="#ourcat">OUR CATS</a></li>
-            <li><a href="#">ABOUT</a></li>
-            <li><a href="#">FAQs</a></li>
-            <li>
-                <div class="user-dropdown">
-                    <button class="user-dropdown-button" onclick="toggleUserDropdown()">
-                        <?php echo htmlspecialchars($name); ?>
-                    </button>
-                    <div class="user-dropdown-content" id="userDropdownContent">
-                        <a href="/logout">Logout</a>
-                    </div>
-                </div>
-            </li>
-        </ul> 
-    </nav>
+    <?php include("header.php"); ?>
 </header>
 
 <section id="main">
@@ -121,6 +109,8 @@ if ($post): // If a valid post is found
                     <h2>Meet <span class="cat-name-wrapper"><?php echo htmlspecialchars($post['cat_name']); ?>
                         <img src="/image/edit.png" alt="Edit" class="edit-icon" onclick="enableEditing()">
                     </span></h2>
+                    <form id="update-form" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                    <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($_GET['post_id']); ?>">
                     <div class="cat-details">
                         <p><strong>Status:</strong> <span id="status-text"><?php echo htmlspecialchars($post['post_status']); ?></span></p>
                         <p><strong>Type:</strong> <span id="type-text"><?php echo htmlspecialchars($post['post_type']); ?></span></p>
@@ -134,10 +124,15 @@ if ($post): // If a valid post is found
             <!-- Additional Information Box -->
             <div class="extra-info-box">
                 <h3>Additional Information</h3>
-                <p><strong>Description:</strong> <?php echo htmlspecialchars($post['Description']); ?></p>
+                <p><strong>Description:</strong> <span id="description-text"><?php echo htmlspecialchars($post['Description']); ?></span></p>
+                <div id="description-edit-box" style="display:none;">
+                    <textarea id="description" name="description" rows="10" cols="80" required><?php echo htmlspecialchars($post['Description']); ?></textarea>
+                </div>
             </div>
         </div>
     </div>
+    <div id="confirm-button-container"></div>
+    </form>
 </section>
 
 <!-- Display Sample Pictures -->
@@ -206,52 +201,168 @@ endif;
 ?>
 
 
+
 <script src="/js/cat-details.js"></script>
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("DOM fully loaded and parsed");
+});
+
 function toggleMenu() {
     const navLinks = document.querySelector('.nav-link');
     navLinks.classList.toggle('active');
 }
 
+let isEditing = false;
+
 function enableEditing() {
-    // Get the current text content
-    const statusText = document.getElementById('status-text').textContent.trim();
-    const postTypeText = document.getElementById('type-text').textContent.trim();
-    
-    // Determine the options based on the post type
-    let statusOptions = '';
-    if (postTypeText === "Adoption") {
-        statusOptions = `
-            <option value="available" ${statusText === 'available' ? 'selected' : ''}>Available</option>
-            <option value="adopted" ${statusText === 'adopted' ? 'selected' : ''}>Adopted</option>
-        `;
-    } else if (postTypeText === "Rescue") {
-        statusOptions = `
-            <option value="available" ${statusText === 'available' ? 'selected' : ''}>Available</option>
-            <option value="rescued" ${statusText === 'rescued' ? 'selected' : ''}>Rescued</option>
-        `;
+    console.log("EnableEditing function triggered"); // Basic log to ensure function is called
+
+    const statusElement = document.getElementById('status-text');
+    const typeElement = document.getElementById('type-text');
+    const ageElement = document.getElementById('age-text');
+    const genderElement = document.getElementById('gender-text');
+    const colorElement = document.getElementById('color-text');
+    const descriptionElement = document.getElementById('description-text');
+    const descriptionEditBox = document.getElementById('description-edit-box');
+
+    // Basic logging for elements
+    console.log("Status Element:", statusElement);
+    console.log("Type Element:", typeElement);
+    console.log("Age Element:", ageElement);
+    console.log("Gender Element:", genderElement);
+    console.log("Color Element:", colorElement);
+    console.log("Description Element:", descriptionElement);
+    console.log("Description Edit Box:", descriptionEditBox);
+
+    if (!statusElement || !typeElement || !ageElement || !genderElement || !colorElement || !descriptionElement) {
+        console.error("One or more elements are missing");
+        return;
     }
 
-    // Replace status text with a form and dropdown
-    document.getElementById('status-text').innerHTML = `
-        <form method="POST" action="">
-            <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($_GET['post_id']); ?>">
+    if (isEditing) {
+        console.log("Switching to non-editable state");
+
+        // Capture the values from input fields
+        const statusInput = document.getElementById('status').value.trim();
+        const typeInput = document.getElementById('type').value.trim();
+        const ageInput = document.getElementById('age').value.trim();
+        const ageUnitInput = document.getElementById('age_unit').value.trim();
+        const genderInput = document.getElementById('gender').value.trim();
+        const colorInput = document.getElementById('color').value.trim();
+        const descriptionInput = document.getElementById('description').value.trim();
+
+        // Debugging: Log captured values
+        console.log("Captured Values:", { statusInput, typeInput, ageInput, ageUnitInput, genderInput, colorInput, descriptionInput });
+
+        statusElement.innerHTML = statusInput;
+        typeElement.innerHTML = typeInput;
+        ageElement.innerHTML = `${ageInput} ${ageUnitInput}`;
+        genderElement.innerHTML = genderInput;
+        colorElement.innerHTML = colorInput;
+        descriptionElement.innerHTML = descriptionInput;
+
+        descriptionEditBox.style.display = 'none';
+        descriptionElement.style.display = 'block';
+
+        const confirmButton = document.getElementById('confirm-button');
+        if (confirmButton) {
+            confirmButton.remove();
+        }
+
+        isEditing = false;
+    } else {
+        console.log("Switching to editable state");
+
+        const statusText = statusElement.textContent.trim();
+        const postTypeText = typeElement.textContent.trim();
+        const ageText = ageElement.textContent.trim();
+        const genderText = genderElement.textContent.trim();
+        const colorText = colorElement.textContent.trim();
+        const descriptionText = descriptionElement.textContent.trim();
+
+        let statusOptions = '';
+        if (postTypeText === "Adoption" || postTypeText === "Rescue") {
+            statusOptions = `
+                <option value="Available" ${statusText === 'Available' ? 'selected' : ''}>Available</option>
+                <option value="Rehomed" ${statusText === 'Rehomed' ? 'selected' : ''}>Rehomed</option>
+            `;
+        }
+
+        const ageMatch = ageText.match(/(\d+)\s*(months|years)/i);
+        const ageValue = ageMatch ? ageMatch[1] : '';
+        const ageUnit = ageMatch ? ageMatch[2] : '';
+
+        statusElement.innerHTML = `
             <select id="status" name="status" required>
                 ${statusOptions}
             </select>
-            <button type="submit">Update Status</button>
-        </form>
-    `;
+        `;
 
-    // Replace type text with a dropdown
-    document.getElementById('type-text').innerHTML = `
-        <select id="type" name="type" required>
-            <option value="Adoption" ${postTypeText === 'Adoption' ? 'selected' : ''}>Adoption</option>
-            <option value="Rescue" ${postTypeText === 'Rescue' ? 'selected' : ''}>Rescue</option>
-        </select>
-    `;
+        typeElement.innerHTML = `
+            <select id="type" name="type" required>
+                <option value="Adoption" ${postTypeText === 'Adoption' ? 'selected' : ''}>Adoption</option>
+                <option value="Rescue" ${postTypeText === 'Rescue' ? 'selected' : ''}>Rescue</option>
+            </select>
+        `;
+
+        ageElement.innerHTML = `
+            <div class="input-box">
+                <input type="text" id="age" name="age" value="${ageValue}" maxlength="2" required 
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2);"
+                    pattern="[0-9]{1,2}" title="Please enter a valid age between 1 and 99">
+                <select id="age_unit" name="age_unit" required>
+                    <option value="" disabled ${!ageUnit ? 'selected' : ''}>Select age unit</option>
+                    <option value="months" ${ageUnit.toLowerCase() === 'months' ? 'selected' : ''}>Months</option>
+                    <option value="years" ${ageUnit.toLowerCase() === 'years' ? 'selected' : ''}>Years</select>
+            </div>
+        `;
+
+        genderElement.innerHTML = `
+            <select id="gender" name="gender" required>
+                <option value="" disabled ${!genderText ? 'selected' : ''}>Select Gender</option>
+                <option value="Male" ${genderText === 'Male' ? 'selected' : ''}>Male</option>
+                <option value="Female" ${genderText === 'Female' ? 'selected' : ''}>Female</option>
+            </select>
+        `;
+
+        colorElement.innerHTML = `
+            <select id="color" name="color" required>
+                <option value="" disabled ${!colorText ? 'selected' : ''}>Select Color</option>
+                <option value="White" ${colorText === 'White' ? 'selected' : ''}>White</option>
+                <option value="Brown" ${colorText === 'Brown' ? 'selected' : ''}>Brown</option>
+                <option value="Orange" ${colorText === 'Orange' ? 'selected' : ''}>Orange</option>
+                <option value="Black" ${colorText === 'Black' ? 'selected' : ''}>Black</option>
+                <option value="Grey" ${colorText === 'Grey' ? 'selected' : ''}>Grey</option>
+                <option value="Mixed" ${colorText === 'Mixed' ? 'selected' : ''}>Mixed</option>
+            </select>
+        `;
+
+        descriptionElement.style.display = 'none';
+        descriptionEditBox.innerHTML = `
+            <textarea id="description" name="description" rows="10" cols="80" required>${descriptionText}</textarea>
+        `;
+        descriptionEditBox.style.display = 'block';
+
+        console.log("Description Element updated to textarea:", descriptionEditBox.innerHTML);
+
+        // Create the confirm button only if it doesn't already exist
+        if (!document.getElementById('confirm-button')) {
+            const confirmButton = document.createElement('button');
+            confirmButton.type = 'submit';
+            confirmButton.id = 'confirm-button';
+            confirmButton.textContent = 'Confirm';
+            confirmButton.style.margin = '20px auto';
+            confirmButton.style.display = 'block';
+            confirmButton.style.width = '100px';
+            confirmButton.style.textAlign = 'center';
+
+            document.getElementById('update-form').appendChild(confirmButton);
+        }
+
+        isEditing = true;
+    }
 }
-
 </script>
 
 </body>
