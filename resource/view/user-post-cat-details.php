@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,6 +97,8 @@ if ($post): // If a valid post is found
 
 <section id="main">
     <div class="parent-container">
+
+    <form id="update-form" method="POST" action="">
         <!-- Cat Card -->
         <div class="cat-card">
             <div class="cat-container">
@@ -104,12 +107,13 @@ if ($post): // If a valid post is found
                     <img src="<?php echo htmlspecialchars($post['picture']); ?>" alt="Cat Image">
                 </div>
 
+                
                 <!-- Cat Info -->
                 <div class="cat-info">
                     <h2>Meet <span class="cat-name-wrapper"><?php echo htmlspecialchars($post['cat_name']); ?>
                         <img src="/image/edit.png" alt="Edit" class="edit-icon" onclick="enableEditing()">
                     </span></h2>
-                    <form id="update-form" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                    
                     <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($_GET['post_id']); ?>">
                     <div class="cat-details">
                         <p><strong>Status:</strong> <span id="status-text"><?php echo htmlspecialchars($post['post_status']); ?></span></p>
@@ -121,6 +125,8 @@ if ($post): // If a valid post is found
                 </div>
             </div>
 
+           
+
             <!-- Additional Information Box -->
             <div class="extra-info-box">
                 <h3>Additional Information</h3>
@@ -131,9 +137,8 @@ if ($post): // If a valid post is found
             </div>
         </div>
     </div>
-    <div id="confirm-button-container"></div>
-    </form>
 </section>
+</form>
 
 <!-- Display Sample Pictures -->
 <?php if (!empty($post['sample_pictures'])): ?>
