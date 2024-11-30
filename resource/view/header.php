@@ -19,6 +19,7 @@
         <img src="<?= htmlspecialchars($user['profile_image_path']); ?>" alt="Profile Image" class="profile-image">
     </button>
     <div class="user-dropdown-content" id="userDropdownContent">
+        <a href="/MyProfile">My Profile</a>
         <a href="/MyPost">My Post</a>
         <a href="/logout">Logout</a>
     </div>

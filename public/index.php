@@ -192,6 +192,12 @@ route('/MyPost-catdetails', function () {
     include __DIR__ . '/../resource/view/user-post-cat-details.php';
 });
 
+route('/MyProfile', function () {
+    include __DIR__ . '/../resource/view/user-profile.php';
+});
+
+
+
 route('/pdf-index', function () {
     include __DIR__ . '/../resource/view/pdf_index.php';
 });
