@@ -85,37 +85,35 @@ if (isset($_SESSION['user_id'])) {
     <!-- header nav-bar -->
     <section id="main">
     <div class="container-admin">
-      <!-- <div class="background-card"> -->
-            <div class="sidebar">
-                <div class="user-profile">
-                    <div class="image-placeholder">
-                        <img src="<?php echo htmlspecialchars($showPic['profile_image_path']); ?>" alt="Admin Profile">
-                        <h2>ADMIN</h2>
-                    </div>
+        <div class="sidebar">
+            <div class="user-profile">
+                <div class="image-placeholder">
+                    <img src="<?php echo htmlspecialchars($showPic['profile_image_path']); ?>" alt="Admin Profile">
+                    <h2>ADMIN</h2>
                 </div>
-
-                <div class="navigation">
-                    <div class="container">
-                        <div onclick="location.href='/admin'" class="approval-card">
-                            <a href="/admin">Approval</a>
-                        </div>  
-                        <div class="adoption-posts">
-                            <a href="/admin-adoption">Adoption Total Posts</a>
-                        </div>
-                        <div onclick="location.href='/admin-rescue'" class="rescue-posts">
-                            <a href="">Rescue Total Posts</a>
-                        </div>
-                        <div onclick="location.href='/admin-restrict'" class="rescue-posts">
-                            <a href="/admin-restrict">Restrict User</a>
-                        </div>
-                        <div onclick="location.href='/admin-pdf'" class="rescue-posts">
-                            <a href="/admin-pdf">Form Approval</a>
-                        </div>
+            </div>
+            <div class="navigation">
+                <div class="container">
+                    <div onclick="location.href='/admin'" class="approval-card">
+                        <a href="/admin">Approval</a>
+                    </div>  
+                    <div class="adoption-posts">
+                        <a href="/admin-adoption">Adoption Total Posts</a>
+                    </div>
+                    <div onclick="location.href='/admin-rescue'" class="rescue-posts">
+                        <a href="">Rescue Total Posts</a>
+                    </div>
+                    <div onclick="location.href='/admin-restrict'" class="rescue-posts">
+                        <a href="/admin-restrict">Restrict User</a>
+                    </div>
+                    <div onclick="location.href='/admin-pdf'" class="rescue-posts">
+                        <a href="/admin-pdf">Form Approval</a>
                     </div>
                 </div>
             </div>
-
-            <div class="main-content">
+        </div>
+        <div class="main-content">
+            <div class="table-container">
                 <div class="pending">
                     <table id="myTable" class="table">
                         <thead>
@@ -161,7 +159,7 @@ if (isset($_SESSION['user_id'])) {
                     </table>
                 </div>
             </div>
-      <!-- </div> -->
+        </div>
     </div>
 </section>
 

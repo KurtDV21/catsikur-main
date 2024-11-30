@@ -184,26 +184,6 @@ h2 {
   color: #333;
 }
 
-.left-text-container {
-    font-family: 'Inter', sans-serif;
-    font-size: 30px ;
-    display: flex; /* Aligns items in a row */
-    align-items: center; /* Centers items vertically */
-    margin-right: 650px; /* Add some space from the left edge */
-}
-
-.calendar-button {
-    background: none; /* No background */
-    border: none; /* No border */
-    cursor: pointer; /* Pointer cursor on hover */
-    margin-right: 10px; /* Space between button and text */
-}
-
-.calendar-icon {
-    width: 26px; /* Set width for the icon */
-    height: 26px; /* Set height for the icon */
-}
-
 .approval-card, .adoption-posts, .rescue-posts {
   background-color: #FFFFFF;
   border-radius: 10px;
@@ -281,16 +261,7 @@ h2 {
 }
 
 
-.approval-item-container {
-  display: flex; /* Align children horizontally */
-  box-sizing: border-box;
-  background-color: #fff; 
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;    
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  align-items: column; /* Center content vertically */
-}
+
 
 .approval-item-container img {
   max-width: 100px; /* Restrict the size of images */
@@ -317,14 +288,26 @@ h2 {
 }
 
 .username {
+  text-align: center;
     font-size: 16px; /* Adjust font size as needed */
     font-family: 'Inter', sans-serif;
 }
 
+.approval-item-container {
+  display: flex; /* Align children horizontally */
+  box-sizing: border-box;
+  background-color: #F3D9DC;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;    
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  align-items: column; /* Center content vertically */
+}
+
 .approval-item {
-    width: 80%;
+    width: 100%;
     flex-grow: 1; /* Allow the approval item to take remaining space */
-    background-color: #FFEFEF;
+    background-color: rgb(222, 214, 209);
     border-radius: 10px;
     padding: 40px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -489,26 +472,61 @@ h2 {
   font-size: 2rem;
 }
 
-.pagination {
-    display: flex;
-    justify-content: space-between; /* Space between buttons */
-    margin-top: 20px;
-    padding: 0 20px; /* Add some padding for spacing */
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 0; /* Add padding for visual spacing */
+  margin-top: 20px; /* Ensure some space between approval list and pagination */
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Ensure it takes the full width */
+  padding: 10px 0; /* Add padding for a balanced layout */
+}
+
+
 .prev-button, .next-button {
-    padding: 10px 15px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #333;
-    transition: background-color 0.3s;
+  padding: 14px 22px; /* Increased padding for a more prominent button */
+  background: linear-gradient(45deg, #FF9F80, #FF6F61); /* Peach gradient */
+  border: none; /* Remove border */
+  border-radius: 50px; /* Fully rounded buttons */
+  text-decoration: none; /* Remove underline from links */
+  color: #fff; /* White text for contrast */
+  font-weight: bold; /* Make text bold */
+  font-size: 16px; /* Larger font size for readability */
+  box-shadow: 0 8px 15px rgba(255, 111, 97, 0.3); /* Glowing shadow for a premium feel */
+  transition: all 0.4s ease; /* Smooth transition for hover and active effects */
+  margin: 0 10px; /* Add spacing between buttons */
+  cursor: pointer; /* Ensure it looks clickable */
 }
 
 .prev-button:hover, .next-button:hover {
-    background-color: #ddd;
+  background: linear-gradient(45deg, #FF6F61, #FF3E3E); /* Slightly darker peach gradient on hover */
+  box-shadow: 0 12px 20px rgba(255, 111, 97, 0.4); /* Stronger glow on hover */
+  transform: translateY(-4px); /* Elevate the button on hover */
 }
+
+.prev-button:active, .next-button:active {
+  background: linear-gradient(45deg, #FF3E3E, #CC2E2E); /* Even darker gradient when clicked */
+  box-shadow: 0 4px 8px rgba(255, 111, 97, 0.3); /* Reduced shadow on click */
+  transform: translateY(0); /* Reset position on click */
+}
+
+.pagination-disabled {
+  background: #FFE5DC; /* Light peach for disabled state */
+  color: #FFB3A7; /* Dimmed peach text color */
+  cursor: not-allowed; /* Indicate that it's not clickable */
+  box-shadow: none; /* No shadow for disabled buttons */
+}
+
+.pagination-disabled:hover {
+  transform: none; /* No hover effect for disabled buttons */
+}
+
   
 .popup{
   width: 400px;
@@ -669,22 +687,25 @@ h2 {
 }
 
 .main-content {
-  margin-top: 200px;
-  height: auto;
-  width: 100vw;
+  margin-top: 150px;
+  width: 100%;
   flex-grow: 1;
   padding: 20px;
   background-color: #ffffff;
   display: flex;
+  flex-direction: column; /* Stack child elements vertically */
   justify-content: flex-start; /* Align items to the start (top-left) */
   align-items: flex-start; /* Align items to the start (top-left) */
 }
 
 .approval-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns for grid layout */
+  grid-template-rows:auto; /* Adjust rows automatically */
   flex-wrap: wrap; /* Wrap items if needed */
   gap: 20px; /* Space between items */
   margin: 20px; /* Add margin around the list */
+  width: 100%; /* Make it full width of the main-content */
 }
 
 

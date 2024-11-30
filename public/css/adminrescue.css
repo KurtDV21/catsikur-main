@@ -676,116 +676,114 @@ h2 {
 }
 
 .pending {
-  overflow-y: auto;
-  height: 30vh;
-  width: 80%;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  padding: 15px;
-  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Soft table shadow */
+
+.table-container {
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 500px; /* Set a fixed height for the container */
+    margin: 20px 0;
+    padding-bottom: 20px; /* Prevent overlap with footer */
+    width: 80%; /* Make the container full width */
 }
 
-thead th {
-  width: 10vw;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background-color: #000;  /* Green background */
-  color: #fff;  /* White text */
-  font-weight: bold;
-  padding: 12px 8px;
-  text-align: left;
-  text-transform: uppercase; /* Uppercase letters */
-  letter-spacing: 1px;  /* Space between letters */
-  border-bottom: 2px solid #ddd;  /* Slightly darker border */
+.table {
+    width: 100%;
+    table-layout: fixed; /* Ensure the table takes up full width */
 }
 
-thead th:hover {
-  background-color: #45a049; /* Darker green on hover */
+.table th,
+.table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    width: 14.28%; /* Adjust as needed to fit the number of columns */
+    word-wrap: break-word; /* Ensure text wraps within cells */
 }
 
-th, td {
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  padding: 12px 8px;
-  text-align: left;
-  font-size: 14px;
-  color: #333;  /* Darker text color */
-  transition: background-color 0.3s ease;
+.table thead tr {
+    background-color: #000;
+    color: #ffffff;
+    text-align: center;
 }
 
-th:hover, td:hover {
-  background-color: #f9f9f9;  /* Subtle hover effect */
-  cursor: pointer;
+.table tbody tr {
+    border-bottom: 1px solid #dddddd;
 }
 
-tr:nth-child(even) {
-  background-color: #f9f9f9;  /* Zebra striping for even rows */
+.table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
 }
 
-tr:hover {
-  background-color: #f1f1f1;  /* Light hover effect for rows */
+.table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
 }
 
-tbody td {
-  border-bottom: 1px solid #ddd;
+.table tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
-tbody td:last-child {
-  border-right: none; /* Remove border from last cell in each row */
+.action-cell {
+    display: flex;
+    justify-content: space-around;
 }
 
-table {
-  border-radius: 8px; /* Rounded corners for the table */
-  overflow: hidden;
+.view-pdf, .approve-btn, .deny-btn, .restriction-btn {
+    text-decoration: none;
+    padding: 10px 15px; /* Increase padding for larger buttons */
+    border: 1px solid #009879;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+    margin: 0 5px;
+}
+
+/* Specific styles for buttons */
+.view-pdf {
+    color: #009879;
+}
+
+.view-pdf:hover {
+    background-color: #009879;
+    color: #ffffff;
+}
+
+.approve-btn {
+    color: #28a745; /* Green for approve */
+    border-color: #28a745;
+}
+
+.approve-btn:hover {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+.deny-btn {
+    color: #dc3545; /* Red for deny */
+    border-color: #dc3545;
+}
+
+.deny-btn:hover {
+    background-color: #dc3545;
+    color: #ffffff;
 }
 
 .restriction-btn {
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s ease-in-out;
-  text-transform: uppercase;
-  background-color: #f44336; /* Red for restrict */
-}
-
-.restriction-btn.restricted {
-  background-color: #4CAF50; /* Green for unrestrict */
+    color: #ffab00; /* Amber for restrict/unrestrict */
+    border-color: #ffab00;
+    font-size: 1.1em; /* Increase font size */
 }
 
 .restriction-btn:hover {
-  background-color: #d32f2f; /* Darker red on hover */
-  transform: translateY(-2px); /* Slight raise on hover */
+    background-color: #ffab00;
+    color: #ffffff;
 }
 
-.restriction-btn.restricted:hover {
-  background-color: #388e3c; /* Darker green for unrestrict hover */
-}
 
-.restriction-btn:active {
-  background-color: #c62828; /* Dark red on click */
-  transform: translateY(0); /* Return to normal position */
-}
-
-.restriction-btn.restricted:active {
-  background-color: #2c6e2f; /* Even darker green on click */
-}
-
-.restriction-btn:focus {
-  outline: none; /* Remove outline */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Focus glow effect */
-}
 
 
 

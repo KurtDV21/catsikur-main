@@ -39,7 +39,7 @@ if (isset($_SESSION['user_id'])) {
 
 <head>
 
-    <link rel="stylesheet" href="/css/adminadoption.css">
+    <link rel="stylesheet" href="/css/adminrestrict.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <meta charset="UTF-8">
@@ -103,7 +103,7 @@ if (isset($_SESSION['user_id'])) {
                             <a href="/admin-adoption">Adoption Total Posts</a>
                         </div>
                         <div onclick="location.href='/admin-rescue'" class="rescue-posts">
-                            <a href="">Rescue Total Posts</a>
+                            <a href="/admin-rescue">Rescue Total Posts</a>
                         </div>
                         <div onclick="location.href='/admin-restrict'" class="rescue-posts">
                             <a href="/admin-restrict">Restrict User</a>
@@ -115,51 +115,57 @@ if (isset($_SESSION['user_id'])) {
                 </div>
             </div>
 
-                <div class="main-content">
-                <div class="pending">
-                <table id="myTable" class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php
-    $database = new Database();
-    $dbConnection = $database->connect();
+            <div class="main-content">
+    <div class="table-container">
+        <div class="pending">
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Database connection
+                    $database = new Database();
+                    $dbConnection = $database->connect();
+                    
+                    if ($dbConnection->connect_error) {
+                        die("Connection Failed: " . $dbConnection->connect_error);
+                    }
 
-    if ($dbConnection->connect_error) {
-        die("Connection Failed: " . $dbConnection->connect_error);
-    }
+                    // SQL query
+                    $sql = "SELECT id, name, email, is_restricted FROM user WHERE role = 'user'";
+                    $result = $dbConnection->query($sql);
 
-    $sql = "SELECT id, name, email, is_restricted FROM user WHERE role = 'user'";
-    $result = $dbConnection->query($sql);
+                    if (!$result) {
+                        die("Invalid Query: " . $dbConnection->error);
+                    }
 
-    if (!$result) {
-        die("Invalid Query: " . $dbConnection->error);
-    }
-
-    while ($row = $result->fetch_assoc()) {
-        $buttonText = $row["is_restricted"] ? "Unrestrict" : "Restrict";
-        echo "<tr>
-            <td>" . htmlspecialchars($row["id"]) . "</td>
-            <td>" . htmlspecialchars($row["name"]) . "</td>
-            <td>" . htmlspecialchars($row["email"]) . "</td>
-            <td><button onclick=\"toggleRestriction(" . $row["id"] . ", " . $row["is_restricted"] . ")\" class='restriction-btn'>" . $buttonText . "</button></td>
-            </tr>";
-    }
-    ?>
-</tbody>
-
-</table>
+                    // Display rows
+                    while ($row = $result->fetch_assoc()) {
+                        $buttonText = $row["is_restricted"] ? "Unrestrict" : "Restrict";
+                        echo "<tr>
+                                <td>" . htmlspecialchars($row["id"]) . "</td>
+                                <td>" . htmlspecialchars($row["name"]) . "</td>
+                                <td>" . htmlspecialchars($row["email"]) . "</td>
+                                <td>
+                                    <button onclick=\"toggleRestriction(" . htmlspecialchars($row["id"]) . ", " . htmlspecialchars($row["is_restricted"]) . ")\" class='restriction-btn'>
+                                        " . $buttonText . "
+                                    </button>
+                                </td>
+                              </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-
-
-                </div>
 
             </div>
           

@@ -190,6 +190,39 @@ if ($stmt) {
 </head>
 
 <body>
+<header>
+        <nav class="navbar">
+        <div class="img">
+    <img src="/image/logo1.png" alt="logo" class="logo">
+    <h2 class="title"><a href="">Cat Free Adoption</a></h2>
+    </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+      <ul class="nav-link">
+        <li><a href="/user-homepage">HOME</a></li>
+        <li><a href="/ourcats">OUR CATS</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#faq">FAQs</a></li>
+        <li>
+          <div class="user-dropdown">
+            <button class="user-dropdown-button" onclick="toggleUserDropdown()">
+              <?php echo htmlspecialchars($name); ?>
+            </button>
+            <div class="user-dropdown-content" id="userDropdownContent">
+              <a href="/logout">Logout</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    </header>
+
+<section id="main">
     <div class="container-admin">
       
         <div class="sidebar">
@@ -209,7 +242,7 @@ if ($stmt) {
                             <a href="/admin-adoption">Adoption Total Posts</a>
                         </div>
                         <div onclick="location.href='/admin-rescue'" class="rescue-posts">
-                            <a href="">Rescue Total Posts</a>
+                            <a href="/admin-rescue">Rescue Total Posts</a>
                         </div>
                         <div onclick="location.href='/admin-restrict'" class="rescue-posts">
                             <a href="/admin-restrict">Restrict User</a>
@@ -221,37 +254,85 @@ if ($stmt) {
                 </div>
             </div>
 
-                <div class="main-content">
-                <d<div class="pending">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Inquirer ID</th>
-                <th>Inquirer Name</th>
-                <th>Post ID</th>
-                <th>Author ID</th>
-                <th>PDF</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($inquiries as $inquiry): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($inquiry['user_id']); ?></td>
-                    <td><?php echo htmlspecialchars($inquiry['user_name']); ?></td>
-                    <td><?php echo htmlspecialchars($inquiry['post_id']); ?></td>
-                    <td><?php echo htmlspecialchars($inquiry['post_name']); ?></td>
-                    <td><a href="?action=generate_pdf&inquiry_id=<?php echo $inquiry['id']; ?>" target="_blank" class="view-pdf">View PDF</a></td>
-                    <td><a href="?action=approve&inquiry_id=<?php echo $inquiry['id']; ?>" class="approve-btn">Approve</a></td>
-                    <td><a href="?action=deny&inquiry_id=<?php echo $inquiry['id']; ?>" class="deny-btn">Deny</a></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
-            </div>
+            <div class="main-content">
+    <div class="table-container">
+        <div class="pending">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Inquirer ID</th>
+                        <th>Inquirer Name</th>
+                        <th>Post ID</th>
+                        <th>Author ID</th>
+                        <th>PDF</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($inquiries as $inquiry): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($inquiry['user_id']); ?></td>
+                            <td><?php echo htmlspecialchars($inquiry['user_name']); ?></td>
+                            <td><?php echo htmlspecialchars($inquiry['post_id']); ?></td>
+                            <td><?php echo htmlspecialchars($inquiry['post_name']); ?></td>
+                            <td><a href="?action=generate_pdf&inquiry_id=<?php echo $inquiry['id']; ?>" target="_blank" class="view-pdf">View PDF</a></td>
+                                <td class="action-cell">
+                                    <a href="?action=approve&inquiry_id=<?php echo $inquiry['id']; ?>" class="approve-btn">Approve</a>
+                                    <a href="?action=deny&inquiry_id=<?php echo $inquiry['id']; ?>" class="deny-btn">Deny</a>
+                                </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+
+        </div>
+        </section>
+
+        <section id="about" class="about">
+    <div class="footer-container">
+        <div class="about-company">
+
+        <div class="info-item">
+        <img src="/image/place.png" alt="" class="place-icon">
+        <p><a href="">9A Masambong St. Bahay Toro, Quezon City</a></p>
+    </div>
+    <div class="info-item">
+        <img src="/image/phone.png" alt="" class="phone-icon">
+        <p><a href="">09123456789</a></p>
+    </div>
+    <div class="info-item">
+        <img src="/image/email.png" alt="" class="email-icon">
+        <p><a href="">catfreeadopt@email.com</a></p>
+    </div>
+        </div>
+
+
+        <div class="details">
+        <h3>ABOUT COMPANY</h3>
+            <p>Lorem ipsum dolor sit amet. Ex officiis molestias et sapiente<br> doloremque et dolores doloribus est animi maiores. Ut fugiat <br> molestiae nam quia earum qui aliquid aliquid ab corrupti officiis. Et<br> temporibus quia 33 incidunt adipisci ea deleniti vero 33<br> reprehenderit repellat.</p>
+            
+            
+            <a href="https://www.facebook.com/groups/1591906714301364" target="_blank">
+                <img src="/image/facebook.png" alt="Facebook" class="fb-icon">
+            </a>
+            
+            <a href="https://www.messenger.com" target="_blank">
+                <img src="/image/messenger.png" alt="Messenger" class="mess-icon">
+            </a>
+     
+        </div>
+    </div>
+
+  </section>
+  
+
+  <footer class = "footer">
+    Cats Free Adoption & Rescue Philippines
+  </footer>
+  
     <script src="/js/admin.js"></script>
 </body>
 

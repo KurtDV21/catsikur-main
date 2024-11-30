@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $postApprovalController->updateApproval();
 }
 
-$limit = 2;
+$limit = 6;
 $totalPosts = $postsModel->getTotalPosts();
 $totalPages = ceil($totalPosts / $limit);
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
@@ -136,8 +136,9 @@ $posts = $postsModel->getPosts($limit, $offset);
                     <div class="adopter-info">
                         <div class="image-placeholder">
                             <img src="<?php echo htmlspecialchars($post['profile_image_path']); ?>" alt="User Pic">
+                            <p class="username"><?php echo htmlspecialchars($post['name']); ?></p>
                         </div>
-                        <p class="username"><?php echo htmlspecialchars($post['name']); ?></p>
+                        
                     </div>
 
                     <div class="approval-item">
@@ -145,7 +146,9 @@ $posts = $postsModel->getPosts($limit, $offset);
                             <div class="cat-profile">
                                 <img src="<?php echo htmlspecialchars($post['picture']); ?>" alt="Cat Image">
                                 <div class="cat-details">
+                                    <h5>Cat Name:</h5>
                                     <p><?php echo htmlspecialchars($post['cat_name']); ?></p>
+                                    <h5>Location:</h5>
                                     <p><?php echo htmlspecialchars($post['location']); ?></p>
                                 </div>
                             </div>
@@ -179,15 +182,24 @@ $posts = $postsModel->getPosts($limit, $offset);
                 </div>
             <?php endforeach; ?>
         </div>
-        <div class="pagination">
-            <?php if ($page > 1): ?>
-                <a href="?page=<?php echo $page - 1; ?>" class="prev-button">Prev</a>
-            <?php endif; ?>
+        <div class="pagination-container">
+    <div class="pagination">
+        <!-- Previous button -->
+        <?php if ($page > 1): ?>
+            <a href="?page=<?php echo $page - 1; ?>" class="prev-button">Prev</a>
+        <?php else: ?>
+            <span class="prev-button pagination-disabled">Prev</span>
+        <?php endif; ?>
 
-            <?php if ($page < $totalPages): ?>
-                <a href="?page=<?php echo $page + 1; ?>" class="next-button">Next</a>
-            <?php endif; ?>
-        </div>
+        <!-- Next button -->
+        <?php if ($page < $totalPages): ?>
+            <a href="?page=<?php echo $page + 1; ?>" class="next-button">Next</a>
+        <?php else: ?>
+            <span class="next-button pagination-disabled">Next</span>
+        <?php endif; ?>
+    </div>
+</div>
+
     </div>
 </div>
 </section>
