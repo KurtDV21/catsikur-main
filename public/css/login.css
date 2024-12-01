@@ -165,6 +165,11 @@
    
     }
 
+.wrapper .form-box{
+   
+   
+}
+
 
   
   
@@ -195,13 +200,10 @@
     transition: .5s;
   }
 
-  .input-box input:focus~label,
-  .input-box input.filled~label {
-      top: -5px;
-      font-size: 0.8em; /* Optional for better scaling */
-      color: gray; /* Optional for a visual cue */
-  }
-  
+.input-box input:focus~label,
+.input-box input:valid~label{
+    top: -5px;
+}
 
   .input-box input{
     width: 100%;

@@ -28,15 +28,14 @@ if (isset($_SESSION['user_id'])) {
     $showPic = $userModel->findUserById($userId);
     $pic = $userModel->findUserById($userId);
 } else {
-    header("Location:/");
-    exit; // Ensure the script stops after redirection
-    }
+    header('Location:/loginto');
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $postApprovalController->updateApproval();
 }
 
-$limit = 2;
+$limit = 6;
 $totalPosts = $postsModel->getTotalPosts();
 $totalPages = ceil($totalPosts / $limit);
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
@@ -60,157 +59,193 @@ $posts = $postsModel->getPosts($limit, $offset);
     <title>Document</title>
 </head>
 
+
 <body>
 
     <!-- header nav-bar -->
     <header>
         <nav class="navbar">
-            <img src="/image/logo1.png" alt="logo" class="logo">
-            <div class="nav-container">
-                <ul class="nav-link">
-                    <li><a href="/admin-homepage">HOME</a></li>
-                    <li><a href="">OUR CATS</a></li>
-                    <li><a href="">ABOUT</a></li>
-                    <li><a href="">FAQs</a></li>
-                    <li>
-                        <div class="user-dropdown">
-                            <button class="user-dropdown-button" onclick="toggleUserDropdown()">
-                                <?php echo htmlspecialchars($name); ?>
-                            </button>
-                            <div class="user-dropdown-content" id="userDropdownContent">
-                                <a href="/logout">Logout</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+        <div class="img">
+    <img src="/image/logo1.png" alt="logo" class="logo">
+    <h2 class="title"><a href="">Cat Free Adoption</a></h2>
+    </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+      <ul class="nav-link">
+        <li><a href="/user-homepage">HOME</a></li>
+        <li><a href="/ourcats">OUR CATS</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#faq">FAQs</a></li>
+        <li>
+          <div class="user-dropdown">
+            <button class="user-dropdown-button" onclick="toggleUserDropdown()">
+              <?php echo htmlspecialchars($name); ?>
+            </button>
+            <div class="user-dropdown-content" id="userDropdownContent">
+              <a href="/logout">Logout</a>
             </div>
-        </nav>
+          </div>
+        </li>
+      </ul>
+    </nav>
     </header>
 
-    <div class="container-admin">
+
+  <section id="main">
+    <div class="admin-dashboard">
+    <div class="sidebar">
         <div class="background-card">
-            <div class="header">
+            <div class="user-profile">
                 <div class="image-placeholder">
                     <img src="<?php echo htmlspecialchars($showPic['profile_image_path']); ?>" alt="Admin Profile">
                     <h2>ADMIN</h2>
                 </div>
             </div>
 
-            <div class="sherwin">
+            <div class="navigation">
                 <div class="container">
                     <div class="approval-card">
-                        Approval
+                        <a href="">Approval</a>
                     </div>
                     <div onclick="location.href='/admin-adoption'" class="adoption-posts">
-                        Adoption Total Posts
+                        <a href="/admin-adoption">Adoption Total Posts</a>
                     </div>
                     <div onclick="location.href='/admin-rescue'" class="rescue-posts">
-                        Rescue Total Posts
+                        <a href="/admin-rescue">Rescue Total Posts</a>
                     </div>
                     <div onclick="location.href='/admin-restrict'" class="rescue-posts">
-                        Restrict User
+                        <a href="/admin-restrict">Restrict User</a>
                     </div>
-                    <div class="rescue-posts">
-                        Form Approval
+                    <div onclick="location.href='/admin-pdf'" class="rescue-posts">
+                        <a href="/admin-pdf">Form Approval</a>
                     </div>
                 </div>
-                <div class="approval-list">
-                <?php foreach ($posts as $post): ?>
-                    <div class="approval-item-container">
-                        <div class="adopter-info">
-                            <div class="image-placeholder">
-                                <img src="<?php echo htmlspecialchars($post['profile_image_path']); ?>" alt="User Pic">
-                            </div>
-                            <p class="username"><?php echo htmlspecialchars($post['name']); ?></p>
-                        </div>
-
-                        <div class="approval-item">
-                            <div class="application-info">
-                                <div class="cat-profile">
-                                    <img src="<?php echo htmlspecialchars($post['picture']); ?>" alt="Cat Image">
-                                    <div class="cat-details">
-                                        <p><?php echo htmlspecialchars($post['cat_name']); ?></p>
-                                        <p><?php echo htmlspecialchars($post['location']); ?></p>
-                                    </div>
-                                </div>
-                                <div class="actions">
-                                    <form action="" method="POST">
-                                        <input type="hidden" name="post_id"
-                                            value="<?php echo htmlspecialchars($post['id']); ?>">
-
-                                        <button type="submit" name="action" onclick="openPopup()" value="approve"
-                                            class="approve-button">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                        <div class="popup1" id="popup">
-                                            <img src="/image/check.png" alt="">
-                                            <h2>Approved!</h2>
-                                            <p>Post has been successfully approved!</p>
-                                            <button class="popbtn" onclick="closePopup()">OK</button>
-                                        </div>
-
-                                        <button type="submit" name="action" onclick="openPopup1()" value="deny"
-                                            class="deny-button">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                        <div class="popup" id="popup1">
-                                            <img src="/image/deny.png" alt="">
-                                            <h2>Denied!</h2>
-                                            <p>Post has been successfully denied!</p>
-                                            <button class="popbtn" onclick="closePopup1()">OK</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-                </div>
-            </div>
-            <div class="pagination">
-                    <?php if ($page > 1): ?>
-                        <a href="?page=<?php echo $page - 1; ?>" class="prev-button">Prev</a>
-                    <?php endif; ?>
-
-                    <?php if ($page < $totalPages): ?>
-                        <a href="?page=<?php echo $page + 1; ?>" class="next-button">Next</a>
-                    <?php endif; ?>
-                </div>
-        </div>
-        </div>
-                            
-    <div class="footer">
-        <div class="footer-container">
-            <div class="footer-section other-section">
-                <h3></h3>
-                <p></p>
-                <ul class="social-media2">
-                    <li><a href="#"><img src="pin.png" alt="pin"></a></li>
-                    <li><a href="#"><img src="call.png" alt="call"></a></li>
-                    <li><a href="#"><img src="email.png" alt="email"></a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section about-company">
-                <h3>About the Company</h3>
-                <p>Lorem ipsum dolor sit amet...</p>
-                <ul class="social-media">
-                    <li><a href="#"><img src="facebook.png" alt="Facebook"></a></li>
-                    <li><a href="#"><img src="messenger.png" alt="messenger"></a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom-container">
-            <div class="footer-bottom">
-                <p>&copy; All rights reserved.</p>
-            </div>
-
-            <div class="footer-bottom-name">
-                <p>Cat Free Adoption & Rescue Philippines</p>
             </div>
         </div>
     </div>
+
+    <div class="main-content">
+        <div class="approval-list">
+            <?php foreach ($posts as $post): ?>
+                <div class="approval-item-container">
+                    <div class="adopter-info">
+                        <div class="image-placeholder">
+                            <img src="<?php echo htmlspecialchars($post['profile_image_path']); ?>" alt="User Pic">
+                            <p class="username"><?php echo htmlspecialchars($post['name']); ?></p>
+                        </div>
+                        
+                    </div>
+
+                    <div class="approval-item">
+                        <div class="application-info">
+                            <div class="cat-profile">
+                                <img src="<?php echo htmlspecialchars($post['picture']); ?>" alt="Cat Image">
+                                <div class="cat-details">
+                                    <h5>Cat Name:</h5>
+                                    <p><?php echo htmlspecialchars($post['cat_name']); ?></p>
+                                    <h5>Location:</h5>
+                                    <p><?php echo htmlspecialchars($post['location']); ?></p>
+                                </div>
+                            </div>
+                            <div class="actions">
+                                <form action="" method="POST">
+                                    <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($post['id']); ?>">
+
+                                    <button type="submit" name="action" onclick="openPopup()" value="approve" class="approve-button">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <div class="popup1" id="popup">
+                                        <img src="/image/check.png" alt="">
+                                        <h2>Approved!</h2>
+                                        <p>Post has been successfully approved!</p>
+                                        <button class="popbtn" onclick="closePopup()">OK</button>
+                                    </div>
+
+                                    <button type="submit" name="action" onclick="openPopup1()" value="deny" class="deny-button">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <div class="popup" id="popup1">
+                                        <img src="/image/deny.png" alt="">
+                                        <h2>Denied!</h2>
+                                        <p>Post has been successfully denied!</p>
+                                        <button class="popbtn" onclick="closePopup1()">OK</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="pagination-container">
+    <div class="pagination">
+        <!-- Previous button -->
+        <?php if ($page > 1): ?>
+            <a href="?page=<?php echo $page - 1; ?>" class="prev-button">Prev</a>
+        <?php else: ?>
+            <span class="prev-button pagination-disabled">Prev</span>
+        <?php endif; ?>
+
+        <!-- Next button -->
+        <?php if ($page < $totalPages): ?>
+            <a href="?page=<?php echo $page + 1; ?>" class="next-button">Next</a>
+        <?php else: ?>
+            <span class="next-button pagination-disabled">Next</span>
+        <?php endif; ?>
+    </div>
+</div>
+
+    </div>
+</div>
+</section>
+
+        
+<section id="about" class="about">
+    <div class="footer-container">
+        <div class="about-company">
+
+        <div class="info-item">
+        <img src="/image/place.png" alt="" class="place-icon">
+        <p><a href="">9A Masambong St. Bahay Toro, Quezon City</a></p>
+    </div>
+    <div class="info-item">
+        <img src="/image/phone.png" alt="" class="phone-icon">
+        <p><a href="">09123456789</a></p>
+    </div>
+    <div class="info-item">
+        <img src="/image/email.png" alt="" class="email-icon">
+        <p><a href="">catfreeadopt@email.com</a></p>
+    </div>
+        </div>
+
+
+        <div class="details">
+        <h3>ABOUT COMPANY</h3>
+            <p>Lorem ipsum dolor sit amet. Ex officiis molestias et sapiente<br> doloremque et dolores doloribus est animi maiores. Ut fugiat <br> molestiae nam quia earum qui aliquid aliquid ab corrupti officiis. Et<br> temporibus quia 33 incidunt adipisci ea deleniti vero 33<br> reprehenderit repellat.</p>
+            
+            
+            <a href="https://www.facebook.com/groups/1591906714301364" target="_blank">
+                <img src="/image/facebook.png" alt="Facebook" class="fb-icon">
+            </a>
+            
+            <a href="https://www.messenger.com" target="_blank">
+                <img src="/image/messenger.png" alt="Messenger" class="mess-icon">
+            </a>
+     
+        </div>
+    </div>
+
+  </section>
+  
+
+  <footer class = "footer">
+    Cats Free Adoption & Rescue Philippines
+  </footer>
 
     <script>
         let popup = document.getElementById("popup");

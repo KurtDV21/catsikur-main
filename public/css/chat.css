@@ -1,0 +1,571 @@
+@import url('https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Convergence&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+/* DISPLAY BACKGROUND */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+html{
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    overflow-x: hidden;   
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-color: #FFEFEF;
+  
+    
+}
+
+section {
+    height: 154vh;
+    width: 105vw;
+    display: block;
+}
+
+.section-cats{
+    height: 180vh;
+    width: 106vw;
+    background: url(paws.png) no-repeat;
+    background-size: cover;
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+.section-home{
+    background-image: url(bg1.png);
+    background-size: cover;
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+/* Navigation Bar */
+.logo {
+  margin-left: 30px;
+    width: 100px; /* Set the width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+header {
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    position: absolute;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    z-index: 99999;
+}
+
+.navbar {
+  background-color: #AFA2D0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.nav-container {
+    display: flex;
+}
+
+.nav-link {
+    list-style-type: none;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-link li {
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 23px;
+    margin-top: 0;
+    display: inline;
+    justify-content: space-between;
+}
+
+/* Links in Navigation */
+.nav-link a {
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    position: relative;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    line-height: 40px;
+}
+
+.nav-link a::after {
+    content: '';
+    position: absolute;
+    left: 0px;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: #C3BEF0;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.nav-link a:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+/* LOGIN BUTTON (NAVBAR) */
+.btn-contain{
+    display: flex;
+    position: relative;
+    left: 100px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.login-btn {
+
+    margin-right: 50px;
+    background-color: #C3BEF0; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px 20px; 
+    font-size: 23px; 
+    font-weight: 500; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.login-btn:hover {
+   background-color: #AFA2D0; 
+   transform: translateY(-2px); 
+   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
+}
+
+.nav-link.login-btn a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.login{
+    text-decoration: none;
+    border: black;
+}
+
+
+.chat-section {
+    position: absolute;
+    top: 200px;
+    right: 200px;
+    background-color: #fbe9e9;
+    padding: 20px;
+    width: 1175px;
+    height: 850px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.chat-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f5f5f5;
+    flex-direction: row;
+  }
+  
+
+.chat-sidebar {
+    width: 30%;
+    background-color: #92A8D1;
+    padding: 20px;
+    border-right: 1px solid black;
+}
+
+.chat-sidebar h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.chat-list {
+  width: 250px;  /* Adjust width as needed */
+  height: 100vh; /* Make the chat list occupy the full viewport height */
+  overflow-y: auto; /* Allow scrolling if there are too many chats */
+  border-right: 2px solid #ddd; /* Optional: to separate the chat list from the chat window */
+  padding: 10px;
+  box-sizing: border-box;
+}
+  
+.chat-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis for long text */
+    transition: background-color 0.3s ease;
+  }
+
+  #typingIndicator {
+    display: none;  /* Hidden by default */
+    font-style: italic;
+    color: #999;
+    text-align: center;
+    padding: 10px;
+  }
+
+
+  .chat-item h3 {
+    display: block;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+.chat-item:hover {
+    cursor: pointer;
+    background-color: #f1f1f1; /* Light gray on hover */
+  }
+
+  .chat-item.new-message {
+    background-color: #f0f8ff;
+    font-weight: bold;
+    color: #007bff;
+  }
+
+.chat-item.selected {
+    background-color: #e0f7fa; /* Light blue background to indicate selection */
+    border: 2px solid #00796b; /* Darker border to highlight the selected item */
+    font-weight: bold; /* Optional: make the text bold for emphasis */
+  }
+
+.chat-window-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+
+.message p {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+.message strong {
+    font-weight: bold;
+}
+
+.message small {
+    font-size: 15px;
+    color: #888;
+  }
+  
+
+.received {
+    background-color: #e6e6e6;
+    text-align: left;
+}
+
+.sent {
+    background-color: #d0e8f2;
+    text-align: right;
+}
+
+.message-input {
+    display: flex;
+    border-top: 1px solid #9D8989;
+    padding: 10px;
+}
+
+.message-sender {
+    background-color: #0084ff; /* Blue for sender */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 60%; /* Limit the width */
+    margin-left: auto; /* Push to the right */
+    text-align: right;
+    word-wrap: break-word; /* Ensure long words wrap properly */
+    margin-bottom: 10px; /* Add spacing between messages */
+    align-self: flex-end; /* Align to the right in flex container */
+}
+
+  .message-receiver {
+    background-color: #f1f1f1; /* Light gray for receiver */
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 60%; /* Limit the width */
+    margin-right: auto; /* Push to the left */
+    text-align: left;
+    word-wrap: break-word; /* Ensure long words wrap properly */
+    margin-bottom: 10px; /* Add spacing between messages */
+    align-self: flex-start; /* Align to the left in flex container */
+}
+
+#messageForm {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+#messageInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+input::placeholder{
+    color: white;
+    opacity: 1;
+}
+
+.send-btn {
+    background-color: #f7b7b7;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
+  /* footer section start */
+.footer {
+    background-color: #F7C9CB;
+    padding: 70px;
+    position: absolute;
+    left: 100px;
+    top: 1375px;
+    height: 487px;
+    display: flex;
+    width: 100vw; /* Full width of the viewport */
+    box-sizing: border-box;
+    overflow: hidden; /* Prevents any overflow */
+  }
+  
+  
+  .footer-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 100%; /* Adjust to prevent exceeding */
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .footer-about {
+      position: relative;
+      left: 650px;
+      width: 40%;                  /* Width of the about section */
+      text-align: left;           /* Align text to the right */
+      display: flex;               /* Use flexbox */
+      flex-direction: column;      /* Stack items vertically */
+      justify-content: center; 
+  }
+  
+  
+  .mess{
+    position: relative;
+    top: 100px;
+    left: 300px;
+  }
+  
+  .mess-icon{
+    position: relative;
+    top: 50px;
+    right: 10px;
+  }
+  
+  .fb-icon{
+    position: relative;
+    top: 150px;
+    left: 275px;
+  }
+  
+  
+  .footer-about h3 {
+    justify-content: flex-end;
+    font-size: 37px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-about p {
+    margin: 5px 0;
+    font-size: 20px;
+  }
+  
+  
+  
+  .footer-left-text {
+    display: flex;
+    position: absolute;
+    top: 450px;
+    left: 20px;
+    bottom: 10px;
+  }
+  
+  .footer-left-text p {
+    font-size: 30px;
+    font-weight: bold;
+  }
+  
+  .footer-about .para{
+    width: 729px;
+    height: 145px;
+  }
+  
+  .details {
+    display: flex;               /* Use flexbox for the details container */
+    flex-direction: column;      /* Stack items vertically */
+    gap: 20px;                  /* Space between items */
+    margin-bottom: 30px;
+  }
+  
+  .details > div {
+    display: flex;               /* Use flexbox for each detail item */
+    align-items: center;         /* Center items vertically */
+    margin-bottom: 30px;
+    margin-left: 10px;
+    gap: 30px;
+  }
+  
+  .place-icon,
+  .phone-icon,
+  .email-icon {
+    margin-right: 10px;         /* Space between icon and paragraph */
+    width: 24px;                /* Set a fixed width for icons */
+    height: 24px;               /* Set a fixed height for icons */
+    margin-left: 10px;
+    gap: 20px;
+  }
+  
+  .details-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 1200px;
+    padding: 20px;
+    position: relative;
+    right: 1200px;
+    top: 60px;
+    margin-bottom: 20px;
+  }
+  
+
+  .chat-window {
+    padding: 10px;
+    height: 800px;
+    overflow-y: scroll;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column; /* Ensure messages stack vertically */
+}
+  
+  
+  /* Style for each message */
+  .message {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.message .timestamp {
+    display: none;
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-top: 5px;
+  }
+  
+  .message.sent {
+    background-color: #dcf8c6; /* Light green like in WhatsApp/Messenger */
+    margin-left: auto; /* Align to the right */
+    text-align: right;
+  }
+  /* Receiver's message (left-aligned) */
+  .message.received {
+    background-color: #f1f1f1; /* Light gray for received messages */
+    align-self: flex-start; /* Align to the left */
+    text-align: left;
+  }
+  
+  /* Sender's message text */
+  .message.sent p {
+    color: #333;
+    font-size: 14px;
+  }
+  
+  /* Receiver's message text */
+  .message.received p {
+    color: #333;
+    font-size: 14px;
+  }
+  
+  /* Time of message (hidden by default) */
+  .timestamp {
+    font-size: 0.8em;
+    color: #888;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  
+  /* Show timestamp on hover */
+  .message:hover .timestamp {
+    display: block;
+  }
+  
+  /* Optional: style for typing indicator */
+  .typing-indicator p {
+    font-size: 14px;
+    color: #888;
+  }
+  /* Style for the no messages message */
+  .no-messages {
+    font-size: 18px;
+    color: #bbb;
+    text-align: center;
+  }

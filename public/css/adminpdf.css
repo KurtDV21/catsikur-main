@@ -1,0 +1,836 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz@0,14..32;1,14..32&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+   overflow-x: hidden;
+    
+  }
+
+section{
+  width: 100vw;
+  height: 100vw;
+  display:flex;
+}
+
+#about{
+  width: 100vw;
+  height: 50vh;
+  display: flex;
+  background-color: #FFEAE3;
+}
+
+  #main{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+  }
+
+   /* navigation bar*/
+.logo{
+    width: 100px; /* Set the width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.header{
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+}
+  
+  .navbar {
+    background-color: #E4E0E1; /* Dark blue background for navbar */
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 30px; /* Adjusted padding for a sleeker look */
+    z-index: 9999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  }
+  
+  .img {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Increased gap between logo and title */
+  }
+  
+  .logo {
+    width: 60px; /* Slightly smaller logo for balance */
+    height: 60px;
+    object-fit: contain;
+  }
+  
+  .title a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .title a:hover {
+    color: #f7c9cb; /* Light pink hover effect on title */
+  }
+  
+  .nav-link {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Spacing between nav items */
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-link li {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    position: relative;
+  }
+  
+  .nav-link a {
+    color: #000; /* White text for links */
+    text-decoration: none;
+    padding: 8px 12px; /* Add padding for clickable area */
+    border-radius: 4px; /* Rounded button-like appearance */
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .nav-link a:hover {
+    background-color: #FFE3E3; /* Pink background on hover */
+    color: #2b3e50; /* Dark text on hover */
+  }
+
+.login-btn a{
+    text-decoration: none;
+}
+
+.login-btn{
+  background-color: #92A8D1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 2rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: #E4E0E1; 
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
+  color: black;
+}
+
+
+.sherwin{
+  justify-content: center;
+  display: flex;
+}
+  .container {
+    padding-bottom: 60px;
+    padding-right: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: left;
+}
+
+
+/* .container-admin {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EFEFEF;
+  padding: 20px;
+} */
+
+/* Background Card */
+/* .background-card {
+    width: calc(100% - 40px); 
+    background-color: #F4E4DE;
+    border-radius: 15px;
+    padding-top: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+} */
+
+
+
+h2 {
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.image-placeholder {
+    text-align: center;
+}
+
+.image-placeholder img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 3px solid #E5C4B3;
+}
+
+.image-placeholder h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.left-text {
+    position: absolute; /* Positioned to overlap */
+    z-index: 3; /* Highest stacking order */
+    color: black; /* Set color for visibility */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Optional shadow for clarity */
+}
+
+.left-text-container {
+    font-family: 'Inter', sans-serif;
+    font-size: 30px ;
+    display: flex; /* Aligns items in a row */
+    align-items: center; /* Centers items vertically */
+    margin-right: 650px; /* Add some space from the left edge */
+}
+
+.calendar-button {
+    background: none; /* No background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-right: 10px; /* Space between button and text */
+}
+
+.calendar-icon {
+    width: 26px; /* Set width for the icon */
+    height: 26px; /* Set height for the icon */
+}
+
+
+
+/* Application Card for Approval Section */
+.approval-card, .adoption-posts, .rescue-posts {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.approval-card {
+    width: 300px; /* Fixed width */
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-left: 5px solid #FF7F50;
+}
+
+.adoption-posts {
+    width: 300px; /* Fixed width */
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-left: 5px solid #87CEEB;
+}
+
+.rescue-posts {
+    width: 300px; /* Fixed width */
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-left: 5px solid #32CD32;
+}
+
+.approval-card:hover,
+.adoption-posts:hover,
+.rescue-posts:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.approval-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 15px;
+    margin-left: 30px;
+    margin-right: 150px;
+}
+
+.header-separator {
+    width: 100%; /* Ensure the line spans full width */
+    height: 2px; /* Set the height of the line */
+    background-color: black; /* Set the color of the line */
+    margin-bottom: 10px;
+}
+
+
+/* Individual Application Card Style */
+.approval-item-container {
+    display: flex; /* Aligns adopter info and approval item side by side */
+    align-items: center; /* Centers items vertically */
+    margin-bottom: 20px; /* Space between items */
+    
+}
+
+.adopter-info {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Space between adopter info and approval item */
+}
+
+.profile-placeholder {
+    width: 40px;
+    height: 40px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.username {
+    font-size: 16px; /* Adjust font size as needed */
+    font-family: 'Inter', sans-serif;
+}
+
+.approval-item {
+    width: 80%;
+    flex-grow: 1; /* Allow the approval item to take remaining space */
+    background-color: #FFEFEF;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid black;
+}
+
+
+.cat-profile {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.cat-profile img {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+}
+
+.cat-details p {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.application-info {
+    display: flex;
+    justify-content: space-between; /* Space between the cat profile and actions */
+    align-items: center; /* Aligns items vertically in the center */
+    width: 100%; /* Allow full width for proper spacing */
+    height: 60px; /* Set a height to help with alignment */
+}
+
+.actions {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 10px; /* Adjust space between buttons */
+    align-items: center; /* Center buttons horizontally */
+}   
+
+/* General button styles */
+.actions button {
+    font-size: 25px; /* Larger font size for bigger icons */
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 35px; /* Large width for circular buttons */
+    height: 35px; /* Large height for circular buttons */
+    border-radius: 50%; /* Makes the button circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional shadow for better appearance */
+    transition: background-color 0.3s; /* Optional: smooth hover effect */
+}
+
+/* Approve button style */
+.approve-button {
+    background-color: #a3eba3; /* Green */
+    color: #333; /* Icon color */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+/* Deny button style */
+.deny-button {
+    background-color: #f58181; /* Red */
+    color: #333; /* Icon color */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+/* Hover effects for each button */
+.approve-button:hover {
+    background-color: #9be19b; /* Slightly darker green on hover */
+}
+
+.deny-button:hover {
+    background-color: #e86a6a; /* Slightly darker red on hover */
+}
+
+
+/* Footer Styles */
+.footer-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100%;
+  gap: 30px; 
+}
+
+
+.details {
+  margin-left: 200px;
+  flex: 1; 
+  font-size: 2rem;
+   
+}
+
+.details p{
+  margin-bottom: 40px;
+  font-size: 1.5rem;
+}
+
+.about-company p{
+  font-size: 1.5rem;
+  
+}
+
+.details h3 {
+  font-size: 2rem; 
+}
+
+.about-company {
+  margin-left: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px; /* Space between each icon-paragraph pair */
+}
+
+.info-item {
+  display: flex;
+  align-items: center; /* Align icon and paragraph vertically */
+  gap: 20px; /* Space between icon and paragraph */
+}
+
+.place-icon,
+.phone-icon,
+.email-icon {
+  width: 30px; /* Adjust icon size as needed */
+  height: 30px;
+}
+
+.info-item a{
+  text-decoration: none;
+  color: black;
+}
+
+.fb-icon,
+.mess-icon {
+  margin-right: 20px; /* Optional spacing between icons if needed */
+}
+
+.details a{
+  text-decoration: none;
+}
+
+.footer{
+  background-color: #FFEAE3;
+  font-size: 2rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between; /* Space between buttons */
+    margin-top: 20px;
+    padding: 0 20px; /* Add some padding for spacing */
+}
+
+.prev-button, .next-button {
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.prev-button:hover, .next-button:hover {
+    background-color: #ddd;
+}
+  
+.popup{
+  width: 400px;
+  text-align: center;
+  padding: 0 30px 30px;
+  color: #333;
+  background-color: #fff;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  visibility: hidden;
+  transition: transform 0.4s , top 0.4s;
+}
+
+.popup1{
+  width: 400px;
+  text-align: center;
+  padding: 0 30px 30px;
+  color: #333;
+  background-color: #fff;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  visibility: hidden;
+  transition: transform 0.4s , top 0.4s;
+}
+
+.open-popup{
+  visibility: visible;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.open-popup1{
+  visibility: visible;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+
+.popup img{
+  width: 100px;
+  margin-top: -50px;
+  outline: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.popup1 img{
+  width: 100px;
+  margin-top: -50px;
+  outline: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.popup h2{
+  font-size: 3rem;
+  font-weight: 500;
+  margin: 30px 0 10px;
+}
+
+.popup1 h2{
+  font-size: 3rem;
+  font-weight: 500;
+  margin: 30px 0 10px;
+}
+
+
+.popup button{
+  width: 100%;
+  margin-top: 50px;
+  padding: 10px 0;
+  background-color: #AFA2D0;
+  color: #fff;
+  border: 0;
+  outline: none;
+  font-size: 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.popup1 button{
+  width: 100%;
+  margin-top: 50px;
+  padding: 10px 0;
+  background-color: #AFA2D0;
+  color: #fff;
+  border: 0;
+  outline: none;
+  font-size: 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.user-dropdown-button {
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+  position: relative;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  font-size: 16px; /* Ensure font size matches */
+  line-height: 40px; /* Keep this consistent */
+  padding: 10px 15px; /* Increase padding for inner space */
+  background-color: transparent; /* Make the button background transparent */
+  border: 1px solid #f7c9cb; /* Optional: Add a border color */
+  border-radius: 5px; /* Optional rounded corners */
+  cursor: pointer;
+  display: inline-block; /* Ensure proper sizing */
+  font-size: 24px;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  
+}
+
+
+
+.user-dropdown-content {
+  display: none; /* Hidden by default */
+ 
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    position: relative;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    line-height: 40px; 
+    background: white; 
+}
+
+.user-dropdown-content.show {
+  display: block; /* Show when .show class is added */
+}
+
+.adopt-text {
+    position: absolute; /* Positioned to overlap */
+    z-index: 2; /* Lower stacking order than .left-text */
+    color: rgba(0, 0, 0, 0.7); /* Slight transparency for visual effect */
+    top: 20px; /* Adjust vertical positioning */
+}
+
+.rescue-text {
+    position: absolute; /* Positioned to overlap */
+    z-index: 1; /* Lowest stacking order */
+    color: rgba(0, 0, 0, 0.5); /* Even more transparency */
+    top: 40px; /* Adjust vertical positioning */
+}
+
+.rescue-table{
+  padding-left: 30px;
+    padding-bottom: 30px;
+    padding-right: 30px; /* Adjusted right padding for better responsiveness */
+    width: 100%; /* Take up full available width */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end; /* Align items to the left */
+    margin-top: 20px;
+
+}
+
+.container a{
+  text-decoration: none;
+}
+
+.pending {
+  
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Table Styling */
+ 
+
+
+  
+  .table-container {
+      overflow-y: auto; /* Enable vertical scrolling */
+      max-height: 600px; /* Set a fixed height for the container */
+      margin: 20px 0;
+      padding-bottom: 20px; /* Prevent overlap with footer */
+      width: 78%; /* Make the container full width */
+  }
+  
+  .table {
+      width: 100%;
+      table-layout: fixed; /* Ensure the table takes up full width */
+  }
+  
+  .table th,
+  .table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      width: 100%; /* Distribute space equally among columns */
+      word-wrap: break-word; /* Ensure text wraps within cells */
+  }
+  
+  .table thead tr {
+      background-color: #000;
+      color: #ffffff;
+      text-align: center;
+  }
+  
+  .table tbody tr {
+      border-bottom: 1px solid #dddddd;
+  }
+  
+  .table tbody tr:nth-of-type(even) {
+      background-color: #f3f3f3;
+  }
+  
+  .table tbody tr:last-of-type {
+      border-bottom: 2px solid #009879;
+  }
+  
+  .table tbody tr:hover {
+      background-color: #f1f1f1;
+  }
+  
+  .action-cell {
+      display: flex;
+      justify-content: space-around;
+  }
+  
+/* General button styling */
+  .view-pdf  {
+      text-decoration: none;
+      padding: 5px 10px;
+      border: 1px solid #009879;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      flex: 1;
+      text-align: center;
+      margin: 0 5px;
+  }
+
+  .approve-btn,
+  .deny-btn{
+    text-decoration: none;
+      padding: 5px 10px;
+      border: 1px solid #009879;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      flex: 1;
+      text-align: center;
+      margin: 0 5px;
+  }
+
+/* Specific styles for buttons */
+
+/* View PDF button */
+.view-pdf {
+    color: #009879;
+}
+
+.view-pdf:hover {
+    background-color: #009879;
+    color: #ffffff;
+}
+
+/* Approve button */
+.approve-btn {
+    color: #28a745; /* Green for approve */
+    border-color: #28a745;
+}
+
+.approve-btn:hover {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+/* Deny button */
+.deny-btn {
+    color: #dc3545; /* Red for deny */
+    border-color: #dc3545;
+}
+
+.deny-btn:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+  
+  
+ 
+   
+  
+  
+  
+  
+
+  
+.container-admin {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  margin-top: 100px;
+  width: 350px;
+  background-color: #F4E4DE;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+  margin-top: 100px;
+  height: 100px;
+  width: 100vw;
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: flex-start; /* Align items to the start (top-left) */
+  align-items: flex-start; /* Align items to the start (top-left) */
+}
+
+.approval-list {
+  display: flex;
+  flex-wrap: wrap; /* Wrap items if needed */
+  gap: 20px; /* Space between items */
+  margin: 20px; /* Add margin around the list */
+}

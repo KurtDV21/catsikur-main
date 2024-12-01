@@ -30,9 +30,8 @@ if (isset($_SESSION['user_id'])) {
   $name = $user['name'] ?? '';
 } else {
   $name = '';
-  header("Location:/");
-  exit; // Ensure the script stops after redirection
-  }
+  header("Location:/loginto");
+}
 
 ?>
 
@@ -42,7 +41,6 @@ if (isset($_SESSION['user_id'])) {
 <head>
   <link rel="stylesheet" href="/css/user.css">
   <link rel="stylesheet" href="/css/usertab.css">
-  <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,7 +97,7 @@ if (isset($_SESSION['user_id'])) {
 
       </div>
       <h1 class="avail"><b>AVAILABLE CATS</b></h1>
-
+  
       <div class="cat-container">
         <?php foreach ($approvedPosts as $post): ?>
           <div class="cat-wrapper">

@@ -117,6 +117,47 @@ route('/admin-restrict', function () {
     include __DIR__ . '/../resource/view/admin-restrict.php';
 });
 
+route('/admin-pdf', function () {
+    
+    include __DIR__ . '/../resource/view/admin-pdf.php';
+});
+
+route('/fpdf', function () {
+    
+    include __DIR__ . '/../resource/view/fpdf/fpdf.php';
+});
+
+route('/chat', function () {
+    
+    include __DIR__ . '/../resource/view/chat.php';
+});
+
+route('/send_message', function () {
+    
+    include __DIR__ . '/../resource/view/send_message.php';
+});
+
+route('/typing_status', function () {
+    
+    include __DIR__ . '/../resource/view/typing_status.php';
+});
+
+route('/update_modal_seen', function () {
+    
+    include __DIR__ . '/../resource/view/update_modal_seen.php';
+});
+
+route('/fetch_messages', function () {
+    
+    include __DIR__ . '/../resource/view/fetch_messages.php';
+});
+
+route('/process-form-approval', function () {
+    
+    include __DIR__ . '/../resource/view/process-form-approval.php';
+});
+
+
 route('/restrict-user', function () {
     
     include __DIR__ . '/../resource/view/restrict-user.php';
@@ -194,22 +235,6 @@ route('/MyPost-catdetails', function () {
 
 route('/MyProfile', function () {
     include __DIR__ . '/../resource/view/user-profile.php';
-});
-
-
-
-route('/pdf-index', function () {
-    include __DIR__ . '/../resource/view/pdf_index.php';
-});
-
-route('/admin-restrict', function () {
-    
-    include __DIR__ . '/../resource/view/admin-restrict.php';
-});
-
-route('/restrict-user', function () {
-    
-    include __DIR__ . '/../resource/view/restrict-user.php';
 });
 
 // Run the routing logic

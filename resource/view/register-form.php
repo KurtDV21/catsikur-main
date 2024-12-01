@@ -16,11 +16,11 @@
 
     <div class="nav-container"> <!-- New div to contain nav links -->
       <ul class="nav-link">
-        <li><a href="/">HOME</a></li>
+        <li><a href="#home">HOME</a></li>
         <li><a href="">OUR CATS</a></li>
         <li><a href="">ABOUT</a></li>
         <li><a href="">FAQs</a></li>
-        <li><button class="login-btn" onclick="location.href='/loginto'">Login</button></li>     
+        <button class="login-btn"> <a href="/loginto">Login</a></button>
       </ul>
     </div>
   </nav>
@@ -43,13 +43,9 @@
 
         <div class="input-box">
           <span class="icon"><ion-icon name="people"></ion-icon></span>
-          <input type="email" name="email" id="email" value="<?= htmlspecialchars($_POST["email"] ?? "") ?>" required>
+          <input type="email" name="email" id="email" value="<?= htmlspecialchars($_POST["email"] ?? "")?>" required>
           <label for="email">Email</label>
-          <?php if (isset($_GET['error']) && $_GET['error'] === 'email_exists'): ?>
-              <p style="color:red;">This email is already registered. Please use a different email.</p>
-          <?php endif; ?>
         </div>
-
 
         <div class="input-box">
           <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>

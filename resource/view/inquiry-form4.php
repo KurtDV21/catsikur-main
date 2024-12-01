@@ -81,25 +81,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $dbConnection->begin_transaction();
 
-        // Insert data into `inquiries`
         $stmt = $dbConnection->prepare("INSERT INTO inquiries (user_id, post_id, name, age, company_industry, Guardian_details, Facebook, address, Housing, Housing_role, Household_agreement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iisssssssss", $userId, $postId, $name, $age, $lastSelectedCompany, $guardian, $facebook, $address, $housing, $has_pets, $outdoor_space);
         $stmt->execute();
         $stmt->close(); 
 
-        // Insert data into `pet_adoption_inquiry`
         $stmt = $dbConnection->prepare("INSERT INTO pet_adoption_inquiry (user_id, post_id, caregiver, landlord_permission, restrictions, household_adults, household_children, children_ages, children_experience, allergies, allergy_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iisssssssss", $userId, $postId, $caregiver, $landlordPermission, $restrictions, $householdAdults, $householdChildren, $childrenAges, $childrenExperience, $allergies, $allergyDetails);
         $stmt->execute();
         $stmt->close();
 
-        // Insert data into `adoption_inquiry_details`
         $stmt = $dbConnection->prepare("INSERT INTO adoption_inquiry_details (user_id, post_id, pets, spayed_neutered, status, adopted_before, supplies) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iisssss", $userId, $postId, $pets, $spayedNeutered, $status, $adoptedBefore, $supplies);
         $stmt->execute();
         $stmt->close();
 
-        // Insert data into `adoption_commitment_inquiry`
         $stmt = $dbConnection->prepare("INSERT INTO adoption_commitment_inquiry (user_id, post_id, hours_alone, sleep_location, stress_awareness, work_through_issues, spay_neuter, commitment, responsibility, truthfulness) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iissssssss", $userId, $postId, $hoursAlone, $sleepLocation, $stressAwareness, $workThroughIssues, $spayNeuter, $commitment, $responsibility, $truthfulness);
         $stmt->execute();
@@ -107,13 +103,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $dbConnection->commit();
 
-        // Clear specific session data after insertion
         session_unset();
 
-        // Retain the user login
         $_SESSION['user_id'] = $userId;
 
-        // Redirect to a confirmation page or show a success message
         header('Location: /user-homepage');
         exit;
     } catch (Exception $e) {
@@ -124,7 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dbConnection->close();
 }
 
-// Make sure to retrieve the values when the page is loaded
 $hoursAlone = $_SESSION['hours_alone'] ?? '';
 $sleepLocation = $_SESSION['sleep_location'] ?? '';
 $stressAwareness = $_SESSION['stress_awareness'] ?? '';
@@ -150,7 +142,6 @@ $truthfulness = $_SESSION['truthfulness'] ?? '';
 
 <body>
 
-  <!-- Header with Navigation -->
   <header>
     <nav class="navbar">
     <img src="/image/logo1.png" alt="logo" class="logo">
@@ -180,7 +171,6 @@ $truthfulness = $_SESSION['truthfulness'] ?? '';
     </nav>
   </header>
 
-  <!-- Adoption Application Form Section -->
   <section class="form" id="form">
     <div class="outer-container">
       <div class="form-container">
@@ -192,7 +182,7 @@ $truthfulness = $_SESSION['truthfulness'] ?? '';
 
         <div class="question-container">
             <p class="question-text">How many hours each day will your new cat be home alone?<span class="required">*</span></p>
-            <span class="example">Example: 8-10 hours | Estimat   the usual hours the cat will be all alone in his/her new home.</span>
+            <span class="example">Example: 8-10 hours | Estimat   e the usual hours the cat will be all alone in his/her new home.</span>
             <div class="answer-options">
             <input type="text" name="hours_alone" class="other-input" placeholder="Specify" value="<?= htmlspecialchars($hoursAlone) ?>" required>
             </label>  
@@ -264,7 +254,6 @@ $truthfulness = $_SESSION['truthfulness'] ?? '';
             </div>
           </div>
           
-          <!-- Buttons inside the form-container and centered -->
           <div class="btn-container">
             <button type="reset" class="btn-cancel" onclick="location.href='/inquiry-form3?post_id=<?php echo htmlspecialchars($postId); ?>'">Back</button>
             <button type="submit" class="btn-confirm">Confirm</button>
@@ -275,7 +264,6 @@ $truthfulness = $_SESSION['truthfulness'] ?? '';
     </div>
   </section>
 
-  <!-- About Section -->
   <section id="about" class="about">
     <div class="footer-container">
       <div class="about-company">
@@ -307,7 +295,6 @@ $truthfulness = $_SESSION['truthfulness'] ?? '';
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     Cats Free Adoption & Rescue Philippines
   </footer>

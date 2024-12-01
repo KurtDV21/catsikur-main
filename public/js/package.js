@@ -50,13 +50,6 @@ window.onload = function() {
 function toggleUserDropdown() {
     const dropdown = document.getElementById("userDropdownContent");
     dropdown.classList.toggle("show");
-
-    // Update pointer-events based on the show class
-    if (dropdown.classList.contains("show")) {
-        dropdown.style.pointerEvents = "auto";
-    } else {
-        dropdown.style.pointerEvents = "none";
-    }
 }
 
 // Close the dropdown if clicked outside
@@ -65,8 +58,6 @@ window.onclick = function(event) {
         const dropdown = document.getElementById("userDropdownContent");
         if (dropdown.classList.contains("show")) {
             dropdown.classList.remove("show");
-            // Disable pointer events when the dropdown is hidden
-            dropdown.style.pointerEvents = "none";
         }
     }
 }

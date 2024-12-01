@@ -38,50 +38,16 @@
         </div>
 
         <div class="input-box">
-  <span class="icon"><ion-icon name="people"></ion-icon></span>
-  <input 
-    type="text" 
-    id="firstname" 
-    name="firstname" 
-    title="First name can only contain letters and spaces." 
-    required
-    oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')"
-  >
-  <label for="firstname">First name</label>
-</div>
+          <span class="icon"><ion-icon name="people"></ion-icon></span>
+          <input type="text" id="fullname" name="fullname" required>
+          <label for="fullname">Fullname</label>
+        </div>
 
-
-<div class="input-box">
-  <span class="icon"><ion-icon name="people"></ion-icon></span>
-  <input 
-    type="text" 
-    id="lastname" 
-    name="lastname" 
-    title="Last name can only contain letters and spaces." 
-    required
-    oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')"
-  >
-  <label for="lastname">Last name</label>
-</div>
-
-
-<div class="input-box telephone">
-  <span class="icon"><ion-icon name="call"></ion-icon></span>
-  <input 
-    type="tel" 
-    id="phone_number" 
-    name="phone_number" 
-    maxlength="13" 
-    pattern="\+63[0-9]{10}" 
-    title="Phone number must start with +63 and contain 10 additional digits." 
-    required
-    value="+63"
-    oninput="this.value = '+63' + this.value.slice(3).replace(/\D/g, '').slice(0, 10)"
-  >
-  <label for="phone_number">Phone number</label>
-</div>
-
-
+        <div class="input-box">
+          <span class="icon"><ion-icon name="call"></ion-icon></span>
+          <input type="tel" id="phone_number" name="phone_number" required>
+          <label for="phone_number">Phone number</label>
+        </div>
 
         <div class="input-box">
           <span class="icon"><ion-icon name="mail"></ion-icon></span>

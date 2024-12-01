@@ -302,35 +302,6 @@ section {
     gap: 30px; /* Reduced space between inputs */
 }
 
-.input-box {
-    margin-bottom: 20px;
-    position: relative;
-}
-
-.input-box input[name="phone"] {
-    width: 350px;   /* Reduced width */
-    background-color: white;
-    padding: 8px;
-    border: 1px solid black;
-    border-radius: 5px;
-    outline: none;
-    font-size: 14px;      /* Reduced font size */
-}
-
-.input-box label {
-    position: absolute;
-    top: -16px;  /* Position label above the input */
-    left: 5px;
-    font-size: 12px;
-    color: #333;
-}
-
-.input-box input[name="phone"]:valid + label {
-    top: -18px;   /* Adjust label position when input has value */
-    font-size: 10px;   /* Smaller font when the input is filled */
-}
-
-
 .input-box input[name="name"],
 .input-box input[name="email"],
 .input-box input[name="phone"],
@@ -399,28 +370,15 @@ section {
 }
 
 .dropdown-content {
-    display: none; /* Hide the dropdown content by default */
-    max-height: 200px; /* Set maximum height for scrollable content */
-    overflow-y: auto;  /* Enable vertical scrolling */
-    border: 1px solid #ccc; /* Optional: Add a border for better visibility */
-    background-color: white; /* Ensure the background is visible */
-    position: absolute; /* Ensure dropdown positions correctly */
-    z-index: 1000; /* Ensure dropdown stays above other elements */
-    width: 100%; /* Match the width of the dropdown button */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
-}
-
-.dropdown-content.show {
-    display: block; /* Show the dropdown content when the class "show" is added */
-}
-
-.dropdown-item {
-    padding: 10px; /* Add padding to the items for better spacing */
-    cursor: pointer; /* Indicate that items are clickable */
-}
-
-.dropdown-item:hover {
-    background-color: #f0f0f0; /* Highlight item on hover */
+    width: 100%;
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 140px;  /* Reduced min-width */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 0;
+    margin: 0;
 }
 
 .dropdown-content ul {
