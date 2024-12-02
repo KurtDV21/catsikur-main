@@ -57,6 +57,7 @@ $supplies = $_SESSION['supplies'] ?? [];
 
 <head>
     <link rel="stylesheet" href="css/form1.css">
+    <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat Adoption</title>
@@ -66,32 +67,7 @@ $supplies = $_SESSION['supplies'] ?? [];
 
   <!-- Header with Navigation -->
   <header>
-  <nav class="navbar">
-    <img src="/image/logo1.png" alt="logo" class="logo">
-
-      <div class="hamburger" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      <ul class="nav-link">
-        <li><a href="/user-homepage">HOME</a></li>
-        <li><a href="#ourcat">OUR CATS</a></li>
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#faq">FAQs</a></li>
-        <li>
-          <div class="user-dropdown">
-            <button class="user-dropdown-button" onclick="toggleUserDropdown()">
-              <?php echo htmlspecialchars($name); ?>
-            </button>
-            <div class="user-dropdown-content" id="userDropdownContent">
-              <a href="/logout">Logout</a>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </nav>
+  <?php include("header.php"); ?>
   </header>
 
   <!-- Adoption Application Form Section -->

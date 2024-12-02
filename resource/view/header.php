@@ -21,6 +21,7 @@
     <div class="user-dropdown-content" id="userDropdownContent">
         <a href="/MyProfile">My Profile</a>
         <a href="/MyPost">My Post</a>
+        <a href="/chat">Messages</a>
         <a href="/logout">Logout</a>
     </div>
 </div>

@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $phoneNumber = $_POST['phone_number'] ?? '';
     $city = $_POST['city'] ?? '';
+    $profile_image_path = $user['profile_image_path']; // Default to existing path
 
     echo "Received POST data:<br>";
     echo "First Name: $firstName<br>";
@@ -51,8 +52,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "Phone Number: $phoneNumber<br>";
     echo "City: $city<br>";
 
+    // Handle profile picture upload
+    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
+        $targetDir = realpath(__DIR__ . '/../../public/uploads/users/');
+        
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0777, true);  // Create the directory if it doesn't exist
+        }
+
+        $targetFile = $targetDir . '/' . basename($_FILES['profile_image']['name']);
+        if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $targetFile)) {
+            $profile_image_path = 'uploads/users/' . basename($_FILES['profile_image']['name']);
+        } else {
+            echo "Error uploading the profile image.";
+        }
+    }
+
     if ($firstName && $lastName && $name && $email && $phoneNumber && $city) {
-        $sqlUpdate = "UPDATE user SET first_name = ?, last_name = ?, name = ?, email = ?, Phone_number = ?, CIty = ? WHERE id = ?";
+        $sqlUpdate = "UPDATE user SET first_name = ?, last_name = ?, name = ?, email = ?, Phone_number = ?, CIty = ?, profile_image_path = ? WHERE id = ?";
         $stmt = $dbConnection->prepare($sqlUpdate);
 
         if ($stmt === false) {
@@ -60,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        $stmt->bind_param("ssssssi", $firstName, $lastName, $name, $email, $phoneNumber, $city, $userId);
+        $stmt->bind_param("sssssssi", $firstName, $lastName, $name, $email, $phoneNumber, $city, $profile_image_path, $userId);
 
         if ($stmt->execute()) {
             // Refresh the page to show updated information
@@ -75,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Invalid input.";
     }
 }
+
 
 if ($user):
 ?>
@@ -122,10 +140,11 @@ if ($user):
                         <img src="/image/edit-profile.png" alt="Edit" class="edit-icon" onclick="enableEditing()">
                     </h3>
                     <div class="cat-image">
-                        <img src="uploads/users/boota.png" alt="Profile Image">
+                        <img id="profileImage" src="<?= htmlspecialchars($user['profile_image_path']); ?>" alt="Profile Image">
                     </div>
+
                     <div class="cat-info">
-                    <form method="POST" action="" id="userForm">
+                    <form method="POST" action="" enctype="multipart/form-data" id="userForm">
                         <h2 id="userName"><strong><?= htmlspecialchars($user['name']); ?></strong></h2>
                         <div class="cat-details">
                             <div><strong>Username:</strong> <span id="username"><?= htmlspecialchars($user['name']); ?></span></div>
@@ -136,12 +155,14 @@ if ($user):
                             <div><strong>City:</strong> <span id="city"><?= htmlspecialchars($user['CIty']); ?></span></div>
                         </div>
                     </div>
+                    <div class="cat-image" id="imageUploadContainer" style="display:none;">
+                    <strong>Change Profile pic: </strong><input type="file" name="profile_image" accept="image/*">
+                    </div>
                 </div>
                 <div id="updateButtonContainer" style="display:none;">
-                    
-                        <button type="submit">Update Profile</button>
-                    </form>
+                    <button type="submit">Update Profile</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -154,6 +175,22 @@ endif;
 ?>
 
 <script>
+
+function toggleUserDropdown() {
+    const dropdown = document.getElementById("userDropdownContent");
+    dropdown.classList.toggle("show");
+}
+
+// Close the dropdown if clicked outside
+window.onclick = function(event) {
+    if (!event.target.closest('.user-dropdown')) {
+        const dropdown = document.getElementById("userDropdownContent");
+        if (dropdown.classList.contains("show")) {
+            dropdown.classList.remove("show");
+        }
+    }
+}
+
 let isEditing = false;
 
 function enableEditing() {
@@ -178,6 +215,10 @@ function enableEditing() {
         const updateButtonContainer = document.getElementById('updateButtonContainer');
         updateButtonContainer.style.display = 'none';
 
+        // Hide the image upload input
+        const imageUploadContainer = document.getElementById('imageUploadContainer');
+        imageUploadContainer.style.display = 'none';
+
         isEditing = false;
     } else {
         // Switch to editable state
@@ -200,6 +241,10 @@ function enableEditing() {
         // Show the update button
         const updateButtonContainer = document.getElementById('updateButtonContainer');
         updateButtonContainer.style.display = 'block';
+
+        // Show the image upload input
+        const imageUploadContainer = document.getElementById('imageUploadContainer');
+        imageUploadContainer.style.display = 'block';
 
         isEditing = true;
     }

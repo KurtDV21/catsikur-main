@@ -41,6 +41,7 @@ if (isset($_SESSION['user_id'])) {
 <head>
   <link rel="stylesheet" href="/css/user.css">
   <link rel="stylesheet" href="/css/usertab.css">
+  <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -109,7 +110,6 @@ if (isset($_SESSION['user_id'])) {
                 <div class="cat-card">
                   <img src="<?php echo htmlspecialchars($post['picture']); ?>" alt="Cat Image" class="cat-image">
                   <h2><?php echo htmlspecialchars($post['cat_name']); ?></h2>
-                  <p>Color: <?php echo htmlspecialchars($post['color']); ?> </p>
                   <p>Age: <?php echo htmlspecialchars($post['age']); ?> </p>
                   <p>Location: <?php echo htmlspecialchars($post['location']); ?></p>
                 </div>
