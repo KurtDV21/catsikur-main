@@ -44,6 +44,38 @@ function generatePDF($inquiry)
     exit;
 }
 
+if ($action === 'deny' && isset($_GET['inquiry_id'])) {
+    $inquiryId = $_GET['inquiry_id'];
+
+    // Update the inquiry status to denied in the database
+    $updateInquiry = $dbConnection->prepare("
+        UPDATE inquiries SET status = 'denied' WHERE id = ?
+    ");
+    if ($updateInquiry === false) {
+        echo "Failed to prepare query: " . $dbConnection->error;
+        exit;
+    }
+    $updateInquiry->bind_param("i", $inquiryId);
+    $updateInquiry->execute();
+    $updateInquiry->close();
+
+    // Display the denial modal
+    echo "
+        <div id='denyModal' style='display: block;'>
+            <div style='background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%;'>
+                <div style='position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; text-align: center;'>
+                    <h2>Inquiry Denied</h2>
+                    <p>The inquiry has been denied.</p>
+                    <div style='display: flex; justify-content: center; margin-top: 20px;'>
+                        <button onclick='document.getElementById(\"denyModal\").style.display=\"none\";' style='padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px;'>Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ";
+}
+
+
 if ($action === 'approve' && isset($_GET['inquiry_id'])) {
     $inquiryId = $_GET['inquiry_id'];
 
@@ -69,7 +101,6 @@ if ($action === 'approve' && isset($_GET['inquiry_id'])) {
         $postId = $inquiry['post_id']; // Fetch the post_id from the inquiry
 
         if ($inquirerId && $authorId && $postId) {
-            // Check if chat exists between the inquirer and the author
             $checkChat = $dbConnection->prepare("
                 SELECT id FROM chats WHERE inquirer_id = ? AND author_id = ?
             ");
@@ -79,10 +110,6 @@ if ($action === 'approve' && isset($_GET['inquiry_id'])) {
             $checkChat->close();
 
             if (!$existingChat) {
-                // Log the parameters before attempting to insert
-                echo "Attempting to create chat with inquirer_id: $inquirerId, author_id: $authorId, post_id: $postId.<br>";
-
-                // Create a new chat
                 $createChat = $dbConnection->prepare("
                     INSERT INTO chats (inquirer_id, author_id, post_id) VALUES (?, ?, ?)
                 ");
@@ -93,21 +120,15 @@ if ($action === 'approve' && isset($_GET['inquiry_id'])) {
                 $createChat->bind_param("iii", $inquirerId, $authorId, $postId); // Include post_id in the query
                 $createChat->execute();
 
-                // Check if the chat was created successfully
                 if ($createChat->affected_rows > 0) {
-                    // Get the chat ID
-                    $chatId = $createChat->insert_id; // Get the last inserted chat_id
-                    echo "Chat created with ID: " . $chatId;
-                } else {
-                    echo "Failed to create chat. No rows affected. MySQL Error: " . $dbConnection->error;
+                    $chatId = $createChat->insert_id;
+                    $chatMessage = "Chat created with ID: {$chatId}";
                 }
-
                 $createChat->close();
             } else {
-                echo "Chat already exists with ID: " . $existingChat['id'];
+                $chatMessage = "Chat already exists with ID: {$existingChat['id']}";
             }
 
-            // Update inquiry status to 'approved'
             $updateInquiry = $dbConnection->prepare("
                 UPDATE inquiries SET status = 'approved' WHERE id = ?
             ");
@@ -119,13 +140,28 @@ if ($action === 'approve' && isset($_GET['inquiry_id'])) {
             $updateInquiry->execute();
             $updateInquiry->close();
 
-            echo "Inquiry approved and chat triggered.";
+            // Output dialog for the combined message
+            echo "
+                <div id='chatDialog' style='display: block;'>
+                    <div style='background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%;'>
+                        <div style='position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; text-align: center;'>
+                            <h2>Inquiry Approved</h2>
+                            <p>Inquiry has been approved and chat triggered. {$chatMessage}</p>
+                            <div style='display: flex; justify-content: center; margin-top: 20px;'>
+                                <button onclick='document.getElementById(\"chatDialog\").style.display=\"none\";' style='padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px;'>Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ";
         } else {
             echo "Invalid inquirer or author ID.";
         }
     } else {
         echo "Inquiry not found.";
     }
+
+
 
 
 } elseif ($action === 'generate_pdf' && isset($_GET['inquiry_id'])) {
@@ -161,7 +197,7 @@ if ($action === 'approve' && isset($_GET['inquiry_id'])) {
 
 // Fetch inquiries for display
 $stmt = $dbConnection->prepare("
-    SELECT inquiries.id, inquiries.user_id, user.name AS user_name, inquiries.post_id, post.user_id AS post_name 
+    SELECT inquiries.id, inquiries.user_id, inquiries.status, user.name AS user_name, inquiries.post_id, post.user_id AS post_name 
     FROM inquiries 
     JOIN user ON inquiries.user_id = user.id 
     JOIN post ON inquiries.post_id = post.id
@@ -190,42 +226,42 @@ if ($stmt) {
 </head>
 
 <body>
-<header>
+    <header>
         <nav class="navbar">
-        <div class="img">
-    <img src="/image/logo1.png" alt="logo" class="logo">
-    <h2 class="title"><a href="">Cat Free Adoption</a></h2>
-    </div>
-
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-      <ul class="nav-link">
-        <li><a href="/user-homepage">HOME</a></li>
-        <li><a href="/ourcats">OUR CATS</a></li>
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#faq">FAQs</a></li>
-        <li>
-          <div class="user-dropdown">
-            <button class="user-dropdown-button" onclick="toggleUserDropdown()">
-              <?php echo htmlspecialchars($name); ?>
-            </button>
-            <div class="user-dropdown-content" id="userDropdownContent">
-              <a href="/logout">Logout</a>
+            <div class="img">
+                <img src="/image/logo1.png" alt="logo" class="logo">
+                <h2 class="title"><a href="">Cat Free Adoption</a></h2>
             </div>
-          </div>
-        </li>
-      </ul>
-    </nav>
+
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-link">
+                <li><a href="/user-homepage">HOME</a></li>
+                <li><a href="/ourcats">OUR CATS</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#faq">FAQs</a></li>
+                <li>
+                    <div class="user-dropdown">
+                        <button class="user-dropdown-button" onclick="toggleUserDropdown()">
+                            <?php echo htmlspecialchars($name); ?>
+                        </button>
+                        <div class="user-dropdown-content" id="userDropdownContent">
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
     </header>
 
-<section id="main">
-    <div class="container-admin">
-      
-        <div class="sidebar">
+    <section id="main">
+        <div class="container-admin">
+
+            <div class="sidebar">
                 <div class="user-profile">
                     <div class="image-placeholder">
                         <img src="<?php echo htmlspecialchars($showPic['profile_image_path']); ?>" alt="Admin Profile">
@@ -237,7 +273,7 @@ if ($stmt) {
                     <div class="container">
                         <div onclick="location.href='/admin'" class="approval-card">
                             <a href="/admin">Approval</a>
-                        </div>  
+                        </div>
                         <div class="adoption-posts">
                             <a href="/admin-adoption">Adoption Total Posts</a>
                         </div>
@@ -255,84 +291,95 @@ if ($stmt) {
             </div>
 
             <div class="main-content">
-    <div class="table-container">
-        <div class="pending">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Inquirer ID</th>
-                        <th>Inquirer Name</th>
-                        <th>Post ID</th>
-                        <th>Author ID</th>
-                        <th>PDF</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($inquiries as $inquiry): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($inquiry['user_id']); ?></td>
-                            <td><?php echo htmlspecialchars($inquiry['user_name']); ?></td>
-                            <td><?php echo htmlspecialchars($inquiry['post_id']); ?></td>
-                            <td><?php echo htmlspecialchars($inquiry['post_name']); ?></td>
-                            <td><a href="?action=generate_pdf&inquiry_id=<?php echo $inquiry['id']; ?>" target="_blank" class="view-pdf">View PDF</a></td>
-                                <td class="action-cell">
-                                    <a href="?action=approve&inquiry_id=<?php echo $inquiry['id']; ?>" class="approve-btn">Approve</a>
-                                    <a href="?action=deny&inquiry_id=<?php echo $inquiry['id']; ?>" class="deny-btn">Deny</a>
-                                </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                <div class="table-container">
+                    <div class="pending">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Inquirer ID</th>
+                                    <th>Inquirer Name</th>
+                                    <th>Post ID</th>
+                                    <th>Author ID</th>
+                                    <th>PDF</th>
+                                    <th>Action</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($inquiries as $inquiry): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($inquiry['user_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($inquiry['user_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($inquiry['post_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($inquiry['post_name']); ?></td>
+                                        <td><a href="?action=generate_pdf&inquiry_id=<?php echo $inquiry['id']; ?>"
+                                                target="_blank" class="view-pdf">View PDF</a></td>
+                                        <td class="action-cell">
+                                            <?php if ($inquiry['status'] === 'approved' || $inquiry['status'] === 'denied'): ?>
+                                                <span class="disabled-btn">Approved or Denied</span>
+                                            <?php else: ?>
+                                                <a href="?action=approve&inquiry_id=<?php echo $inquiry['id']; ?>"
+                                                    class="approve-btn">Approve</a>
+                                                <a href="?action=deny&inquiry_id=<?php echo $inquiry['id']; ?>"
+                                                    class="deny-btn">Deny</a>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?php echo htmlspecialchars($inquiry['status']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
         </div>
-        </section>
+    </section>
 
-        <section id="about" class="about">
-    <div class="footer-container">
-        <div class="about-company">
+    <section id="about" class="about">
+        <div class="footer-container">
+            <div class="about-company">
 
-        <div class="info-item">
-        <img src="/image/place.png" alt="" class="place-icon">
-        <p><a href="">9A Masambong St. Bahay Toro, Quezon City</a></p>
-    </div>
-    <div class="info-item">
-        <img src="/image/phone.png" alt="" class="phone-icon">
-        <p><a href="">09123456789</a></p>
-    </div>
-    <div class="info-item">
-        <img src="/image/email.png" alt="" class="email-icon">
-        <p><a href="">catfreeadopt@email.com</a></p>
-    </div>
+                <div class="info-item">
+                    <img src="/image/place.png" alt="" class="place-icon">
+                    <p><a href="">9A Masambong St. Bahay Toro, Quezon City</a></p>
+                </div>
+                <div class="info-item">
+                    <img src="/image/phone.png" alt="" class="phone-icon">
+                    <p><a href="">09123456789</a></p>
+                </div>
+                <div class="info-item">
+                    <img src="/image/email.png" alt="" class="email-icon">
+                    <p><a href="">catfreeadopt@email.com</a></p>
+                </div>
+            </div>
+
+
+            <div class="details">
+                <h3>ABOUT COMPANY</h3>
+                <p>Lorem ipsum dolor sit amet. Ex officiis molestias et sapiente<br> doloremque et dolores doloribus est
+                    animi maiores. Ut fugiat <br> molestiae nam quia earum qui aliquid aliquid ab corrupti officiis.
+                    Et<br> temporibus quia 33 incidunt adipisci ea deleniti vero 33<br> reprehenderit repellat.</p>
+
+
+                <a href="https://www.facebook.com/groups/1591906714301364" target="_blank">
+                    <img src="/image/facebook.png" alt="Facebook" class="fb-icon">
+                </a>
+
+                <a href="https://www.messenger.com" target="_blank">
+                    <img src="/image/messenger.png" alt="Messenger" class="mess-icon">
+                </a>
+
+            </div>
         </div>
 
+    </section>
 
-        <div class="details">
-        <h3>ABOUT COMPANY</h3>
-            <p>Lorem ipsum dolor sit amet. Ex officiis molestias et sapiente<br> doloremque et dolores doloribus est animi maiores. Ut fugiat <br> molestiae nam quia earum qui aliquid aliquid ab corrupti officiis. Et<br> temporibus quia 33 incidunt adipisci ea deleniti vero 33<br> reprehenderit repellat.</p>
-            
-            
-            <a href="https://www.facebook.com/groups/1591906714301364" target="_blank">
-                <img src="/image/facebook.png" alt="Facebook" class="fb-icon">
-            </a>
-            
-            <a href="https://www.messenger.com" target="_blank">
-                <img src="/image/messenger.png" alt="Messenger" class="mess-icon">
-            </a>
-     
-        </div>
-    </div>
 
-  </section>
-  
+    <footer class="footer">
+        Cats Free Adoption & Rescue Philippines
+    </footer>
 
-  <footer class = "footer">
-    Cats Free Adoption & Rescue Philippines
-  </footer>
-  
     <script src="/js/admin.js"></script>
 </body>
 

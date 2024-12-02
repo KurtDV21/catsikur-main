@@ -793,14 +793,6 @@ h2 {
     background-color: #dc3545;
     color: #ffffff;
 }
-  
-  
- 
-   
-  
-  
-  
-  
 
   
 .container-admin {
@@ -833,4 +825,18 @@ h2 {
   flex-wrap: wrap; /* Wrap items if needed */
   gap: 20px; /* Space between items */
   margin: 20px; /* Add margin around the list */
+}
+
+
+.disabled-btn {
+  color: #ccc;
+  font-weight: bold;
+}
+
+.approve-btn, .deny-btn {
+  pointer-events: auto;
+}
+
+.disabled-btn {
+  pointer-events: none;
 }
