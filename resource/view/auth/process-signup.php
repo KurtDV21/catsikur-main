@@ -11,20 +11,42 @@ $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
+$response = [];
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $role = 'user';
-    // Register the user and get the activation hash
-    $activation_hash = $userController->register($role, $_POST["name"], $_POST["email"], $_POST["password"]);
-    
-    // Retrieve the newly registered user's ID
-    $newUserId = $dbConnection->insert_id;
+    $email = $_POST["email"];
 
-    // Send activation email with the activation link
-    $activation_link = "http://localhost/activate-account.php?token=" . $activation_hash; // Update your domain
-    // Use PHPMailer or similar library to send the email here
+    // Check if the email already exists in the database
+    $sqlCheckEmail = "SELECT * FROM user WHERE email = ?";
+    $stmt = $dbConnection->prepare($sqlCheckEmail);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Redirect to profile creation page, passing user ID
-    header("Location: /profile2?user_id=" . $newUserId);
-    exit;
+    if ($result->num_rows > 0) {
+        // Email already exists, set the error message
+        $response['error'] = "Email is already registered. Please use a different email.";
+    } else {
+        $role = 'user';
+        // Register the user and get the activation hash
+        $activation_hash = $userController->register($role, $_POST["name"], $_POST["email"], $_POST["password"]);
+        
+        // Retrieve the newly registered user's ID
+        $newUserId = $dbConnection->insert_id;
+
+        // Send activation email with the activation link
+        $activation_link = "http://localhost/activate-account.php?token=" . $activation_hash; // Update your domain
+        // Use PHPMailer or similar library to send the email here
+
+        // Set success response
+        $response['success'] = "Registration successful. Please check your email for activation link.";
+        $response['redirect'] = "/profile2?user_id=" . $newUserId;
+    }
+
+    $stmt->close();
 }
+
+header('Content-Type: application/json');
+echo json_encode($response);
+exit;
 ?>
