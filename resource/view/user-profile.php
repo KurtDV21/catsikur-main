@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/css/catdeetstab.css">
     <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
 
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
 </head>

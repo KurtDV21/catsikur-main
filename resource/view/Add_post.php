@@ -144,8 +144,8 @@ $name = $user['name'];
         <button type="submit" class="btn">Submit Post</button>
         <div class="popup" id="popup">
             <img src="/image/check.png" alt="">
-            <h2>Thank You!</h2>
-            <p>Your post has been successfully submitted, Thanks!</p>
+            <h2>Confirmation!</h2>
+            <p>Please Confirm and submit post.</p>
             <button type="button" class="popbtn" onclick="submitForm()">Confirm and Submit</button>
             <button type="button" class="popbtn" onclick="closePopup()">Cancel</button>
         </div>

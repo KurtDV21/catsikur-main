@@ -81,7 +81,7 @@ if ($action === 'approve' && isset($_GET['inquiry_id'])) {
 
     // Fetch inquiry details
     $query = $dbConnection->prepare("
-        SELECT inquiries.user_id AS inquirer_id, post.user_id AS author_id, inquiries.post_id
+        SELECT inquiries.user_id AS inquirer_id, post.user_id AS author_id, inquiries.post_id, inquiries.status
         FROM inquiries
         JOIN post ON inquiries.post_id = post.id
         WHERE inquiries.id = ?
