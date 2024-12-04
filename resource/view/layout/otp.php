@@ -62,8 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <!-- Verify button submits the form instead of redirecting directly -->
             <button class="verifyButton" type="submit">Verify</button>
             <button type="button" class="exitBtn">×</button>
-            <p class="resendNote">Didn't receive the code? <button type="button" class="resendBtn">Resend Code</button></p>
-        </form>
+            <p class="resendNote">Didn't receive the code? <button type="button" class="resendBtn" id="resendBtn">Resend Code</button></p>
+            </form>
     </div>
 </section>
 
@@ -101,4 +101,53 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     Cats Free Adoption & Rescue Philippines
 </footer>
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const resendButton = document.getElementById('resendBtn');
+
+    resendButton.addEventListener('click', function() {
+        fetch('/public/process/resend-otp.php', { // Ensure this path is correct
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.success);
+            } else if (data.error) {
+                alert(data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    // OTP Countdown logic
+    const countdownElement = document.getElementById("countdown");
+    const remainingTime = <?= isset($lockout_remaining) ? $lockout_remaining : 0 ?>;
+
+    if (remainingTime > 0) {
+        let timeLeft = remainingTime;
+
+        const updateCountdown = () => {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            countdownElement.textContent = `${minutes}m ${seconds}s`;
+
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                countdownElement.textContent = "You can try logging in now.";
+                clearInterval(timer);
+            }
+        };
+
+        updateCountdown();
+        const timer = setInterval(updateCountdown, 1000);
+    }
+});
+</script>
+
 </html>

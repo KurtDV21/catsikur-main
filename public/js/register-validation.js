@@ -9,15 +9,25 @@ document.addEventListener("DOMContentLoaded", function() {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(response => response.text()) // Fetch as text first
+        .then(text => {
+            console.log("Raw response:", text);
+            return JSON.parse(text); // Parse JSON
+        })
         .then(data => {
+            console.log("Data processed", data); // Log the processed data
             if (data.error) {
+                console.log("Error: ", data.error);
                 document.getElementById("emailError").textContent = data.error;
             } else if (data.success) {
-                alert(data.success);
-                window.location.href = data.redirect;
+                alert(data.success); // Optional alert
+                console.log("Redirecting to: ", data.redirect);
+                window.location.href = data.redirect; // Redirect to the new URL
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred. Please try again.");
+        });
     });
 });

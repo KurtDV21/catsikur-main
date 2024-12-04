@@ -56,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           $_SESSION["user_name"] = $user["name"];
           $_SESSION["otp"] = $otp;
           $_SESSION["role"] = $user["role"];
+          $_SESSION["user_email"] = $user["email"]; 
 
           // Mailer for sending OTP
           $mail = require __DIR__ . "/auth/mailer.php";
@@ -66,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
           // Redirect based on role
           if ($_SESSION["role"] === 'user') {
-              header("Location: /user-homepage");
+              header("Location: /otp");
               exit;
           } else {
               $is_invalid = true;

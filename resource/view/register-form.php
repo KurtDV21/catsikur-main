@@ -3,10 +3,10 @@
 <head>
     <link rel="stylesheet" href="/css/register.css">
     <script src="https://cdn.jsdelivr.net/npm/just-validate@latest/dist/just-validate.production.min.js"></script>
-    <script src="/js/register-validation.js" defer></script>
+    <script src="/js/validation.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Document</title>
 </head>
 <body>
     
@@ -14,7 +14,7 @@
   <nav class="navbar">
     <img src="/image/logo1.png" alt="logo" class="logo">
 
-    <div class="nav-container">
+    <div class="nav-container"> <!-- New div to contain nav links -->
       <ul class="nav-link">
         <li><a href="#home">HOME</a></li>
         <li><a href="">OUR CATS</a></li>
@@ -26,11 +26,15 @@
   </nav>
 </header>
 
+
 <div class="wrapper">
-    <span class="icon-close"><ion-icon name="close"></ion-icon></span>
+    
+
+<span class="icon-close"><ion-icon name="close"></ion-icon></span>
     <div class="form-box register">
       <h2>Register</h2>
-      <form id="signup" action="/process-signup" method="post">
+      <form id="signup"action="/process-signup" method="post">
+
         <div class="input-box">
           <span class="icon"><ion-icon name="people"></ion-icon></span>
           <input name="name" id="name" type="user" required>
@@ -42,7 +46,6 @@
           <input type="email" name="email" id="email" value="<?= htmlspecialchars($_POST["email"] ?? "")?>" required>
           <label for="email">Email</label>
         </div>
-        <div id="emailError" class="error-message"></div> <!-- Space for error message -->
 
         <div class="input-box">
           <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
@@ -50,19 +53,23 @@
           <label for="password">Password</label>
         </div>
 
-        <div class="remember-forgot">
+       <div class="remember-forgot">
           <label><a href="admin-login.php" class="admin-account"><b>ADMIN ACCOUNT</b></a></label>
           <a href="#" class="forgot"><b>FORGOT PASSWORD?</b></a>
         </div>
-        <button type="submit" class="btn"><b>Register</b></button>
+        <button type="submit" class="btn" onclick="location.href='/process-signup'"><b>Register</b></button>
 
         <div class="login-register">
-          <p>Already have an account? <a href="/loginto" class="register-link"><b>Login</b></a></p>
+          <p >Already have an account? <a href="/loginto" class="register-link"><b>Login</b></a></p>
         </div>
       </form>
     </div>
 
+
+
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    
+
 </body>
 </html>
