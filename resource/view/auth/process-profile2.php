@@ -23,7 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Fetch user input
-    $fullname = $_POST['fullname'] ?? ''; 
+    $firstname = $_POST['firstname'] ?? ''; 
+    $lastname = $_POST['lastname'] ?? ''; 
     $phone_number = $_POST['phone_number'] ?? '';
     $city = $_POST['city'] ?? '';
     
@@ -46,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Update the user with profile information
-    $sqlUpdate = "UPDATE user SET name=?, phone_number=?, city=?, profile_image_path=? WHERE id=?";
+    $sqlUpdate = "UPDATE user SET first_name=?, last_name=?, phone_number=?, city=?, profile_image_path=? WHERE id=?";
     $stmt = $dbConnection->prepare($sqlUpdate);
 
     if ($stmt === false) {
@@ -54,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Bind parameters
-    $stmt->bind_param("ssssi", $fullname, $phone_number, $city, $profile_image_path, $userId);
+    $stmt->bind_param("sssssi", $firstname, $lastname, $phone_number, $city, $profile_image_path, $userId);
 
     if ($stmt->execute()) {
         header("Location: /signup-success");
