@@ -337,6 +337,7 @@ h2 {
 }
 
 .cat-detail-box {
+    background-color: #fbe9e9;
     border-radius: 8px;
     width: 372px;
     height: 540px;
@@ -346,7 +347,6 @@ h2 {
     font-size: 20px;
     font-weight: bold;
     color: #4c2a2a;
-    overflow: hidden; /* Add this to ensure images do not overflow the box */
 }
 
 .cat-detail-box img {

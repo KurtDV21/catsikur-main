@@ -107,6 +107,10 @@ route('/signup-success', function () {
     include __DIR__ . '/../resource/view/layout/signup-success.php';
 });
 
+route('/login', function () {
+    include __DIR__ . '/../resource/view/layout/login.php';
+});
+
 route('/ajaxFilterPosts', function () {
     
     include __DIR__ . '/../resource/view/ajaxFilterPosts.php';

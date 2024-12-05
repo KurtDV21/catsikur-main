@@ -42,11 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <img src="${post.picture}" alt="Cat Image" class="cat-image">
                                         <h2>${post.cat_name}</h2>
                                         <p>Color: ${post.color}</p>
-                                        <p>Age: ${post.age} years</p>
+                                        <p>Age: ${post.age}</p>
                                         <p>Location: ${post.location}</p>
                                     </div>
                                 </a>
-                                <button class="btn-adopt">Adopt Me</button>
                             </div>`;
                     });
                 }

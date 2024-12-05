@@ -62,3 +62,44 @@ window.onclick = function(event) {
     }
 }
 
+let currentIndex = 0;
+
+function showSlide(index) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+
+    // Ensure the index is within range
+    if (index >= slides.length) {
+        currentIndex = 0;
+    } else if (index < 0) {
+        currentIndex = slides.length - 1;
+    } else {
+        currentIndex = index;
+    }
+
+    // Move slider to the correct slide
+    const slider = document.querySelector('.slider');
+    slider.style.transform = `translateX(-${currentIndex * 100}vw)`; // Use template literals
+
+    // Update active dot
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[currentIndex].classList.add('active');
+}
+
+// Set up automatic slide change every 8 seconds
+setInterval(() => {
+    showSlide(currentIndex + 1); // Show next slide
+}, 8000);
+
+// Initialize the first slide
+showSlide(currentIndex);
+
+// Change slide with prev and next buttons
+function changeSlide(step) {
+    showSlide(currentIndex + step);
+}
+
+// Optional: You can add event listeners to the dots if you want to click the dots directly
+document.querySelectorAll('.dot').forEach((dot, index) => {
+    dot.addEventListener('click', () => showSlide(index));
+});

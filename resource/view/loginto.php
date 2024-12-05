@@ -56,19 +56,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           $_SESSION["user_name"] = $user["name"];
           $_SESSION["otp"] = $otp;
           $_SESSION["role"] = $user["role"];
-          $_SESSION["user_email"] = $user["email"]; 
+          $_SESSION["user_email"] = $user["email"];     
 
           // Mailer for sending OTP
           $mail = require __DIR__ . "/auth/mailer.php";
           $mail->setFrom('noreply@yourdomain.com', 'Your App');
           $mail->addAddress($user["email"]);
-          $mail->Subject = 'Your OTP Code';
+          $mail->Subject = 'Your OTP Code';   
           $mail->Body = "Your OTP code is: $otp";
 
           // Redirect based on role
           if ($_SESSION["role"] === 'user') {
-              header("Location: /otp");
-              exit;
+              header("Location: /user-homepage");
+              exit; 
           } else {
               $is_invalid = true;
           }
@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
               $is_invalid = true;
           }
       }
-  }
+  } 
 }
 
 
@@ -108,8 +108,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     
       <ul class="nav-link">
-        <li><a href="/">HOME</a></li>
-        <li><a href="">OUR CATS</a></li>
+      <li><a href="/">HOME</a></li>
+      <li><a href="/#ourcats">OUR CATS</a></li> 
         <li><a href="">ABOUT</a></li>
         <li><a href="">FAQs</a></li>
         <button class="login-btn" onclick="location.href='/loginto'">Login</button>

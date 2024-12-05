@@ -54,11 +54,64 @@ if (isset($_SESSION['user_id'])) {
   </header>
 
   <section id="main" class="main">
-    <div class="main-container">
-      <h1 class="text1">Find Your Purr-fect<br> Companion: Adopt<br> a Cat Today!</h1>
-      <button class="adopt-btn">ADOPT NOW!</button>
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="image/puspin.jpg" alt="Image 1">
+      </div>
+      <div class="slide">
+        <img src="image/puspin1.jpg" alt="Image 2">
+      </div>
+      <div class="slide">
+        <img src="../image/puspin2.jpg" alt="Image 3">
+      </div>
+      <div class="slide">
+        <img src="../image/puspin3.jpg" alt="Image 3">
+      </div>
     </div>
+    <!-- Navigation Dots -->
+    <div class="dots-container">
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot" onclick="currentSlide(4)"></span>
+    </div>
+    
+    <!-- Prev and Next Buttons -->
+    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+    <button class="next" onclick="changeSlide(1)">&#10095;</button>
+  </div>
+
+  <div class="main-container">
+    <h1 class="text1">Find Your Purr-fect<br> Companion: Adopt<br> a Cat Today!</h1>
+    <button class="adopt-btn">ADOPT NOW!</button>
+  </div>
   </section>
+
+  <section id="sample" class="sample">
+<div class="sample-container">
+  <h2>Be Part of our Community by...</h2>
+  
+  <div class="adopting">
+    <h3>Adopting</h3>
+    <p>Provide a loving home for one of our community cats. Adopting a cat not only helps the animal but also creates a bond for life.</p>
+    <button>Adopt</button>
+  </div>
+  
+  <div class="rescue">
+    <h3>Rescue</h3>
+    <p>Help us rescue and care for stray and injured cats. Your support makes a big difference in their lives.</p>
+    <button>Rescue</button>
+  </div>
+  
+  <div class="community">
+    <h3>Community</h3>
+    <p>Join our community efforts to feed and care for our feline friends. Become a volunteer or contribute in other ways.</p>
+    <button>Join</button>
+  </div>
+</div>
+
+</section>
 
   <section id="ourcats" class="ourcats">
     <div class="container">
@@ -122,46 +175,53 @@ if (isset($_SESSION['user_id'])) {
 
   <section id="about" class="about">
     <div class="footer-container">
-      <div class="about-company">
+        <div class="about-company">
 
         <div class="info-item">
-          <img src="/image/place.png" alt="" class="place-icon">
-          <p><a href="">9A Masambong St. Bahay Toro, Quezon City</a></p>
-        </div>
-        <div class="info-item">
-          <img src="/image/phone.png" alt="" class="phone-icon">
-          <p><a href="">09123456789</a></p>
-        </div>
-        <div class="info-item">
-          <img src="/image/email.png" alt="" class="email-icon">
-          <p><a href="">catfreeadopt@email.com</a></p>
-        </div>
-      </div>
-
-      <div class="details">
-        <h3>ABOUT COMPANY</h3>
-        <p>Lorem ipsum dolor sit amet. Ex officiis molestias et sapiente<br> doloremque et dolores doloribus est animi
-          maiores. Ut fugiat <br> molestiae nam quia earum qui aliquid aliquid ab corrupti officiis. Et<br> temporibus
-          quia 33 incidunt adipisci ea deleniti vero 33<br> reprehenderit repellat.</p>
-
-        <a href="https://www.facebook.com/groups/1591906714301364" target="_blank">
-          <img src="/image/facebook.png" alt="Facebook" class="fb-icon">
-        </a>
-
-        <a href="https://www.messenger.com" target="_blank">
-          <img src="/image/messenger.png" alt="Messenger" class="mess-icon">
-        </a>
-      </div>
+        <img src="/image/place.png" alt="" class="place-icon">
+        <p><a href="">9A Masambong St. Bahay Toro, Quezon City</a></p>
     </div>
-  </section>
+    <div class="info-item">
+        <img src="/image/phone.png" alt="" class="phone-icon">
+        <p><a href="">09123456789</a></p>
+    </div>
+    <div class="info-item">
+        <img src="/image/email.png" alt="" class="email-icon">
+        <p><a href="">catfreeadopt@email.com</a></p>
+    </div>
+        </div>
 
-  <footer class="footer">
+
+        <div class="details">
+        <h3>COMMUNITY RULES</h3>
+            <p><a href="/rules">Rules and Regulations</a></p>
+            <p><a href="/faq">FAQs</a></p>
+            
+            
+            <a href="https://www.facebook.com/groups/1591906714301364" target="_blank">
+                <img src="/image/facebook.png" alt="Facebook" class="fb-icon">
+            </a>
+            
+            <a href="https://www.messenger.com" target="_blank">
+                <img src="/image/messenger.png" alt="Messenger" class="mess-icon">
+            </a>
+     
+        </div>
+    </div>
+
+  </section>
+  
+
+  <footer class = "footer">
     Cats Free Adoption & Rescue Philippines
-  </footer>
+  </footer>  
 
   <script src="/js/filter.js"></script>
   <script src="/js/package.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script>
+     
+  </script>
 </body>
 </html>

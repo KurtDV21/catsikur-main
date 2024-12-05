@@ -71,13 +71,18 @@ section{
 }
 
 #main {
+    position: relative;
     width: 100vw;
-    height: 100vh; /* Adjusted the height */
-    background-image: url(/image/background.png);
-    background-repeat: no-repeat;
-    background-size: cover; /* Reduces the image size while maintaining its aspect ratio */
-    background-position: center;
-}
+    height: 100vh;
+    overflow: hidden; /* Hide overflow from the slider */
+  }
+
+#sample{
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    background-color: #92A8D1;
+}  
 
 #ourcats{
     width: 100vw;
@@ -86,11 +91,13 @@ section{
     background-color: #FFEFEF;
 }
 
-#about{
-    width: 100vw;
-    height: 50vh;
-    display: flex;
-    background-color: #F7C9CB;
+#about {
+  width: 100vw;
+  height: 50vh;
+  display: flex;
+  background-color: #fbccac;
+  /* background: url('../image/footer9.jpg') no-repeat center center; */
+  background-size: cover; /* Ensure the image covers the whole area */
 }
 
 .header{
@@ -203,26 +210,105 @@ section{
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
   }
 
+  .slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .slider {
+    display: flex;
+    width: 400%; /* 4 images = 400% */
+    height: 100%;
+    transition: transform 1s ease;
+  }
+  
+  .slide {
+    width: 100vw; /* Each slide takes up the full viewport width */
+    height: 100vh;
+  }
+  
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .dots-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .dot {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .dot.active {
+    background-color: #C3BEF0;
+  }
+  
+  /* Prev and Next Buttons */
+  button.prev,
+  button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 3rem;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  button.prev {
+    left: 20px;
+  }
+  
+  button.next {
+    right: 20px;
+  }
+  
+  button.prev:hover,
+  button.next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
   .main-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; 
-    justify-content: center; 
-    margin-left: 200px; 
-    height: 100vh; 
-    gap: 20px; 
-}
-
-.text1 {
-    font-family: 'Aoboshi One', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
-    margin-top: 100px;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: 200px;
+    height: 100vh;
+    gap: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .text1 {
+    font-family: 'Aoboshi One', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 3.5rem;
-    text-align: left; 
-}
-
-.adopt-btn {
-    font-family: 'Aoboshi One', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
-    background-color: #C3BEF0;
+    text-align: left;
+    color: #FFEFEF;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  .adopt-btn {
+    font-family: 'Aoboshi One', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #92A8D1;
     color: white;
     border: none;
     border-radius: 10px;
@@ -233,7 +319,67 @@ section{
     transition: background-color 0.3s ease, transform 0.3s ease;
     box-shadow: 0 50px 50px rgba(0, 0, 0, 0.1);
     align-self: flex-start;
-}
+  }
+
+  .sample-container {
+    max-width: 1200px; /* Centered content */
+    margin: 0 auto;
+    text-align: center;
+    padding: 50px 20px; /* Add spacing around content */
+  }
+  
+  .sample-container h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333; /* Neutral heading color */
+    text-transform: uppercase;
+    letter-spacing: 2px; /* Add spacing to letters */
+    margin-bottom: 40px;
+  }
+  
+  .adopting, .rescue, .community {
+    display: inline-block; /* Align items horizontally */
+    width: 30%; /* Equal width for items */
+    margin: 0 10px; /* Spacing between items */
+    padding: 20px;
+    background-color: #ffffff; /* White card background */
+    border: 1px solid #eaeaea; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    vertical-align: top; /* Align vertically */
+  }
+  
+  .adopting h3, .rescue h3, .community h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .adopting p, .rescue p, .community p {
+    font-size: 1rem;
+    color: #666666; /* Subtle gray for descriptions */
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .adopting button, .rescue button, .community button {
+    display: inline-block;
+    background-color: #ff8c00; /* Bright orange */
+    color: #ffffff; /* White text */
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 20px; /* Rounded button */
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .adopting button:hover, .rescue button:hover, .community button:hover {
+    background-color: #ff7000; /* Slightly darker orange on hover */
+  }
+
 
 .container {
     margin-top: 20px;
@@ -336,7 +482,7 @@ h1 {
 
 .cat-card {
     padding: 8px; /* Slightly reduced padding */
-    background-color: #92A8D1;
+    background-color: #fff;
     border: 2px solid black;
     border-radius: 8px; /* Slightly reduced border radius */
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* Slightly reduced shadow */
@@ -434,6 +580,18 @@ h1 {
     font-size: 1.5rem;
 }
 
+.details a {
+    text-decoration: none;
+    color: black;
+    transition: color 0.3s ease, text-decoration 0.3s ease; /* Smooth transition for color and text decoration */
+}
+
+.details a:hover {
+    color: #d9534f; /* Change color on hover */
+    text-decoration: underline; /* Add underline on hover */
+}
+
+
 .about-company p{
     font-size: 1.5rem;
     
@@ -457,6 +615,18 @@ h1 {
     gap: 20px; /* Space between icon and paragraph */
 }
 
+.info-item a {
+    text-decoration: none;
+    color: black;
+    transition: color 0.3s ease, text-decoration 0.3s ease; /* Smooth transition for color and text decoration */
+}
+
+.info-item a:hover {
+    color: #d9534f; /* Change color on hover */
+    text-decoration: underline; /* Add underline on hover */
+}
+
+
 .place-icon,
 .phone-icon,
 .email-icon {
@@ -479,7 +649,6 @@ h1 {
 }
 
 .footer{
-    margin-left: 10px;
-    background-color: #F7C9CB;
+    background-color: #fbccac;
     font-size: 2rem;
 }

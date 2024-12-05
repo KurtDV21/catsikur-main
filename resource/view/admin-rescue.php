@@ -136,7 +136,7 @@ if (isset($_SESSION['user_id'])) {
                                 die("Connection Failed: " . $dbConnection->connect_error);
                             }
 
-                            $sql = "SELECT cat_name, age, location, gender, color, post_type , approval FROM post WHERE post_type = 'rescue'";
+                            $sql = "SELECT cat_name, age, location, gender, color, post_type , approval FROM post WHERE post_type = 'rescued'";
                             $result = $dbConnection->query($sql);
 
                             if (!$result) {

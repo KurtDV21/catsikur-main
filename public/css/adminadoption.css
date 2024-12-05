@@ -676,7 +676,7 @@ h2 {
 }
 
 .pending {
-
+  width: 100%;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -693,7 +693,7 @@ h2 {
 }
 
 .table {
-    width: 100%;
+    width: 75%;
     table-layout: fixed; /* Ensure the table takes up full width */
 }
 
