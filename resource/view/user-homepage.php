@@ -126,6 +126,7 @@ if (isset($_SESSION['user_id'])) {
                   <a href="#" class="filter-option" data-filter="color" data-value="white">White</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="brown">Brown</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="orange">Orange</a>
+                  <a href="#" class="filter-option" data-filter="color" data-value="grey">Grey</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="black">Black</a>
                   <a href="#" class="filter-option" data-filter="color" data-value="mixed">Mixed</a>
               </div>
