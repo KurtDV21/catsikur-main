@@ -241,5 +241,13 @@ route('/MyProfile', function () {
     include __DIR__ . '/../resource/view/user-profile.php';
 });
 
+route('/rules', function () {
+    include __DIR__ . '/../resource/view/rules.php';
+});
+
+route('/faq', function () {
+    include __DIR__ . '/../resource/view/faq.php';
+});
+
 // Run the routing logic
 run();

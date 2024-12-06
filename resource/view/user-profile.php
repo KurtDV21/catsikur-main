@@ -202,22 +202,20 @@ function enableEditing() {
             const inputElement = document.getElementById(field + '_input');
             const value = inputElement.value;
 
-            const spanElement = document.createElement('span');
-            spanElement.setAttribute('id', field);
+            // Find corresponding span element and update its content
+            const spanElement = document.getElementById(field);
             spanElement.textContent = value;
+            spanElement.style.display = 'inline'; // Show static span
 
-            // Replace input field with static span
-            const parentDiv = inputElement.parentNode;
-            parentDiv.replaceChild(spanElement, inputElement);
+            // Remove input field
+            inputElement.remove();
         });
 
         // Hide the update button
-        const updateButtonContainer = document.getElementById('updateButtonContainer');
-        updateButtonContainer.style.display = 'none';
+        document.getElementById('updateButtonContainer').style.display = 'none';
 
         // Hide the image upload input
-        const imageUploadContainer = document.getElementById('imageUploadContainer');
-        imageUploadContainer.style.display = 'none';
+        document.getElementById('imageUploadContainer').style.display = 'none';
 
         isEditing = false;
     } else {
@@ -233,22 +231,21 @@ function enableEditing() {
             inputElement.setAttribute('id', field + '_input');
             inputElement.setAttribute('name', field);
 
-            // Insert input field dynamically next to the label
-            spanElement.parentNode.appendChild(inputElement);
+            // Insert input field dynamically before the span and hide span
             spanElement.style.display = 'none'; // Hide static span
+            spanElement.parentNode.insertBefore(inputElement, spanElement); // Insert input before span
         });
 
         // Show the update button
-        const updateButtonContainer = document.getElementById('updateButtonContainer');
-        updateButtonContainer.style.display = 'block';
+        document.getElementById('updateButtonContainer').style.display = 'block';
 
         // Show the image upload input
-        const imageUploadContainer = document.getElementById('imageUploadContainer');
-        imageUploadContainer.style.display = 'block';
+        document.getElementById('imageUploadContainer').style.display = 'block';
 
         isEditing = true;
     }
 }
+
 </script>
 
 </body>
