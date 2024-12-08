@@ -129,20 +129,20 @@ if (isset($_SESSION['post_added']) && $_SESSION['post_added'] === true) {
   <section id="ourcats" class="ourcats">
     <div class="container">
       <div class="buttons-container">
-        <div class="dropdown">
-          <button class="dropbtn">
-            <span class="button-text"><b>COLOR</b></span>
-            <span class="arrow-down-1"><ion-icon name="chevron-down"></ion-icon></span>
-          </button>
-          <div class="dropdown-content">
-            <a href="#" class="filter-option" data-filter="default-color" data-value="default-color">Default</a>
-            <a href="#" class="filter-option" data-filter="color" data-value="white">White</a>
-            <a href="#" class="filter-option" data-filter="color" data-value="brown">Brown</a>
-            <a href="#" class="filter-option" data-filter="color" data-value="orange">Orange</a>
-            <a href="#" class="filter-option" data-filter="color" data-value="black">Black</a>
-            <a href="#" class="filter-option" data-filter="color" data-value="mixed">Mixed</a>
+          <div class="dropdown">
+              <button class="dropbtn">
+                  <span class="button-text"><b>COLOR</b></span>
+                  <span class="arrow-down-1"><ion-icon name="chevron-down"></ion-icon></span>
+              </button>
+              <div class="dropdown-content">
+                  <a href="#" class="filter-option" data-filter="default-color" data-value="default-color">Default</a>
+                  <a href="#" class="filter-option" data-filter="color" data-value="white">White</a>
+                  <a href="#" class="filter-option" data-filter="color" data-value="brown">Brown</a>
+                  <a href="#" class="filter-option" data-filter="color" data-value="orange">Orange</a>
+                  <a href="#" class="filter-option" data-filter="color" data-value="black">Black</a>
+                  <a href="#" class="filter-option" data-filter="color" data-value="mixed">Mixed</a>
+              </div>
           </div>
-        </div>
 
         <div class="dropdown">
           <button class="dropbtn">
