@@ -90,11 +90,13 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
         $stmt->bind_param("isssssssss", $userId, $catName, $age, $location, $gender, $color, $description, $profilePicturePath, $samplePicturesJson, $postType);
 
         if ($stmt->execute()) {
+            $_SESSION['post_added'] = true; // Set session variable
             header("Location: /user-homepage");
             exit;
         } else {
             echo "Error adding post: " . $stmt->error;
         }
+        
 
         $stmt->close();
     } else {

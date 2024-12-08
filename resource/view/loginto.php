@@ -12,84 +12,87 @@ $database = new Database();
 $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
-  
+
 $is_invalid = false;
 
 // Initialize session variables for tracking login attempts and lockout time
 if (!isset($_SESSION['login_attempts'])) {
-  $_SESSION['login_attempts'] = 0;
-  $_SESSION['lockout_time'] = null;
+    $_SESSION['login_attempts'] = 0;
+    $_SESSION['lockout_time'] = null;
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  // Check if the user is currently locked out
-  if ($_SESSION['lockout_time'] && time() < $_SESSION['lockout_time']) {
-      $lockout_remaining = $_SESSION['lockout_time'] - time();
-      $is_invalid = true;
-      $lockout_message = "Too many login attempts. Please try again in";
-  } else {
-      // Reset lockout if lockout period has expired
-      if ($_SESSION['lockout_time'] && time() >= $_SESSION['lockout_time']) {
-          $_SESSION['login_attempts'] = 0;
-          $_SESSION['lockout_time'] = null;
-      }
-
-      // Process login
-      $user = $userController->login($_POST["email"], $_POST["password"]);
-
-      if ($user) {
-          // Reset attempts on successful login
-          $_SESSION['login_attempts'] = 0;
-
-          $insertQuery = "INSERT INTO user_logins (user_id, login_time) VALUES (?, NOW())";
-        $stmt = $dbConnection->prepare($insertQuery);
-
-        if ($stmt) {
-            $stmt->bind_param("i", $user['id']);
-            $stmt->execute();
+    // Check if the user is currently locked out
+    if ($_SESSION['lockout_time'] && time() < $_SESSION['lockout_time']) {
+        $lockout_remaining = $_SESSION['lockout_time'] - time();
+        $is_invalid = true;
+        $lockout_message = "Too many login attempts. Please try again in";
+    } else {
+        // Reset lockout if lockout period has expired
+        if ($_SESSION['lockout_time'] && time() >= $_SESSION['lockout_time']) {
+            $_SESSION['login_attempts'] = 0;
+            $_SESSION['lockout_time'] = null;
         }
 
-          // Generate OTP
-          $otp = rand(100000, 999999);
-          session_regenerate_id();
-          $_SESSION["user_id"] = $user["id"];
-          $_SESSION["user_name"] = $user["name"];
-          $_SESSION["otp"] = $otp;
-          $_SESSION["role"] = $user["role"];
-          $_SESSION["user_email"] = $user["email"];     
+        // Process login
+        $user = $userController->login($_POST["email"], $_POST["password"]);
 
-          // Mailer for sending OTP
-          $mail = require __DIR__ . "/auth/mailer.php";
-          $mail->setFrom('noreply@yourdomain.com', 'Your App');
-          $mail->addAddress($user["email"]);
-          $mail->Subject = 'Your OTP Code';   
-          $mail->Body = "Your OTP code is: $otp";
+        if ($user) {
+            // Reset attempts on successful login
+            $_SESSION['login_attempts'] = 0;
 
-          // Redirect based on role
-          if ($_SESSION["role"] === 'user') {
-              header("Location: /user-homepage");
-              exit; 
-          } else {
-              $is_invalid = true;
-          }
-      } else {
-          // Increment login attempts on failure
-          $_SESSION['login_attempts']++;
+            // Generate OTP
+            $otp = rand(100000, 999999);
+            session_regenerate_id();
+            $_SESSION["user_id"] = $user["id"];
+            $_SESSION["user_name"] = $user["name"];
+            $_SESSION["otp"] = $otp;
+            $_SESSION["role"] = $user["role"];
+            $_SESSION["user_email"] = $user["email"];
 
-          // Lockout after 5 failed attempts
-          if ($_SESSION['login_attempts'] >= 5) {
-              $_SESSION['lockout_time'] = time() + 300; // 5 minutes lockout
-              $is_invalid = true;
-              $lockout_message = "Too many login attempts. Please try again in 5 minutes.";
-          } else {
-              $is_invalid = true;
-          }
-      }
-  } 
+            // Mailer for sending OTP
+            $mail = require __DIR__ . "/auth/mailer.php";
+
+            try {
+                $mail->setFrom('noreply@yourdomain.com', 'Mailer');
+                $mail->addAddress($user["email"]);
+                $mail->Subject = 'Your OTP Code';
+                $mail->Body = "Your OTP code is: $otp";
+
+                if (!$mail->send()) {
+                    $is_invalid = true;
+                    $error_message = "Failed to send OTP. Please try again.";
+                } else {
+                    // Redirect based on role
+                    if ($_SESSION["role"] === 'user') {
+                        header("Location: /otp");
+                        exit;
+                    } else {
+                        $is_invalid = true;
+                    }
+                }
+            } catch (Exception $e) {
+                $is_invalid = true;
+                $error_message = "Mailer Error: " . $e->getMessage();
+            }
+        } else {
+            // Increment login attempts on failure
+            $_SESSION['login_attempts']++;
+
+            // Lockout after 5 failed attempts
+            if ($_SESSION['login_attempts'] >= 5) {
+                $_SESSION['lockout_time'] = time() + 300; // 5 minutes lockout
+                $is_invalid = true;
+                $lockout_message = "Too many login attempts. Please try again in 5 minutes.";
+            } else {
+                $is_invalid = true;
+            }
+        }
+    }
 }
 
-
 ?>
+
 
 
 <!DOCTYPE html>

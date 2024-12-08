@@ -1,35 +1,40 @@
 <?php
+session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-session_start();
+$mail = new PHPMailer(true);
 
-if (!isset($_SESSION["user_email"])) {
-    echo json_encode(['error' => 'Email not available. Please log in again.']);
-    exit;
-}
 
-// Generate a new OTP
-$otp = rand(100000, 999999);
-$_SESSION["otp"] = $otp;
+$mail->isSMTP();
+$mail->SMTPAuth = true;
+$mail->Host = 'sandbox.smtp.mailtrap.io';
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+$mail->Port = 2525;
+$mail->Username = '2078dd9b83a328';
+$mail->Password = '7d6b474b619e9b';
 
-// Send the OTP via email
-$mail = require __DIR__ . "/auth/mailer.php";
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+    $otp = rand(100000, 999999);
+    $_SESSION["otp"] = $otp;
+    
+    $user_email = $_SESSION["user_email"];
 
-if ($mail !== false) {
-    $mail->setFrom('noreply@yourdomain.com', 'Your App');
-    $mail->addAddress($_SESSION["user_email"]); // Use stored email from session
-    $mail->Subject = 'Your OTP Code';
-    $mail->Body = "Your OTP code is: $otp";
+    try {
+        $mail->setFrom('noreply@yourdomain.com', 'Mailer');
+        $mail->addAddress($user_email);
+        $mail->Subject = 'Your OTP Code';
+        $mail->Body = "Your OTP code is: $otp";
 
-    if ($mail->send()) {
-        echo json_encode(['success' => 'OTP resent successfully.']);
-    } else {
-        echo json_encode(['error' => 'Mailer Error: ' . $mail->ErrorInfo]);
+        if (!$mail->send()) {
+            echo json_encode(['success' => false, 'message' => 'Failed to resend OTP']);
+        } else {
+            echo json_encode(['success' => true, 'message' => 'OTP resent successfully']);
+        }
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Mailer Error: ' . $e->getMessage()]);
     }
-} else {
-    echo json_encode(['error' => 'Mailer initialization failed.']);
 }
-?>

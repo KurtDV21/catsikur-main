@@ -19,6 +19,7 @@ if (isset($_SESSION['user_id'])) {
     $userId = $_SESSION['user_id'];
     $user = $userModel->findUserById($userId);
     $name = $user['name'] ?? '';
+    $showPic = $userModel->findUserById($userId);
 } else {
     header('Location: /loginto');
     exit;
@@ -145,7 +146,7 @@ if ($action === 'approve' && isset($_GET['inquiry_id'])) {
                 <div id='chatDialog' style='display: block;'>
                     <div style='background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%;'>
                         <div style='position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; text-align: center;'>
-                            <h2>Inquiry Approved</h2>
+                            <h2>Inquiry Approved</h2>   
                             <p>Inquiry has been approved and chat triggered. {$chatMessage}</p>
                             <div style='display: flex; justify-content: center; margin-top: 20px;'>
                                 <button onclick='document.getElementById(\"chatDialog\").style.display=\"none\";' style='padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px;'>Close</button>

@@ -4,12 +4,10 @@ session_start();
 $is_invalid = false;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Combine all OTP input fields into one variable
     $entered_otp = $_POST["otp-input1"] . $_POST["otp-input2"] . $_POST["otp-input3"] . 
                    $_POST["otp-input4"] . $_POST["otp-input5"] . $_POST["otp-input6"];
     
     if ($entered_otp == $_SESSION["otp"]) {
-        // OTP is correct, log the user in
         header("Location: /user-homepage");
         exit;
     } else {
@@ -44,26 +42,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <span class="mainHeading">Enter OTP</span>
             <p class="otpSubheading">We have sent a verification code to your email address</p>
             
-            <!-- Display an error message if OTP is invalid -->
             <?php if ($is_invalid): ?>
                 <em class="error-message">Invalid OTP. Please try again.</em>
             <?php endif ?>
 
             <div class="inputContainer">
-                <!-- Input fields for each OTP digit -->
-                <input required maxlength="1" type="text" class="otp-input" name="otp-input1" id="otp-input1">
-                <input required maxlength="1" type="text" class="otp-input" name="otp-input2" id="otp-input2">
-                <input required maxlength="1" type="text" class="otp-input" name="otp-input3" id="otp-input3">
-                <input required maxlength="1" type="text" class="otp-input" name="otp-input4" id="otp-input4">
-                <input required maxlength="1" type="text" class="otp-input" name="otp-input5" id="otp-input5">
-                <input required maxlength="1" type="text" class="otp-input" name="otp-input6" id="otp-input6">
+                <input required maxlength="1" type="text" class="otp-input" name="otp-input1" id="otp-input1" oninput="filterNonNumeric(this); moveFocus(this)">
+                <input required maxlength="1" type="text" class="otp-input" name="otp-input2" id="otp-input2" oninput="filterNonNumeric(this); moveFocus(this)">
+                <input required maxlength="1" type="text" class="otp-input" name="otp-input3" id="otp-input3" oninput="filterNonNumeric(this); moveFocus(this)">
+                <input required maxlength="1" type="text" class="otp-input" name="otp-input4" id="otp-input4" oninput="filterNonNumeric(this); moveFocus(this)">
+                <input required maxlength="1" type="text" class="otp-input" name="otp-input5" id="otp-input5" oninput="filterNonNumeric(this); moveFocus(this)">
+                <input required maxlength="1" type="text" class="otp-input" name="otp-input6" id="otp-input6" oninput="filterNonNumeric(this); moveFocus(this)">
             </div>
             
-            <!-- Verify button submits the form instead of redirecting directly -->
             <button class="verifyButton" type="submit">Verify</button>
             <button type="button" class="exitBtn">×</button>
             <p class="resendNote">Didn't receive the code? <button type="button" class="resendBtn" id="resendBtn">Resend Code</button></p>
-            </form>
+        </form>
     </div>
 </section>
 
@@ -84,70 +79,81 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
 
-        <div class="details">
-            <h3>ABOUT COMPANY</h3>
-            <p>Lorem ipsum dolor sit amet. Ex officiis molestias et sapiente doloremque et dolores doloribus...</p>
-            <a href="https://www.facebook.com/suuupperrb" target="_blank">
-                <img src="facebook.png" alt="Facebook" class="fb-icon">
-            </a>
-            <a href="https://www.messenger.com" target="_blank">
-                <img src="messenger.png" alt="Messenger" class="mess-icon">
-            </a>
+        <div class="socials">
+            <p>Follow us:</p>
+            <div class="socials-icons">
+                <img src="facebook.png" alt="">
+                <img src="twitter.png" alt="">
+                <img src="instagram.png" alt="">
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>© 2024 Cat Free Adopt. All Rights Reserved.</p>
         </div>
     </div>
 </section>
 
-<footer class="footer">
-    Cats Free Adoption & Rescue Philippines
-</footer>
-</body>
+<div id="otpModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <p id="otpMessage"></p>
+    </div>
+</div>
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const resendButton = document.getElementById('resendBtn');
+document.getElementById("resendBtn").addEventListener("click", function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/resend-otp", true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            var modal = document.getElementById("otpModal");
+            var otpMessage = document.getElementById("otpMessage");
 
-    resendButton.addEventListener('click', function() {
-        fetch('/public/process/resend-otp.php', { // Ensure this path is correct
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(data.success);
-            } else if (data.error) {
-                alert(data.error);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-
-    // OTP Countdown logic
-    const countdownElement = document.getElementById("countdown");
-    const remainingTime = <?= isset($lockout_remaining) ? $lockout_remaining : 0 ?>;
-
-    if (remainingTime > 0) {
-        let timeLeft = remainingTime;
-
-        const updateCountdown = () => {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-
-            countdownElement.textContent = `${minutes}m ${seconds}s`;
-
-            if (timeLeft > 0) {
-                timeLeft--;
+            if (response.success) {
+                otpMessage.textContent = "OTP resent successfully. Please check your email.";
             } else {
-                countdownElement.textContent = "You can try logging in now.";
-                clearInterval(timer);
+                otpMessage.textContent = "Failed to resend OTP. Please try again later.";
             }
-        };
 
-        updateCountdown();
-        const timer = setInterval(updateCountdown, 1000);
-    }
+            modal.style.display = "block";
+
+            document.querySelector(".close-button").onclick = function() {
+                modal.style.display = "none";
+            };
+
+            var resendBtn = document.getElementById("resendBtn");
+            resendBtn.disabled = true;
+            var timer = 60;
+
+            var countdown = setInterval(function() {
+                timer--;
+                resendBtn.textContent = "Resend Code (" + timer + ")";
+                if (timer === 0) {
+                    clearInterval(countdown);
+                    resendBtn.disabled = false;
+                    resendBtn.textContent = "Resend Code";
+                }
+            }, 1000);
+        }
+    };
+    xhr.send();
 });
+
+function moveFocus(current) {
+    if (current.value.length > 0) { // Check if the current input has a value
+        var nextInput = current.nextElementSibling;
+        if (nextInput) {
+            nextInput.focus();
+        }
+    }
+}
+
+function filterNonNumeric(input) {
+    input.value = input.value.replace(/[^0-9]/g, '');
+}
 </script>
 
+</body>
 </html>

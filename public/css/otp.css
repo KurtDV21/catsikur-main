@@ -293,6 +293,10 @@ section{
     font-weight: 700;
   }
 
+  .resendBtn:hover {
+    color: #45a049;
+}
+
   .footer-container {
     display: flex;
     justify-content: center; 
@@ -361,4 +365,42 @@ section{
 .footer{
     background-color: #F7C9CB;
     font-size: 2rem;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  background: #fff;
+  width: 50%;
+  max-width: 400px;
+  margin: 15% auto;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  border-radius: 5px;
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+  display: block;
 }

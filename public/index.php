@@ -229,6 +229,10 @@ route('/updateApproval', function () {
     include __DIR__ . '/../public/process/updateApproval.php';
 });
 
+route('/resend-otp', function () {
+    include __DIR__ . '/../public/process/resend-otp.php';
+});
+
 route('/MyPost', function () {
     include __DIR__ . '/../resource/view/user-post.php';
 });

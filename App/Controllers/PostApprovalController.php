@@ -16,18 +16,28 @@ class PostApprovalController {
 
     public function updateApproval() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $postId = $_POST['post_id'];
-            $action = $_POST['action']; 
-            
+            $postId = $_POST['post_id'] ?? null;
+            $action = $_POST['action'] ?? null;
+    
+            if (!$postId || !$action) {
+                echo json_encode(['success' => false, 'message' => 'Invalid request parameters.']);
+                exit;
+            }
+    
             $approvalStatus = ($action === 'approve') ? 'approved' : 'denied';
-            $postStatus = ($action === 'available') ? 'available' : 'denied';
-            
+            $postStatus = ($action === 'approve') ? 'available' : 'denied';
+    
             if ($this->postApprovalModel->updateApproval($postId, $approvalStatus, $postStatus)) {
-                header("location:/admin");
+                echo json_encode(['success' => true, 'message' => 'Post updated successfully.']);
                 exit;
             } else {
-                echo "Failed to update approval status.";
+                echo json_encode(['success' => false, 'message' => 'Failed to update post status.']);
+                exit;
             }
         }
+    
+        echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
+        exit;
     }
-}
+    
+    }

@@ -19,14 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $userModel->updateResetToken($user['id'], $token_hash, $expiresAt);
 
-        try {
+        try {   
             $mail = new PHPMailer(true);
 
             $mail->isSMTP();
             $mail->Host = 'sandbox.smtp.mailtrap.io';
             $mail->SMTPAuth = true;
-            $mail->Username = '74ebc0aaaa06a1';
-            $mail->Password = '2397f3d8c486b5';
+            $mail->Username = '2078dd9b83a328';
+            $mail->Password = '7d6b474b619e9b';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 2525;
             $mail->SMTPDebug = 2;
