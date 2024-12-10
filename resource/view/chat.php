@@ -110,7 +110,6 @@ if (isset($_GET['chat_id'])) {
       <a href="/user-homepage" class="back-btn">Back</a>
       <h2>Chats</h2>
     </div>
-    <input type="text" id="chatSearch" placeholder="Search chats..." onkeyup="searchChats()">
     <?php if (empty($chats)): ?>
       <p>No chats available.</p>
     <?php else: ?>

@@ -14,8 +14,8 @@ $mail->SMTPAuth = true;
 $mail->Host = 'sandbox.smtp.mailtrap.io';
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 2525;
-$mail->Username = '2078dd9b83a328';
-$mail->Password = '7d6b474b619e9b';
+$mail->Username = '74ebc0aaaa06a1';
+$mail->Password = '2397f3d8c486b5';
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $otp = rand(100000, 999999);

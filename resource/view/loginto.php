@@ -113,8 +113,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <ul class="nav-link">
       <li><a href="/">HOME</a></li>
       <li><a href="/#ourcats">OUR CATS</a></li> 
-        <li><a href="">ABOUT</a></li>
-        <li><a href="">FAQs</a></li>
+        <li><a href="/rules">ABOUT</a></li>
+        <li><a href="/faq">FAQs</a></li>
         <button class="login-btn" onclick="location.href='/loginto'">Login</button>
       </ul>
     

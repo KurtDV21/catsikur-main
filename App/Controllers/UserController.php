@@ -26,17 +26,13 @@ class UserController {
 
     public function login($email, $password) {
         $user = $this->userModel->findByEmail($email);
-    
-        if ($user && $user['account_activation_hash'] === NULL && $this->userModel->verifyPassword($user, $password)) {
-            return $user; 
-        }
-        else{
-            return null; 
-        }
-            
-        }
 
-        
+        if ($user && $user['account_activation_hash'] === NULL && $this->userModel->verifyPassword($user, $password)) {
+            return $user;
+        } else {
+            return null;
+        }
+    }
 
     public function activate($token_hash) {
         return $this->userModel->findByActivationToken($token_hash);
@@ -44,5 +40,9 @@ class UserController {
 
     public function confirmAccount($userId) {
         return $this->userModel->activateAccount($userId);
+    }
+
+    public function emailExists($email) {
+        return $this->userModel->emailExists($email);
     }
 }

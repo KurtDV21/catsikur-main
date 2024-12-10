@@ -232,7 +232,7 @@ if (isset($_SESSION['post_added']) && $_SESSION['post_added'] === true) {
   <div id="success-modal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close-button" onclick="closeModal()">&times;</span>
-        <p>Post added successfully!</p>
+        <p>Post has been submitted successfully!</p>
     </div>
 </div>
 

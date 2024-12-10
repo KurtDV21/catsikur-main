@@ -10,145 +10,188 @@
     box-sizing: border-box;
   }
   
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  body{
     min-height: 100vh;
-    background: url(/image/paws.png);
-    background-size: cover;
-    background-position: center;
-    background-color: #FFEFEF;  
-    overflow-x: hidden;  
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  position: absolute;
+  top: 10%;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  position: absolute;
+  top: 50px;
+  right: 70px;
+}
+
+.bar {
+  width: 100%;
+ height: 4px;
+ background-color: #333;
+ transition: all 0.3s ease;
+}
+
+.hamburger span {
+  display: block;
+  width: 40px;
+  height: 5px;
+  background-color: #333;
+  transition: 0.3s;
+}
+
+section{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+#main{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background: url(/image/paws.png) no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
   /* navigation bar*/
-.logo{
-  width: 100px; /* Set the width */
-  height: auto; /* Maintain aspect ratio */
-  position: relative;
-  margin-left: 20px;
+  .logo {
+    width: 100px; /* Adjust the size of the logo */
+    height: 100px; /* Maintain aspect ratio by using equal width and height */
+    object-fit: contain; /* Ensure the logo fits within the bounds */
 }
 
-  header {
-    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin-top: 50px;
-    padding: 50px auto;
-    display: flex;
-    align-items: center;
-    z-index: 9999;
-  }
+.header{
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #AFA2D0;
+}
   
-  .navbar {
-    background-color: #92A8D1;
-    position: fixed;
-    display: flex;
-    justify-content: space-between; 
-    width: 100%; 
-    margin-top: 5px;   
-    z-index: 9999;
-  }
-  
-  .logo {
-    margin-right: auto; 
-  }
-  
-  .nav-container {
-    display: flex; 
-  }
-  
-  .nav-link {
-    list-style-type: none;
-    display: flex;
-    gap: 20px; 
-    align-items: center; 
+.navbar{
+  margin-right: 10px;
+  background-color: #92A8D1;
+  position: fixed;
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 9999;
+}
+   
+.nav-link {
+  list-style-type: none;
+  display: flex;
+  gap: 30px; 
+  align-items: center;
+  justify-content: space-between;
+  text-align: end;
+  margin-left: 0;
+  padding-right: 20px;
 }
 
 .nav-link li {
-  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 23px;
-    margin-top: 0; 
-    display: inline;
-    position: relative;
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;    font-size: 23px;
+  margin-top: 0; 
+  display: inline; 
+  position: relative;
 }
 
-
-
-.nav-link a {
+.nav-link a{
+  font-size: 2rem;
   font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
-    position: relative;
-    text-decoration: none;
-    color: black;
-    font-weight: 500;
-    line-height: 40px; 
+  position: relative;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  line-height: 40px; 
 }
 
 .nav-link a::after {
-    content: '';
-    position: absolute;
-    left: 0px;
-    bottom: -6px;
-    width: 100%;
-    height: 3px;
-    background: #C3BEF0;
-    border-radius: 5px;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform .5s;
-  }
+  content: '';
+  position: absolute;
+  left: 0px;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: #C3BEF0;
+  border-radius: 5px;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform .5s;
+}
   
-  .nav-link a:hover::after {
-    transform-origin: left;
-    transform: scaleX(1);
-  }
-
-  .login-btn a{
-    text-decoration: none;
-  }
-/* --------------------------------------------------------------------------------------------------------------- */
-  /* LOGIN BUTTON */
-  .login-btn {
-    background-color: #C3BEF0; 
-    color: white; 
-    border: none; 
-    border-radius: 5px; 
-    padding: 10px 20px; 
-    font-size: 23px; 
-    font-weight: 500; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease, transform 0.3s ease; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    align-self: center; 
-    margin-right: 25px;
-    overflow: hidden;
+.nav-link a:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
 }
 
-  .login-btn:hover {
-    background-color: #AFA2D0; 
-    transform: translateY(-2px); 
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
-  }
+.login-btn a{
+  text-decoration: none;
+}
+
+.login-btn{
+  background-color: #AFA2D0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 2rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: #7457bd; 
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
+}
 
 
-  .wrapper{
-    position: relative;
-    width: 400px;
-    height: 550px;
-    background: transparent;
-    border: 2px solid rgba(255,255,255,.5);
-    border-radius: 20px;
-    background-color: #E9CECA;
-    box-shadow: 0 0 30px rgba(0,0,0,.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
+.container-middle {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  position: fixed; /* Fix the container in the viewport */
+  top: 0;
+  left: 0;
+}
+
+.wrapper {
+  position: relative;
+  width: 400px;
+  height: 650px;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,.5);
+  border-radius: 20px;
+  background-color: #E9CECA;
+  box-shadow: 0 0 30px rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
 
   .wrapper .icon-close{
     position: absolute;
@@ -168,14 +211,7 @@
    
     }
 
-.wrapper .form-box{
-   
-   
-}
 
-
-  
-  
   .form-box h2{
     font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 32px;
@@ -315,8 +351,155 @@
     text-decoration: underline; /* Optional: underline on hover */
 }
 
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
+
+.terms {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 }
+
+.terms input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.terms a {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-style: italic;
+  color: #9C9897;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.terms a:hover {
+  color: #4A6FA5;
+  text-decoration: underline;
+}
+/* Existing styles remain the same */
+
+/* Additional styles for the terms link */
+.terms-link {
+  background: none;
+  border: none;
+  color: #9C9897;
+  text-decoration: underline;
+  font: inherit;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 0;
+}
+
+.terms-link:hover {
+  color: #4A6FA5;
+  text-decoration: none;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  margin: 10% auto;
+  padding: 20px;
+  border: none;
+  width: 90%; /* Increased width */
+  max-width: 800px; /* Adjusted max-width */
+  max-height: 80vh; /* Set a maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  position: relative;
+  animation: modalfadein 0.5s; /* Fade-in animation */
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+@keyframes modalfadein {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.close {
+  color: #fff;
+  background-color: #f76c6c;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  background-color: #e64747;
+}
+
+.modal-content h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+  color: #333;
+  text-align: center;
+  font-family: 'Georgia', serif; /* Fancy font */
+}
+
+.modal-content p {
+  font-size: 1.1em;
+  line-height: 1.5;
+  color: #555;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.modal-content button {
+  background-color: #4A6FA5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.modal-content button:hover {
+  background-color: #3B5998;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom Scrollbar */
+.modal-content::-webkit-scrollbar {
+  width: 12px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+  border: 3px solid #f1f1f1;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+

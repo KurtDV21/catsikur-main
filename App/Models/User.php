@@ -28,23 +28,13 @@ class User {
         return false; // Indicate failure
     }
 
-    public function isEmailRegistered($email) {
-        $sql = "SELECT COUNT(*) as count FROM user WHERE email = ?";
-        $stmt = $this->mysqli->prepare($sql);
-
-        // Check if the statement was prepared successfully
-        if ($stmt === false) {
-            // Debug message
-            echo "Error preparing statement: " . $this->mysqli->error;
-            exit;
-        }
-
+    public function emailExists($email) {
+        $query = "SELECT COUNT(*) AS count FROM user WHERE email = ?";
+        $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("s", $email);
         $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-    
-        return $row['count'] > 0; // Returns true if the email exists
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result['count'] > 0;
     }
 
     private function sendActivationEmail($email, $activation_hash) {

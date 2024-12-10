@@ -1,3 +1,108 @@
+@media(max-width: 1920px){
+    .navbar {
+        padding: 10px;
+    }
+
+    .nav-link {
+        gap: 18px;
+    }
+
+    .nav-link li {
+        font-size: 1.6rem;
+    }
+
+    .login-btn {
+        font-size: 1.6rem;
+        padding: 10px 18px;
+    }
+
+    .text1 {
+        font-size: 4rem;
+        margin-top: 90px;
+    }
+
+    .adopt-btn {
+        font-size: 3.5rem;
+        padding: 10px 18px;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    .buttons-container {
+        gap: 18px;
+    }
+
+    .dropbtn {
+        font-size: 32px;
+        padding: 10px 18px;
+    }
+
+    .dropdown-content{
+        width: 100%;
+    }
+
+    .dropdown-content a{
+        font-size: 1.5rem;
+    }
+
+    .addbtn {
+        font-size: 32px;
+        padding: 10px 18px;
+    }
+
+    h1 {
+        font-size: 3.8rem;
+        margin-top: 25px;
+    }
+
+    .cat-card {
+        width: 260px;
+        height: 320px;
+    }
+
+    .cat-image {
+        height: 190px;
+    }
+
+    .cat-card h2, .cat-card p {
+        font-size: 1.1rem;
+    }
+
+    .btn-adopt {
+        font-size: 1em;
+        padding: 10px;
+    }
+
+    .btn-next, .btn-prev {
+        font-size: 1.4rem;
+        padding: 10px 18px;
+    }
+
+    .pagination a {
+        font-size: 1.4rem;
+    }
+
+    .details, .about-company {
+        margin-left: 120px;
+        font-size: 1.9rem;
+    }
+
+    .details p, .about-company p {
+        font-size: 1.3rem;
+    }
+
+    .details h3 {
+        font-size: 1.9rem;
+    }
+
+    .footer {
+        font-size: 1.9rem;
+    }
+}
+
+
 @media (max-width: 1550px) {
     .navbar {
         padding: 10px;

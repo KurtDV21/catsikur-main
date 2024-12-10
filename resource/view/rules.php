@@ -19,8 +19,20 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 </head>
 <body>
 <header>
-<?php include("header.php"); ?>
-</header>
+<nav class="navbar">
+        <img src="/image/logo1.png" alt="logo" class="logo">
+
+        <div class="nav-container"> <!-- New div to contain nav links -->
+            <ul class="nav-link">
+                <li><a href="/">HOME</a></li>
+                <li><a href="/#ourcats">OUR CATS</a></li>
+                <li><a href="/rules">ABOUT</a></li>
+                <li><a href="/faq">FAQs</a></li>
+                
+            </ul>
+        </div>
+    </nav>
+  </header>
 
 
 <section id="main">

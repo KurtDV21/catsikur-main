@@ -9,18 +9,21 @@
 <body>
     
 <header>
-  <nav class="navbar">
-    <img src="/image/logo1.png" alt="logo" class="logo">
-    <div class="nav-container">
-      <ul class="nav-link">
-        <li><a href="#home">HOME</a></li>
-        <li><a href="">OUR CATS</a></li>
-        <li><a href="">ABOUT</a></li>
-        <li><a href="">FAQs</a></li>
-        <li><button class="login-btn" onclick="location.href='/loginto'">Login</button></li>     
-      </ul>
-    </div>
-  </nav>
+<nav class="navbar">
+        <img src="/image/logo1.png" alt="logo" class="logo">
+
+        <div class="nav-container"> <!-- New div to contain nav links -->
+            <ul class="nav-link">
+                <li><a href="/">HOME</a></li>
+                <li><a href="/#ourcats">OUR CATS</a></li>
+                <li><a href="/rules">ABOUT</a></li>
+                <li><a href="/faq">FAQs</a></li>
+                <button class="login-btn">
+                    <a href="/loginto">Login</a>
+                </button>
+            </ul>
+        </div>
+    </nav>
 </header>
 
 <div class="wrapper">

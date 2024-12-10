@@ -11,8 +11,8 @@
       <ul class="nav-link">
         <li><a href="/user-homepage">HOME</a></li>
         <li><a href="/user-homepage#ourcats">OUR CATS</a></li> 
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#faq">FAQs</a></li>
+        <li><a href="/rules">ABOUT</a></li>
+        <li><a href="/faq">FAQs</a></li>
         <li>
         <div class="user-dropdown">
     <button class="user-dropdown-button" onclick="toggleUserDropdown()">

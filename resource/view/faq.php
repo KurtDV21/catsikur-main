@@ -1,9 +1,36 @@
 <?php
+use App\Core\Database;
+use App\Models\User;
+use App\Controllers\UserController;
+use App\Models\ApprovedPostsModel;
+use App\Controllers\ApprovedPostsController;
+use App\Controllers\PostFilterController;
+use App\Models\PostFilterModel;
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+session_start();
 
+$database = new Database();
+$dbConnection = $database->connect();
+$userModel = new User($dbConnection);
+$userController = new UserController($userModel);
+$postFilterModel = new PostFilterModel($dbConnection);
+$postFilterController = new PostFilterController($postFilterModel);
 
+$postModel = new ApprovedPostsModel($dbConnection);
+$postController = new ApprovedPostsController($postModel);
 
+$approvedPosts = $postController->showApprovedPosts();
+$postFilterController->getFilteredPosts();
+
+if (isset($_SESSION['user_id'])) {
+  $userId = $_SESSION['user_id'];
+  $user = $userModel->findUserById($userId);
+  $name = $user['name'] ?? '';
+} else {
+  $name = '';
+}
 ?>
 
 
@@ -20,8 +47,18 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 <body>
 <header>
 <nav class="navbar">
-     <?php include("header.php"); ?>
-</header>
+        <img src="/image/logo1.png" alt="logo" class="logo">
+
+        <div class="nav-container"> <!-- New div to contain nav links -->
+            <ul class="nav-link">
+                <li><a href="/">HOME</a></li>
+                <li><a href="/#ourcats">OUR CATS</a></li>
+                <li><a href="/rules">ABOUT</a></li>
+                <li><a href="/faq">FAQs</a></li>
+                
+            </ul>
+        </div>
+    </nav></header>
 
 
 <section id="main">
