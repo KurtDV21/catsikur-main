@@ -9,17 +9,18 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 session_start();
 
+// Database connection
 $database = new Database();
 $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
+// Check if user is logged in
 if (isset($_SESSION['user_id'])) {
     $userId = $_SESSION['user_id'];  
     $user = $userModel->findUserById($userId); 
-    $name = $user['name'] ?? ''; 
     $firstname = $user['first_name'] ?? ''; 
-     $lastname = $user['last_name'] ?? ''; 
+    $lastname = $user['last_name'] ?? ''; 
     $phone = $user['Phone_number'] ?? '';
     $email = $user['email'] ?? '';
 } else {
@@ -27,97 +28,71 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
-$postId = isset($_GET['post_id']) ? $_GET['post_id'] : '';
+// Get the post ID from the URL
+$postId = isset($_GET['post_id']) ? (int)$_GET['post_id'] : ''; // Sanitize the post_id
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $_SESSION['lastSelectedCompany'] = $_POST['company'] ?? '';
-    $_SESSION['has_pets'] = $_POST['has_pets'] ?? '';
-    
+// Fetch questions and answers from the database
+$query = "SELECT * FROM questions WHERE page = 1";
+$stmt = $dbConnection->prepare($query);
+$stmt->execute();
+$result = $stmt->get_result();
+$questions = $result->fetch_all(MYSQLI_ASSOC);
 
-    
-    
-    $name = htmlspecialchars(trim($_POST['name']));
-    $lastname = htmlspecialchars(trim($_POST['lastname'])); 
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $phone = htmlspecialchars(trim($_POST['phone']));
-    $address = htmlspecialchars(trim($_POST['address']));
-    $age = $_POST['age'];
-    $guardian = htmlspecialchars(trim($_POST['guardian'] ?? ''));
-    $lastSelectedCompany = $_POST['company'] ?? '';
-    $facebook = $_POST['fb'] ?? '';
-    $housing = $_POST['housing'] ?? '';
-    $housingOther = htmlspecialchars(trim($_POST['housing_other'] ?? ''));
-    $has_pets = $_POST['has_pets'] ?? '';
-    $outdoor_space = $_POST['outdoor_space'] ?? '';
+$answerQuery = "SELECT * FROM answers";
+$answerStmt = $dbConnection->prepare($answerQuery);
+$answerStmt->execute();
+$answerResult = $answerStmt->get_result();
+$answers = $answerResult->fetch_all(MYSQLI_ASSOC);
 
-    $name = $name . " " . $lastname;
-
-    if ($housing === 'Other' && !empty($housingOther)) {
-        $housing = $housing . ': ' . $housingOther; // e.g., "Other: My Custom Text"
-    }
-
-    $_SESSION['housing'] = $housing;
-
-    $_SESSION['name'] = $name;
-    $_SESSION['lastname'] = $lastname;
-    $_SESSION['email'] = $email;
-    $_SESSION['phone'] = $phone;
-    $_SESSION['address'] = $address;
-    $_SESSION['age'] = $age;
-    $_SESSION['company'] = $lastSelectedCompany;
-    $_SESSION['guardian'] = $guardian;
-    $_SESSION['facebook'] = $facebook;
-    $_SESSION['outdoor_space'] = $outdoor_space;
-    
-    // Input validation
-    $errors = [];
-
-    // Validate name fields
-    if (empty($name) || empty($lastname)) {
-        $errors[] = "First and last name are required.";
-    }
-
-    // Validate email
-    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "A valid email address is required.";
-    }
-
-    // Validate phone number (simple check to ensure it’s not empty)
-    if (empty($phone)) {
-        $errors[] = "Phone number is required.";
-    }
-
-    // Validate address
-    if (empty($address)) {
-        $errors[] = "Address is required.";
-    }
-
-    // Validate age (ensure it's a valid number)
-    if (empty($age) || !is_numeric($age)) {
-        $errors[] = "A valid age is required.";
-    }
-
-    // Validate guardian details (only if age is 18 or below)
-    if ($age <= 18 && empty($guardian)) {
-        $errors[] = "Guardian details are required for applicants aged 18 or below.";
-    }
-
-    // Check if there are any validation errors
-    if (count($errors) > 0) {
-        // Store errors in session or display them
-        $_SESSION['errors'] = $errors;
-        // Redirect to the form with error messages
-        header('Location: /inquiry-form'); 
-        exit;
-    }    
-
-    // Redirect to the next step of the form
-    header('Location: /inquiry-form2?post_id=' . $postId);
-    exit;
-
+// Group answers by question_id
+$groupedAnswers = [];
+foreach ($answers as $answer) {
+    $groupedAnswers[$answer['question_id']][] = $answer;
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Store dynamic form inputs in session
+    $formData = [];
+    $dynamicAnswers = [];
+    foreach ($questions as $question) {
+        $questionId = $question['id']; // Use the correct column name for question ID
+        $inputName = "question_{$questionId}";
+        if (isset($_POST[$inputName])) {
+            $formData[$inputName] = htmlspecialchars(trim($_POST[$inputName]));
+        }
+    }
+
+    // Store form data in session
+    $_SESSION = array_merge($_SESSION, $formData); // Merge form data with session
+
+    // Store dynamic answers in session
+    $_SESSION['dynamic_answers'] = $formData;
+
+    // Form validation
+    $errors = [];
+
+    // Dynamic fields validation
+    foreach ($questions as $question) {
+        $questionId = $question['id'];
+        $inputName = "question_{$questionId}";
+        if (!$question['is_optional'] && empty($formData[$inputName])) {
+            $errors[] = "The question '{$question['question']}' is required.";
+        }
+    }
+
+    // If validation fails, redirect back to the form with error messages
+    if (count($errors) > 0) {
+        $_SESSION['errors'] = $errors;
+        header('Location: /inquiry-form');
+        exit;
+    }
+
+    // If validation passes, redirect to the next step
+    header('Location: /inquiry-form2?post_id=' . $postId);
+    exit;
+}
 ?>
+
 
 
 
@@ -135,7 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <header>
     <?php include("header.php"); ?>
   </header>
-
 
 
   <section class="form1" id="form1">
@@ -156,164 +130,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <?php unset($_SESSION['errors']); // Clear errors after displaying them ?>
             <?php endif; ?>
-            <form id="form"  method="POST" >
+            <form id="form" method="POST">
                 <input type="hidden" name="user_id" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"> 
                 <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($postId); ?>">
 
-                <div class="input-group">
-                    <div class="input-box">
-                        <input type="text" name="name" required value="<?php echo htmlspecialchars($firstname); ?>">
-                        <label>First Name</label>
-                    </div>
-
-                    <div class="input-box">
-                        <input type="text" name="lastname" required placeholder=" " value="<?php echo htmlspecialchars($lastname); ?>" />
-                        <label>Last Name</label>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <div class="input-box">
-                        <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
-                        <label>Email Address</label>
-                    </div>
-
-                    <div class="input-box">
-                        <input 
-                            type="tel" 
-                            id="phoneNumber" 
-                            name="phone" 
-                            required 
-                            value="<?php echo isset($_SESSION['phone']) ? '+63' . substr($_SESSION['phone'], -10) : '+63'; ?>" 
-                            pattern="^\+63[0-9]{10}$" 
-                            title="Phone number must start with +63 and contain 10 additional digits."
-                            oninput="this.value = '+63' + this.value.slice(3).replace(/\D/g, '').slice(0, 10)"
-                            maxlength="13" 
-                        />
-                        <label for="phoneNumber">Phone Number</label>
-                        </div>
-
-                </div>
-
-                <div class="input-box">
-                    <input type="text" name="address" required placeholder=" " value="<?php echo isset($_SESSION['address']) ? $_SESSION['address'] : ''; ?>" />
-                    <label>Address</label>
-                </div>
-
-                <div class="input-group">
-                    <div class="input-box">
-                        <input 
-                            type="text" 
-                            name="age" 
-                            required 
-                            placeholder=" " 
-                            maxlength="3" 
-                            value="<?php echo isset($_SESSION['age']) ? $_SESSION['age'] : ''; ?>" 
-                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 3);"
-                            pattern="[0-9]{1,3}" 
-                            title="Please enter a valid age (1-999)."
-                        />
-                        <label>Age</label>
-                    </div>
-                </div>
-
-
-                <div class="guardian">
-                    <p>Guardian Name - Relationship - Contact Number: (FOR 18 YRS OLD & BELOW ONLY) <br> Example: Melinda Reyes - Mother - 0917522634 | FOR 18yrs old and below ONLY.</p>
-                </div>
-
-                <div class="input-group">
-                    <div class="input-box">
-                    <input type="text" name="guardian" placeholder=" " value="<?php echo isset($_SESSION['guardian']) ? $_SESSION['guardian'] : ''; ?>" />
-                    <label>Your Answer</label>
-                    </div>
-                </div>
-
-                <div class="guardian">
-                    <p>Industry of the Company You are working for:</p>
-                </div>
-
-                <div class="input-group">
-                    <div class="dropdown">
-                        <span class="dropbtn" onclick="toggleDropdown()" required name="company">
-                            <?php echo htmlspecialchars($_SESSION['lastSelectedCompany'] ?? 'Select a company'); ?>
-                            <span class="caret"></span>
-                        </span>
-                        <div id="dropdownContent" class="dropdown-content"></div>
-                    </div>
-                
-
-                <!-- Hidden input to store selected company -->
-                <input type="hidden" id="companyInput" name="company" value="<?php echo htmlspecialchars($_SESSION['lastSelectedCompany'] ?? ''); ?>">
-
-                    <div class="input-box">
-                    <input type="text" name="fb" required placeholder=" " value="<?php echo isset($_SESSION['facebook']) ? htmlspecialchars($_SESSION['facebook']) : ''; ?>" />
-                    <label>Your Facebook profile link:</label>
-                    </div>
-                </div>
-
                 <div class="questions-container">
-                    <div class="question">
-                        <p>Do you live in a:<span class="required">*</span></p>
-                        <div class="radio-options">
+                    <?php foreach ($questions as $question): ?>
+                    <div class="question <?php echo stripos($question['question'], 'guardian') !== false ? 'guardian' : ''; ?>" id="question_<?php echo $question['id']; ?>">
+                        <p><?php echo htmlspecialchars($question['question']); ?><?php echo $question['is_optional'] ? '' : '<span class="required">*</span>'; ?></p>
+                        <?php if ($question['type'] == 'radio' || $question['type'] == 'checkbox'): ?>
+                        <div class="options">
+                            <?php foreach ($groupedAnswers[$question['id']] as $answer): ?>
                             <div>
-                                <input type="radio" name="housing" value="House" id="house" <?php echo (isset($_SESSION['housing']) && $_SESSION['housing'] == 'House') ? 'checked' : ''; ?>>
-                                <span>House</span>
+                                <input type="<?php echo $question['type']; ?>" name="question_<?php echo $question['id']; ?>" value="<?php echo htmlspecialchars($answer['answer_text']); ?>" id="answer_<?php echo $answer['id']; ?>"
+                                <?php if(isset($_SESSION["question_{$question['id']}"]) && $_SESSION["question_{$question['id']}"] == $answer['answer_text']) echo 'checked'; ?>>
+                                <span><?php echo htmlspecialchars($answer['answer_text']); ?></span>
                             </div>
-                            <div>
-                                <input type="radio" name="housing" value="Apartment" id="apartment" <?php echo (isset($_SESSION['housing']) && $_SESSION['housing'] == 'Apartment') ? 'checked' : ''; ?>>
-                                <span>Apartment</span>
-                            </div>
-                            <div>
-                                <input type="radio" name="housing" value="Condo" id="condo" <?php echo (isset($_SESSION['housing']) && $_SESSION['housing'] == 'Condo') ? 'checked' : ''; ?>>
-                                <span>Condo</span>
-                            </div>
-                            <div>
-                                <input type="radio" name="housing" value="Other" id="other" onclick="showOtherInput(true)" <?php echo (strpos($_SESSION['housing'] ?? '', 'Other:') === 0) ? 'checked' : ''; ?>>
-                                <span>Other...</span>
-                                <input type="text" class="other-input" name="housing_other" id="otherResidence" placeholder="Specify if Other"
-                                    value="<?php echo (strpos($_SESSION['housing'] ?? '', 'Other:') === 0) ? htmlspecialchars(substr($_SESSION['housing'], 6)) : ''; ?>" />
-                            </div>
+                            <?php endforeach; ?>    
                         </div>
-
-                    </div>
-
-                    <div class="question">
-                        <p>Do you own the house you are currently residing in or are you a tenant renting the house?:<span class="required">*</span></p>
-                        <div class="radio-options">
-                            <div>
-                                <input type="radio" name="has_pets" value="own" id="own" <?php echo (isset($_SESSION['has_pets']) && $_SESSION['has_pets'] == 'own') ? 'checked' : ''; ?> >
-                                <span>Own/Landlord</span>
-                            </div>
-                            <div>
-                                <input type="radio" name="has_pets" value="rent" id="rent" <?php echo (isset($_SESSION['has_pets']) && $_SESSION['has_pets'] == 'rent') ? 'checked' : ''; ?> >
-                                <span>Rent/Tenant</span>
-                            </div>
+                        <?php elseif ($question['type'] == 'number' && stripos($question['question'], 'age') !== false): ?>
+                        <div class="input-box-age">
+                            <input type="number" name="question_<?php echo $question['id']; ?>" id="ageInput" class="input-short" value="<?php echo isset($_SESSION['dynamic_answers']["question_{$question['id']}"]) ? htmlspecialchars($_SESSION['dynamic_answers']["question_{$question['id']}"]) : ''; ?>" required="<?php echo !$question['is_optional']; ?>" min="0" max="120" data-type="number">
                         </div>
-                    </div>
-
-                    <div class="question">
-                        <p>Are all members of your household in agreement with this adoption?:<span class="required">*</span></p>
-                        <div class="radio-options">
-                            <div>
-                                <input type="radio" name="outdoor_space" value="Yes" id="yes_outdoor" <?php echo (isset($_SESSION['outdoor_space']) && $_SESSION['outdoor_space'] == 'Yes') ? 'checked' : ''; ?> >
-                                <span>Yes</span>
-                            </div>
-                            <div>
-                                <input type="radio" name="outdoor_space" value="No" id="no_outdoor" <?php echo (isset($_SESSION['outdoor_space']) && $_SESSION['outdoor_space'] == 'No') ? 'checked' : ''; ?> >
-                                <span>No</span>
-                            </div>
-                            <div>
-                                <input type="radio" name="outdoor_space" value="Other" id="other_outdoor" <?php echo (isset($_SESSION['outdoor_space']) && $_SESSION['outdoor_space'] == 'Other') ? 'checked' : ''; ?> >
-                                <span>Don't know</span>
-                            </div>
+                        <?php elseif ($question['type'] == 'text' && stripos($question['question'], 'phone') !== false): ?>
+                        <div class="input-box">
+                            <input type="text" name="question_<?php echo $question['id']; ?>" value="<?php echo isset($_SESSION['dynamic_answers']["question_{$question['id']}"]) ? htmlspecialchars($_SESSION['dynamic_answers']["question_{$question['id']}"]) : '+63'; ?>" required="<?php echo !$question['is_optional']; ?>" pattern="^\+63[0-9]{10}$" title="Phone number must start with +63 and contain 10 additional digits." oninput="validatePhoneNumber(this)">
                         </div>
+                        <?php elseif ($question['type'] == 'text'): ?>
+                        <div class="input-box">
+                            <input type="text" name="question_<?php echo $question['id']; ?>" value="<?php echo isset($_SESSION['dynamic_answers']["question_{$question['id']}"]) ? htmlspecialchars($_SESSION['dynamic_answers']["question_{$question['id']}"]) : ''; ?>" required="<?php echo !$question['is_optional']; ?>">
+                        </div>
+                        <?php elseif ($question['type'] == 'dropdown'): ?>
+                        <div class="dropdown">
+                            <select name="question_<?php echo $question['id']; ?>" required="<?php echo !$question['is_optional']; ?>">
+                                <?php foreach ($groupedAnswers[$question['id']] as $answer): ?>
+                                <option value="<?php echo htmlspecialchars($answer['answer_text']); ?>" <?php if(isset($_SESSION['dynamic_answers']["question_{$question['id']}"]) && $_SESSION['dynamic_answers']["question_{$question['id']}"] == $answer['answer_text']) echo 'selected'; ?>>
+                                    <?php echo htmlspecialchars($answer['answer_text']); ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <?php endif; ?>
                     </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <div class="btn-container">
                     <button type="button" class="btn-cancel" onclick="location.href='/cat-details?post_id=<?php echo htmlspecialchars($postId); ?>'">Back</button>
-
                     <button type="submit" class="btn-confirm">Next</button>
                 </div>
             </form>
@@ -367,36 +230,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   
 
   <script>
-    const drop = document.querySelectorAll('.drop');
+function validatePhoneNumber(input) {
+    // Ensure input value starts with '+63'
+    if (!input.value.startsWith('+63')) {
+        input.value = '+63';
+    }
+    
+    // Remove all non-numeric characters except '+'
+    input.value = '+63' + input.value.slice(3).replace(/\D/g, '').slice(0, 10);
+}
 
-    drop.forEach(drop => {
-        const select = drop.querySelector('.select');
-        const caret = drop.querySelector('.caret');
-        const menu = drop.querySelector('.menu');
-        const options = drop.querySelectorAll('.menu li');
-        const selected = drop.querySelector('.selected');
+function toggleGuardianFields() {
+    const ageInput = document.getElementById('ageInput');
+    const guardianFields = document.querySelectorAll('.question.guardian');
 
-        select.addEventListener('click', () => {
-            select.classList.toggle('select-clicked');
-            caret.classList.toggle('caret-rotate');
-            menu.classList.toggle('menu-open');
+    function toggle() {
+        const age = parseInt(ageInput.value);
+        guardianFields.forEach(function(field) {
+            if (age <= 18) {
+                field.style.display = 'block';
+                field.querySelector('input').setAttribute('required', 'required');
+            } else {
+                field.style.display = 'none';
+                field.querySelector('input').removeAttribute('required');
+            }
         });
+    }
 
-        options.forEach(option => {
-            option.addEventListener('click', () => {
-                selected.innerText = option.innerText; // Set the selected option
-                select.classList.remove('select-clicked');
-                caret.classList.remove('caret-rotate');
-                menu.classList.remove('menu-open');
+    ageInput.addEventListener('input', toggle);
+    toggle();  // Call it initially in case there is a pre-filled age
+}
 
-                // Deselect all options and highlight the selected one
-                options.forEach(option => {
-                    option.classList.remove('active');
-                });
-                option.classList.add('active');
-            });
+document.addEventListener("DOMContentLoaded", function() {
+    toggleGuardianFields();
+
+    document.querySelectorAll('input[data-type="number"]').forEach(function(input) {
+        input.addEventListener('input', function(e) {
+            // Remove all non-numeric characters
+            this.value = this.value.replace(/[^0-9]/g, '');
         });
     });
+});
 
     function toggleUserDropdown() {
     const dropdown = document.getElementById("userDropdownContent");
@@ -434,96 +308,7 @@ function closeMainDropdown() {
 window.onclick = closeDropdowns;
 
 
-function addOption(companyName) {
-    const dropdownContent = document.getElementById("dropdownContent");
 
-    const option = document.createElement("div");
-    option.className = "dropdown-item";
-    option.textContent = companyName;
-
-    option.onclick = function () {
-        document.querySelector(".dropbtn").textContent = companyName;
-        document.getElementById('companyInput').value = companyName;
-        closeMainDropdown(); // Close the dropdown when an option is selected
-    };
-
-    dropdownContent.appendChild(option);
-}
-
-function showOtherInput(isVisible) {
-    const otherInput = document.getElementById('otherResidence');
-    otherInput.style.display = isVisible ? 'inline-block' : 'none';
-    if (!isVisible) {
-        otherInput.value = ''; // Clear value when hidden
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const isOtherSelected = document.getElementById('other').checked;
-    showOtherInput(isOtherSelected);
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    const savedCompany = '<?php echo htmlspecialchars($_SESSION['lastSelectedCompany'] ?? ''); ?>';
-
-    if (savedCompany) {
-        document.querySelector(".dropbtn").textContent = savedCompany;
-        document.getElementById('companyInput').value = savedCompany;
-    }
-
-    const companyOptions = [
-        "Homestay/HouseWife/HouseHusband",
-        "Student - High School/Senior Highschool",
-        "Student - College",
-        "Accountancy, banking and finance",
-        "Aerospace",
-        "Architecture, creative arts and design",
-        "Business, consulting and management",
-        "Charity and volunteer work",
-        "Education",
-        "Electronics, robotics, and mechanics",
-        "Energy and Utilities",
-        "Engineering, manufacturing and construction",
-        "Environment and agriculture",
-        "Food, food manufacturing",
-        "Healthcare",
-        "Hospitality and event management",
-        "Information technology & computer",
-        "Law",
-        "Law enforcement and security",
-        "Leisure, entertainment, sports and tourism",
-        "Marketing, advertising and PR",
-        "Media, news and internet",
-        "Mining",
-        "Public Services and administration",
-        "Recruitment and HR",
-        "Retail",
-        "Sales and E-commerce",
-        "Science and Pharmaceuticals",
-        "Social Care",
-        "Telecommunication and BPO",
-        "Transport and logistics",
-    ];
-
-    companyOptions.forEach(option => addOption(option));
-});
-
-function toggleOtherInput() {
-    const otherInput = document.getElementById('otherResidence');
-    const otherRadio = document.querySelector('input[name="housing"][value="Other"]');
-    otherInput.style.display = otherRadio.checked ? 'inline-block' : 'none';
-    if (!otherRadio.checked) {
-        otherInput.value = ''; // Clear value when hidden
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    toggleOtherInput();
-    const radioButtons = document.querySelectorAll('input[name="housing"]');
-    radioButtons.forEach((radio) => {
-        radio.addEventListener('change', toggleOtherInput);
-    });
-});
 
 document.getElementById('form').addEventListener('submit', function (event) {
     let isValid = true;

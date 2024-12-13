@@ -484,6 +484,21 @@ section {
     position: relative;
 }
 
+  /* Add this to your CSS file */
+  .input-short {
+    width: 50px; /* Adjust the width as needed */
+}
+.input-box-age input,
+.input-box-age textarea {
+    padding: 8px;         /* Reduced padding */
+    background: none;
+    border: 1px solid black;
+    border-radius: 5px;
+    outline: none;
+    font-size: 18px;      /* Reduced font size */
+    transition: border-color 0.3s;
+}
+
 .input-box input,
 .input-box textarea {
     width: 100%;
@@ -772,3 +787,4 @@ input[type="checkbox"] {
   .user-dropdown-content a:hover {
     background-color: #f1f1f1; /* Hover effect for links */
   }
+

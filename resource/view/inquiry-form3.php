@@ -3,7 +3,6 @@
 use App\Core\Database;
 use App\Models\User;
 use App\Controllers\UserController;
-
 use App\Models\Inquiry;
 use App\Controllers\InquiryController;
 
@@ -11,43 +10,95 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 session_start();
 
+// Database connection
 $database = new Database();
 $dbConnection = $database->connect();
 $userModel = new User($dbConnection);
 $userController = new UserController($userModel);
 
+// Check if user is logged in
 if (isset($_SESSION['user_id'])) {
-  $userId = $_SESSION['user_id'];  
-  $user = $userModel->findUserById($userId); 
-  $name = $user['name'] ?? ''; 
-  $phone = $user['Phone_number'] ?? '';
-  $email = $user['email'] ?? '';
+    $userId = $_SESSION['user_id'];
+    $user = $userModel->findUserById($userId);
+    $name = $user['name'] ?? '';
+    $phone = $user['Phone_number'] ?? '';
+    $email = $user['email'] ?? '';
 } else {
-  header('location:/loginto');
-  exit;
+    header('Location: /loginto');
+    exit;
 }
 
-$postId = isset($_GET['post_id']) ? $_GET['post_id'] : '';
+// Get the post ID from the URL
+$postId = isset($_GET['post_id']) ? (int)$_GET['post_id'] : 0;
+if (!$postId) {
+    header('Location: /error-page');
+    exit;
+}
+
+// Fetch questions and answers from the database
+$query = "SELECT * FROM questions WHERE page = 3"; // Adjust the page as needed
+$stmt = $dbConnection->prepare($query);
+$stmt->execute();
+$questions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+$answerQuery = "SELECT * FROM answers WHERE page = 3";
+$answerStmt = $dbConnection->prepare($answerQuery);
+$answerStmt->execute();
+$answers = $answerStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Group answers by question_id
+$groupedAnswers = [];
+foreach ($answers as $answer) {
+    $groupedAnswers[$answer['question_id']][] = $answer;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Storing form inputs in $_SESSION
-  $_SESSION['pets'] = $_POST['pets'] ?? '';
-  $_SESSION['spayed_neutered'] = $_POST['spayed_neutered'] ?? '';
-  $_SESSION['status'] = $_POST['status'] ?? '';
-  $_SESSION['adopted_before'] = $_POST['adopted_before'] ?? '';
-  $_SESSION['supplies'] = $_POST['supply'] ?? [];
+    // Store dynamic form inputs in session
+    $formData = [];
+    foreach ($questions as $question) {
+        $questionId = $question['id'];
+        $inputName = "question_{$questionId}";
+        if (isset($_POST[$inputName])) {
+            if (is_array($_POST[$inputName])) {
+                $formData[$inputName] = array_map('htmlspecialchars', array_map('trim', $_POST[$inputName]));
+            } else {
+                $formData[$inputName] = htmlspecialchars(trim($_POST[$inputName]));
+            }
+        } else {
+            // Ensure checkboxes are stored as empty arrays if not checked
+            if ($question['type'] == 'checkbox') {
+                $formData[$inputName] = [];
+            }
+        }
+    }
 
-  // Redirect to the next page or confirmation
-  header('Location: /inquiry-form4?post_id=' . $postId); // Change to the next step in your form process
-  exit;
+    // Store form data in a separate session key for this page
+    $_SESSION['form_data_page3'] = array_merge($_SESSION['form_data_page3'] ?? [], $formData);
+
+    // Form validation
+    $errors = [];
+    foreach ($questions as $question) {
+        if (!$question['is_optional'] && empty($_POST["question_{$question['id']}"])) {
+            $errors[] = "Please answer question: " . htmlspecialchars($question['question']);
+        }
+    }
+
+    // If validation fails, redirect back to the form with error messages
+    if (!empty($errors)) {
+        $_SESSION['errors'] = $errors;
+        header('Location: /inquiry-form3?post_id=' . $postId);
+        exit;
+    }
+
+    // If validation passes, redirect to the next step (if any)
+    header('Location: /inquiry-form4?post_id=' . $postId);
+    exit;
 }
 
-// Retrieving stored data from $_SESSION
-$pets = $_SESSION['pets'] ?? '';
-$spayedNeutered = $_SESSION['spayed_neutered'] ?? '';
-$status = $_SESSION['status'] ?? '';
-$adoptedBefore = $_SESSION['adopted_before'] ?? '';
-$supplies = $_SESSION['supplies'] ?? [];
+// Load previously stored values if available
+$formValues = $_SESSION['form_data_page3'] ?? [];
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
 
 
 ?>
@@ -57,7 +108,7 @@ $supplies = $_SESSION['supplies'] ?? [];
 
 <head>
     <link rel="stylesheet" href="css/form1.css">
-    <link rel="stylesheet" href="/css/userdropdown.css"> <!-- Add your CSS file link if needed -->
+    <link rel="stylesheet" href="/css/userdropdown.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat Adoption</title>
@@ -73,75 +124,67 @@ $supplies = $_SESSION['supplies'] ?? [];
   <!-- Adoption Application Form Section -->
   <section class="form" id="form">
     <div class="outer-container">
-      <div class="form-container">
-        <div class="text">
-          <h1>Cat Adoption Application Form</h1>
+        <div class="form-container">
+            <div class="text">
+                <h1>Cat Adoption Application Form</h1>
+            </div>
+
+            <?php if (!empty($errors)): ?>
+                <div class="error-messages">
+                    <ul>
+                        <?php foreach ($errors as $error): ?>
+                            <li><?= htmlspecialchars($error) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <form id="form1" method="POST">
+                <?php foreach ($questions as $question): ?>
+                    <div class="question-container">
+                        <p class="question-text">
+                            <?= htmlspecialchars($question['question']) ?>
+                            <?= $question['is_optional'] ? '' : '<span class="required">*</span>' ?>
+                        </p>
+
+                        <?php if ($question['type'] == 'text'): ?>
+                            <?php if (stripos($question['question'], 'list any pets you own') !== false): ?>
+                                <input type="text" name="question_<?= $question['id'] ?>" class="other-input" placeholder="Format: NAME-SPECIES-BREED-AGE. Type N/A if you don't have any pets in the past five (5) years" value="<?= htmlspecialchars($formValues["question_{$question['id']}"] ?? '') ?>" required>
+                            <?php elseif (stripos($question['question'], 'kapon') !== false): ?>
+                                <input type="text" name="question_<?= $question['id'] ?>" class="other-input-kapon" placeholder="Type N/A if you don't have any pets" value="<?= htmlspecialchars($formValues["question_{$question['id']}"] ?? '') ?>" required>
+                            <?php else: ?>
+                                <input type="text" name="question_<?= $question['id'] ?>" class="other-input" placeholder="Your answer" value="<?= htmlspecialchars($formValues["question_{$question['id']}"] ?? '') ?>" required>
+                            <?php endif; ?>
+                        
+                        <?php elseif ($question['type'] == 'radio'): ?>
+                            <div class="answer-options">
+                                <?php foreach ($groupedAnswers[$question['id']] as $answer): ?>
+                                    <label>
+                                        <input type="radio" name="question_<?= $question['id'] ?>" value="<?= htmlspecialchars($answer['answer_text'], ENT_QUOTES) ?>" <?= isset($formValues["question_{$question['id']}"]) && $formValues["question_{$question['id']}"] === $answer['answer_text'] ? 'checked' : '' ?> required>
+                                        <?= htmlspecialchars($answer['answer_text']) ?>
+                                    </label>
+                                <?php endforeach; ?>
+                            </div>
+                        
+                        <?php elseif ($question['type'] == 'checkbox'): ?>
+                            <div class="answer-options">
+                                <?php foreach ($groupedAnswers[$question['id']] as $answer): ?>
+                                    <label>
+                                        <input type="checkbox" name="question_<?= $question['id'] ?>[]" value="<?= htmlspecialchars($answer['answer_text'], ENT_QUOTES) ?>" <?= isset($formValues["question_{$question['id']}"]) && in_array($answer['answer_text'], $formValues["question_{$question['id']}"]) ? 'checked' : '' ?> class="option-checkbox">
+                                        <?= htmlspecialchars($answer['answer_text']) ?>
+                                    </label>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+
+                <div class="btn-container">
+                    <button type="button" class="btn-cancel" onclick="location.href='/inquiry-form2?post_id=<?= htmlspecialchars($postId) ?>'">Back</button>
+                    <button type="submit" class="btn-confirm">Next</button>
+                </div>
+            </form>
         </div>
-
-        <form id="form1"  method="POST">
-
-        <div class="question-container">
-  <p class="question-text">List any pets you own or have owned in the past five (5) years, their breeds, and their ages:<span class="required">*</span></p>
-  <span class="example">Format: NAME-SPECIES-BREED-AGE (Example: Lala-Cat-Puspin-2yrs old). Separate by "enter".Type N/A if you don't have any pets in the past five (5) years.</span>
-  <div class="answer-options">
-  <input type="text" name="pets" class="other-input" placeholder="Specify" value="<?= htmlspecialchars($pets) ?>" required>  </div>
-</div>
-
-<div class="question-container">
-  <p class="question-text">How many of these pets are spayed/neutered? (kapon):<span class="required">*</span></p>
-  <span class="example">Type N/A if you don't have any pets.</span>
-  <div class="answer-options">
-  <input type="text" name="spayed_neutered" class="other-input" placeholder="Specify" value="<?= htmlspecialchars($spayedNeutered) ?>" required>  </div>
-</div>
-
-<div class="question-container">
-  <p class="question-text">Where are the animals (your pets) you mentioned ABOVE now?<span class="required">*</span></p>
-  <div class="answer-options">
-  <label><input type="radio" name="status" value="alive" <?= $status === 'alive' ? 'checked' : '' ?> required> Alive and with me/us</label>
-  <label><input type="radio" name="status" value="dead" <?= $status === 'dead' ? 'checked' : '' ?>> Dead/Passed away</label>
-  <label><input type="radio" name="status" value="given" <?= $status === 'given' ? 'checked' : '' ?>> Given to relative</label>
-  <label><input type="radio" name="status" value="adopt" <?= $status === 'adopt' ? 'checked' : '' ?>> Given to adoption or to other people</label>
-  <label><input type="radio" name="status" value="none" <?= $status === 'none' ? 'checked' : '' ?>> N/A. Did not own pet/s before</label>
-
-  </div>
-</div>
-
-<div class="question-container">
-  <p class="question-text">Have you adopted from a rescuer or animal welfare group before?<span class="required">*</span></p>
-  <div class="answer-options">
-  <label><input type="radio" name="adopted_before" value="yes" <?= $adoptedBefore === 'yes' ? 'checked' : '' ?> required> Yes</label>
-  <label><input type="radio" name="adopted_before" value="no" <?= $adoptedBefore === 'no' ? 'checked' : '' ?>> No</label>
-</div>
-
-</div>
-
-<div class="question-container">
-  <p class="question-text">Do you have supplies and goods that you can provide for your new cat right now?* Check all that you have already bought for your new cat. No worries if you have only selected a FEW OR NONE AT ALL, we are NOT REQUIRING you to have all of the following choices below.<span class="required">*</span></p>
-  <div class="check-options">
-  <label><input type="checkbox" name="supply[]" value="catfood" <?= in_array('catfood', $supplies) ? 'checked' : '' ?> > Cat Food (wet and/or dry)</label>
-  <label><input type="checkbox" name="supply[]" value="milk" <?= in_array('milk', $supplies) ? 'checked' : '' ?>> Kitten Milk</label>
-  <label><input type="checkbox" name="supply[]" value="food" <?= in_array('food', $supplies) ? 'checked' : '' ?>> Food bowl and Water bottle/fountain</label>
-  <label><input type="checkbox" name="supply[]" value="litter" <?= in_array('litter', $supplies) ? 'checked' : '' ?>> Litter box and its accessories (scooper/litter mat)</label>
-  <label><input type="checkbox" name="supply[]" value="bedding" <?= in_array('bedding', $supplies) ? 'checked' : '' ?>> Bedding and blankets</label>
-  <label><input type="checkbox" name="supply[]" value="flee" <?= in_array('flee', $supplies) ? 'checked' : '' ?>> Flea & worming medications</label>
-  <label><input type="checkbox" name="supply[]" value="cage" <?= in_array('cage', $supplies) ? 'checked' : '' ?>> Cage or cat condo/tree</label>
-  <label><input type="checkbox" name="supply[]" value="toys" <?= in_array('toys', $supplies) ? 'checked' : '' ?>> Toys and Scratching post</label>
-  <label><input type="checkbox" name="supply[]" value="grooming" <?= in_array('grooming', $supplies) ? 'checked' : '' ?>> Grooming supplies (comb, brush, nail clipper, cat shampoo/soap, towel, toothbrush)</label>
-  <label><input type="checkbox" name="supply[]" value="crate" <?= in_array('crate', $supplies) ? 'checked' : '' ?>> Crate or Pet Travel Bag</label>
-  <label><input type="checkbox" name="supply[]" value="vita" <?= in_array('vita', $supplies) ? 'checked' : '' ?>> Vitamins & Supplements</label>
-  <label><input type="checkbox" name="supply[]" value="none" <?= in_array('none', $supplies) ? 'checked' : '' ?>> None as of the moment</label>
-</div>
-
-</div>
-          
-          <!-- Buttons inside the form-container and centered -->
-          <div class="btn-container">
-            <button type="button" class="btn-cancel" onclick="location.href='/inquiry-form2?post_id=<?php echo htmlspecialchars($postId); ?>'">Back</button>
-            <button type="submit" class="btn-confirm">Next</button>
-          </div>
-
-        </form>
-      </div>
     </div>
   </section>
 
@@ -181,6 +224,35 @@ $supplies = $_SESSION['supplies'] ?? [];
   <footer class="footer">
     Cats Free Adoption & Rescue Philippines
   </footer>
+
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Select All checkboxes functionality
+    document.querySelectorAll('input[type="checkbox"][value="Select All"]').forEach(function(selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function() {
+            const container = this.closest('.answer-options');
+            const checkboxes = container.querySelectorAll('input[type="checkbox"]:not([value="Select All"]):not([value="None as of the moment"])');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    });
+
+    // Ensure all other checkboxes maintain their checked state from the session
+    <?php if (!empty($formValues)): ?>
+        <?php foreach ($formValues as $key => $value): ?>
+            <?php if (is_array($value)): ?>
+                <?php foreach ($value as $item): ?>
+                    document.querySelectorAll('input[name="<?= $key ?>[]"][value="<?= htmlspecialchars($item, ENT_QUOTES) ?>"]').forEach(function(checkbox) {
+                        checkbox.checked = true;
+                    });
+                    console.log('Checked: ', '<?= $key ?>', '<?= htmlspecialchars($item, ENT_QUOTES) ?>');
+                <?php endforeach; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+});
+</script>
 
   <script src="/js/inquiry-form3.js"></script>
 

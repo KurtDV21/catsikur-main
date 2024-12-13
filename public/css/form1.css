@@ -278,6 +278,19 @@ input[type="radio"] {
   accent-color: #333; /* Ensures visibility */
 }
 
+.other-input-kapon {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #333;
+  padding: 5px;
+  font-size: 16px;
+  margin-top: 5px;
+  background-color: transparent;
+}
+input.other-input-kapon {
+  width: 260px;
+}
+
 .other-input {
   width: 100%;
   border: none;
@@ -456,3 +469,13 @@ input[type="radio"] {
   .user-dropdown-content a:hover {
     background-color: #f1f1f1; /* Hover effect for links */
   }
+
+  .answer-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.answer-options label {
+    margin-bottom: 8px; /* Adds space between options */
+}
