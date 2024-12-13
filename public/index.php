@@ -253,5 +253,10 @@ route('/faq', function () {
     include __DIR__ . '/../resource/view/faq.php';
 });
 
+route('/admin-question-answers', function () {
+    include __DIR__ . '/../resource/view/admin-question-answers.php';
+});
+
+
 // Run the routing logic
 run();
